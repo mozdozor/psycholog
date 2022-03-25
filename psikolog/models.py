@@ -20,7 +20,7 @@ class CustomUserModel(AbstractUser):
     email=models.EmailField(max_length=250,blank=False,null=False,unique=True)
     phone_number=models.CharField(max_length=250,blank=False,null=False)
     image=models.ImageField(
-        upload_to="doctor_images",default='avatar/no-avatar.png'
+        upload_to="profile_images",default='avatar/no-avatar.png'
     )
     about=models.TextField(blank=True,null=True,default="")
     city=models.CharField(max_length=50,blank=True,null=True,default="")              # il adı döndürür 

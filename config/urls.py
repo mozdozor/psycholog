@@ -22,7 +22,7 @@ from django.urls.conf import include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django-psyc-admin/', admin.site.urls),
     path('', include("psikolog.urls")),
     path('psyc-admin/', include("Admin.urls")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
