@@ -1,0 +1,169 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+{% load static %}
+
+{% block contentAdmin %}
+    
+<form 
+
+
+{% if MenuObje %}
+	action="{% url 'addMenu' %}?tip={{type}}&menuId={{MenuObje.pk}}"
+{% else %}
+	action="{% url 'addMenu' %}?tip={{type}}"
+{% endif %}
+method="post"
+>
+    {% csrf_token %}
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Add listing</li>
+      </ol>
+		<div class="box_general padding_bottom">
+			<div class="header_box version_2">
+				<h2><i class="fa fa-file"></i>
+                {% if type == "ust-menu-ekle" %}
+                    Üst Menü Ekle
+				{% elif type == "alt-menu-ekle" %}
+					Alt Menü Ekle
+                {% endif %}
+                    </h2>
+			</div>
+			
+			{% if type == "alt-menu-ekle" %}
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>Bağlı Menü Seçiniz</label>
+						<select name="baglıMenu" id="cars" class="form-control">
+							
+							{% for menu in bottomMenus %}
+								<option 
+								{% if MenuObje %}
+									{% if MenuObje.topMenu.pk == menu.pk %}
+										selected
+									{% endif %}
+								{% endif %}
+									 value="{{menu.pk}}">{{menu.name}} 
+									 {% if menu.userType == "anonim" %}
+										 (Anonim Kullanıcı)
+									{% else %}
+										(Giriş Yapmış Kullanıcı)
+									 {% endif %}
+										 </option>
+							{% endfor %}
+						  </select>
+					</div>
+				</div>
+				
+			</div>
+				
+			{% endif %}
+				
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Menü İsmi</label>
+						<input type="text" 
+						{% if MenuObje %}
+							value="{{MenuObje.name}}"
+						{% endif %}
+							 name="menuName" required class="form-control" placeholder="Menü İsmi">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Url</label>
+						<input type="text" {% if MenuObje %}
+						value="{{MenuObje.url}}"
+					{% endif %} name="menuUrl" required class="form-control" placeholder="Url">
+					</div>
+				</div>
+			</div>
+			<!-- /row-->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Kullanıcı Tipi</label>
+
+						<select class="form-control" name="userType" id="cars">
+							<option {% if MenuObje %}
+							{% if MenuObje.userType == "anonim" %}
+								selected
+							{% endif %}
+						{% endif %} value="anonim">Anonim Kullanıcı</option>
+							<option  {% if MenuObje %}
+							{% if MenuObje.userType == "authUser" %}
+								selected
+							{% endif %}
+						{% endif %} value="authUser">Giriş Yapmış Kullanıcı</option>
+							
+						  </select>
+
+<!-- 
+						<input type="text" name="userType"
+						{% if MenuObje %}
+						value="{{MenuObje.userType}}"
+					{% endif %}
+						required class="form-control" placeholder="Kullanıcı Tipi"> -->
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Menü Sıra</label>
+						<input type="number" 
+
+						{% if MenuObje %}
+							value="{{MenuObje.menuSira}}"
+						{% endif %}
+						
+						name="menuSira" required class="form-control" placeholder="Menü Sıra">
+					</div>
+				</div>
+			</div>
+			
+		
+		</div>
+		<!-- /box_general-->
+		
+		
+		
+		<p><button type="submit" class="btn_1 medium">Kaydet</button></p>
+	  </div>
+	  <!-- /.container-fluid-->
+   	</div>
+
+
+</form>
+
+{% endblock contentAdmin %}
+
+       {% block scriptsAdmin %}
+	<!-- Bootstrap core JavaScript-->
+	<script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+	<!-- Page level plugin JavaScript-->
+	<script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+	<script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+	<script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+	<script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+	<script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+	<script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+
+	<script src="{% static 'assetsAdmin/vendor/dropzone.min.js' %}"></script>
+	<script src="{% static 'assetsAdmin/vendor/bootstrap-datepicker.js' %}"></script>
+	<script>$('input.date-pick').datepicker();</script>
+{% endblock scriptsAdmin %}
+   
+
+

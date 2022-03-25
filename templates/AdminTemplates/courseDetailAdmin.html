@@ -1,0 +1,161 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+
+
+{% block contentAdmin %}
+    
+    
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'indexAdmin' %}">Anasayfa</a>
+        </li>
+        <li class="breadcrumb-item active">Kurs Detayı</li>
+      </ol>
+		<div class="box_general">
+			<div class="header_box">
+				<h2 class="d-inline-block">Kurs Detayı</h2>
+				<!-- <div class="filter">
+					<select name="orderby" class="selectbox">
+						<option value="Any status">Any status</option>
+						<option value="Approved">Started</option>
+						<option value="Pending">Pending</option>
+						<option value="Cancelled">Cancelled</option>
+					</select>
+				</div> -->
+			</div>
+			<div class="list_general">
+				<ul>
+					<li>
+						<figure><img src="{{course.image.url}}" alt=""></figure>
+						<h4>{{course.title}}</h4>
+						<ul class="course_list">
+							<li><strong>Oluşturma Tarihi</strong> {{course.created_date.date}}</li>
+							<!-- <li><strong>Expire date</strong> 11 April 2018</li> -->
+							<li><strong>Kategori</strong> {{course.category.name}}</li>
+							<li><strong>Oluşturan</strong> {{course.author.get_full_name}}</li>
+              <li><strong>Fiyat</strong> {{course.price}} ₺</li>
+						</ul>
+						<h4>Kurs Üst Açıklama</h4> 
+						<p>{{course.description}}</p>
+                        <h4>Öğrenecekleriniz</h4> 
+						<p>
+                            
+                            
+                            {% if course.whatWillYouLearns.all %}
+                                {% for ogr in course.whatWillYouLearns.all %}
+                                    {{ogr}} <br>
+                                {% endfor %}
+                            {% else %}
+                            -
+                            {% endif %}
+                                
+                        </p>
+
+                        
+                        
+                        <h4>Kurs Alt Açıklama</h4> 
+						<p>{{course.bottomDescription}}</p>
+
+
+
+                        <h4>Kurs Bölümleri</h4> 
+						<p>
+                            
+                            
+                            {% if course.sessions.all %}
+                                {% for ogr in course.sessions.all %}
+                                    <p style="color: green; font-size: 15px; font-weight: bold;">{{ogr}}</p>
+                                    
+                                    
+                                    {% if  ogr.videos.all %}
+                                        {% for video in ogr.videos.all %}
+                                           <p>&emsp;<i class="fa fa-solid fa-arrow-right"></i>&emsp;{{video.title}}</p>
+                                        {% endfor %}
+                                    {% else %}
+                                     -
+                                    {% endif %}
+                                        
+                                        
+                                {% endfor %}
+                            {% else %}
+                            -
+                            {% endif %}
+                                
+                        </p>
+
+
+
+
+                            
+						<ul class="buttons">
+                            <li><a href="{% url 'wwylListAdmin' %}?courseId={{course.pk}}" class="btn_1 gray approve">Öğrenecekleriniz Ekle/Çıkar</a></li>
+							 <li><a href="{% url 'courseAddAdmin' %}?courseId={{course.pk}}" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Düzenle</a></li> 
+							<li><a href="#" onclick="deleteObject('{{course.pk}}')" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Sil</a></li>
+						</ul>
+					</li>
+					
+					
+				</ul>
+			</div>
+		</div>
+		<!-- /box_general-->
+		<!-- <nav aria-label="...">
+			<ul class="pagination pagination-sm add_bottom_30">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">Previous</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav> -->
+		<!-- /pagination-->
+	  </div>
+	  <!-- /container-fluid-->
+   	</div>
+    <!-- /container-wrapper-->
+   
+    {% endblock contentAdmin %}
+
+
+
+    {% block scriptsAdmin %}
+    <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <!-- Page level plugin JavaScript-->
+  <script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+  <script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+  <script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+  <script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+  <script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+
+
+  <script>
+    function deleteObject(pk){
+        var result= confirm("Bu kursu silmek istediğinize emin misiniz?");
+        if (result){
+            document.location.href = "/psyc-admin/admin-kurs-sil/" + pk;
+        }
+    }
+  </script>
+  <!-- Custom scripts for this page-->
+{% endblock scriptsAdmin %}
+  
+
+

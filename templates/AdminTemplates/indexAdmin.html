@@ -1,0 +1,203 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+
+
+{% block contentAdmin %}
+    
+{{ mylistjson|json_script:"mylistjson" }}
+{{ list|json_script:"mylistjson2" }}
+
+
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'indexAdmin' %}">Anasayfa</a>
+        </li>
+        <li class="breadcrumb-item active">Yönetim Paneli</li>
+      </ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  <!-- Icon Cards-->
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card dashboard text-white bg-primary o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-envelope-open"></i>
+              </div>
+              <div class="mr-5"><h5>{{messageCount}}  Mesaj</h5></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'showAllMessages' %}">
+              <span class="float-left">Tüm Mesajlar</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card dashboard text-white bg-warning o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-star"></i>
+              </div>
+				<div class="mr-5"><h5>{{commentCount}}  Yorum</h5></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'commentsAdmin' %}">
+              <span class="float-left">Tüm Yorumlar</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card dashboard text-white bg-success o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-calendar-check-o"></i>
+              </div>
+              <div class="mr-5"><h5>{{courseCount}}  Kurs</h5></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'courseListAdmin' %}">
+              <span class="float-left">Tüm Kurslar</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card dashboard text-white bg-danger o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-heart"></i>
+              </div>
+              <div class="mr-5"><h5>{{billingCount}}  Satın Alma</h5></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'listBillingsAdmin' %}">
+              <span class="float-left">Tüm Satın Alımlar</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+		</div>
+		<!-- /cards -->
+		<h2></h2>
+		<div class="box_general padding_bottom">
+			<div class="header_box version_2">
+				<h2><i class="fa fa-bar-chart"></i>İstatistik</h2>
+			</div>
+		 <canvas id="myAreaChart" width="100%" height="30" style="margin:45px 0 15px 0;"></canvas>
+		</div>
+
+
+
+
+
+
+
+
+      <center>
+        <div class="container">
+          <div class="row">
+            <div class="col md-4">
+              <!-- Example Bar Chart Card-->
+              <div class="card mb-3">
+                <div style="font-weight: bold; color: black;" class="card-header">
+                    <center> <i class="fa fa-pie-chart"></i> Toplam Kazanç</center></div>
+                <div class="card-body">
+                  <canvas id="myPieChart1" width="100%" height="100"></canvas>
+                </div>
+                <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+              </div>
+              <center><p style="color: black; font-weight: bold;">Toplam Kazanç: {{totalMoneyThisMonth}}₺</p>
+                <p style="color: black; font-weight: bold;">Gelir: {{list.0}}₺</p>
+                <p style="color: black; font-weight: bold;">Gider: {{list.1}}₺</p></center>
+            </div>
+            <div class="col md-4">
+              <!-- Example Pie Chart Card-->
+              <div class="card mb-3">
+                <div style="font-weight: bold; color: black;" class="card-header">
+                  <center><i class="fa fa-pie-chart"></i> Bu Ayki Kazanç</center></div>
+                <div class="card-body">
+                  <canvas id="myPieChart2" width="100%" height="100"></canvas>
+                </div>
+                <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+              </div>
+             <center>
+                <p style="color: black; font-weight: bold;">Bu Ayki Kazanç: {{totalMoneyAllTime}}₺</p>
+                <p  style="color: black; font-weight: bold;">Gelir: {{list.2}}₺</p>
+                <p style="color: black; font-weight: bold;">Gider: {{list.3}}₺</p>
+             </center>
+            </div>
+            </div>
+      
+          </div>
+      
+      </center>
+
+
+
+
+
+
+
+	  </div>
+	  <!-- /.container-fluid-->
+   	</div>
+    <!-- /.container-wrapper-->
+
+
+    {% endblock contentAdmin %}
+
+
+    
+    {% block scriptsAdmin %}
+          <!-- Bootstrap core JavaScript-->
+        <script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+        <script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+        <script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+        <script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+        <script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+        <!-- Custom scripts for this page-->
+        <script src="{% static 'assetsAdmin/js/admin-charts.js' %}"></script>
+
+        <script src="{% static 'assetsAdmin/js/admin-all-billings.js' %}"></script>
+
+    {% endblock scriptsAdmin %}
+        

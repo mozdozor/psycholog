@@ -1,0 +1,141 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+{% block cssFiles %}
+<link href="{% static 'assetsAdmin/vendor/dropzone.css' %}" rel="stylesheet">
+<link href="{% static 'assetsAdmin/css/date_picker.css' %}" rel="stylesheet">
+{% endblock cssFiles %}
+
+
+{% block contentAdmin %}
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'indexAdmin' %}">Anasayfa</a>
+      </li>
+      <li class="breadcrumb-item active">Seo Ayarları</li>
+    </ol>
+
+
+   
+
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+  
+      {% if message.tags == "error" %}
+      <div class="alert alert-danger" role="alert">
+  
+        <center><strong>{{message}}</strong></center>
+      </div>
+      {% else %}
+      <div class="alert alert-success" role="alert">
+  
+        <center><strong>{{message}}</strong></center>
+      </div>
+      {% endif %}
+  
+  
+  
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+
+
+    <!-- Example DataTables Card-->
+    <div  class="card mb-3">
+      <div style="font-weight: bold; color: red;" class="card-header">
+        <i class="fa fa-table"></i> Seo Ayarları
+        <div style="float: right;">
+          <a  href="{% url 'createPageModelAdmin' %}" type="button" class="btn btn-warning">Ekle</a>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr style="font-weight: bold; color: black;">
+                <th>Meta Title</th>
+                <th>Meta Description</th>
+                <th>Meta Keywords</th>
+                <th>Fonksiyon Adı</th>
+                <th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for page in pages %}
+              <tr>
+                <td>{{page.meta_title}}</td>
+                <td>{{page.meta_description}}</td>
+                <td>{{page.meta_keywords}}</td>
+                <td>{{page.view_name}}</td>
+               
+                <td>
+                  <center><a href="{% url 'createPageModelAdmin' %}?pageId={{page.pk}}" type="button" class="btn btn-primary btn-xs">Düzenle</a>&emsp;&emsp;&emsp;
+                    <a type="button" class="btn btn-danger btn-xs" onclick="deleteObject('{{page.pk}}')" href="#">Sil</a></center>
+                </td>
+
+              </tr>
+
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+    </div>
+    <!-- /tables-->
+
+
+
+
+  </div>
+  <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+
+{% endblock contentAdmin %}
+
+
+
+{% block scriptsAdmin %}
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+<script src="{% static 'assetsAdmin/js/admin-datatables.js' %}"></script>
+
+
+<script>
+  function deleteObject(pk){
+      var result= confirm("Bu sayfa modelini silmek istediğinize emin misiniz?");
+      if (result){
+          document.location.href = "/psyc-admin/admin-seo-sil/" + pk;
+      }
+  }
+</script>
+
+
+{% endblock scriptsAdmin %}

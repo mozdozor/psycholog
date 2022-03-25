@@ -1,0 +1,271 @@
+  {% load static %}
+  
+
+  
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
+    <a class="navbar-brand" href="{% url 'indexAdmin' %}"><img src="{% static 'assetsAdmin/img/logo.png' %}" data-retina="true" alt="" width="163" height="36"></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="{% url 'indexAdmin' %}">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Anasayfa</span>
+          </a>
+        </li>
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+          <a class="nav-link" href="{% url 'showAllMessages' %}">
+            <i class="fa fa-fw fa-envelope-open"></i>
+            <span class="nav-link-text">Mesajlar</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+          <a class="nav-link" href="{% url 'listNotificationsAdmin' %}">
+            <i class="fa fa-solid fa-bell"></i>
+            <span class="nav-link-text">Bildirimler</span>
+          </a>
+        </li>
+		<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookings">
+          <a class="nav-link" href="courses.html">
+            <i class="fa fa-fw fa-archive"></i>
+            <span class="nav-link-text">Courses <span class="badge badge-pill badge-primary">6 New</span></span>
+          </a>
+        </li> -->
+
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#comments" data-parent="#exampleAccordion">
+            <i class="fa fa-solid fa-comments"></i>
+            <span class="nav-link-text">Yorumlar</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="comments">
+            <li>
+              <a href="{% url 'commentsAdmin' %}">Tüm Yorumlar</a>
+            </li>
+            <li>
+              <a href="{% url 'commentsRequestAdmin' %}">Yorum İstekleri</a>
+            </li>
+            <!-- <li>
+              <a href="user-profile.html">User profile</a>
+            </li>
+			      <li>
+              <a href="teacher-profile.html">Teacher profile</a>
+            </li> -->
+          </ul>
+        </li>
+
+
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+          <a class="nav-link" href="{% url 'listBillingsAdmin' %}">
+            <i class="fa fa-solid fa-credit-card"></i>
+            <span class="nav-link-text">Satın Alımlar</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+          <a class="nav-link" href="{% url 'userListAdmin' %}">
+            <i class="fa fa-fw fa-users"></i>
+            <span class="nav-link-text">Kullanıcılar</span>
+          </a>
+        </li>
+       
+		<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
+          <a class="nav-link" href="bookmarks.html">
+            <i class="fa fa-fw fa-heart"></i>
+            <span class="nav-link-text">Bookmarks</span>
+          </a>
+        </li> -->
+		<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+          <a class="nav-link" href="add-listing.html">
+            <i class="fa fa-fw fa-plus-circle"></i>
+            <span class="nav-link-text">Add listing</span>
+          </a>
+        </li> -->
+
+
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfiles" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-archive"></i>
+            <span class="nav-link-text">Kurs İşlemleri</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseProfiles">
+            <li>
+              <a href="{% url 'categoryListAdmin' %}">Kategoriler</a>
+            </li>
+            <li>
+              <a href="{% url 'courseListAdmin' %}">Kurslar</a>
+            </li>
+            <!-- <li>
+              <a href="user-profile.html">User profile</a>
+            </li> -->
+			      
+          </ul>
+        </li>
+
+
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfile" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Site Ayarları</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseProfile">
+            <li>
+              <a href="{% url 'listSlidersAdmin' %}">Slider Ayarları</a>
+            </li>
+            <li>
+              <a href="{% url 'listMenu' %}">Menü Ayarları</a>
+            </li>
+            <li>
+              <a href="{% url 'showPagesAdmin' %}">Seo Ayarları</a>
+            </li>
+            <!-- <li>
+              <a href="user-profile.html">User profile</a>
+            </li>
+			      <li>
+              <a href="teacher-profile.html">Teacher profile</a>
+            </li> -->
+          </ul>
+        </li>
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-gear"></i>
+            <span class="nav-link-text">Kullanıcı Ayarları</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="{% url 'profileSettingsAdmin' %}">Profil Ayarları</a>
+            </li>
+            <li>
+              <a href="{% url 'changePasswordAdmin' %}">Şifre Değiştir</a>
+            </li>
+            <!-- <li>
+              <a href="charts.html">Charts</a>
+            </li>
+			<li>
+              <a href="tables.html">Tables</a>
+            </li> -->
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-fw fa-envelope"></i>
+            <span class="d-lg-none">Yeni Mesajlar
+              <span class="badge badge-pill badge-primary">12 New</span>
+            </span>
+           
+           {% if newMessages %}
+            <span class="indicator text-primary d-none d-lg-block">
+              <i class="fa fa-fw fa-circle"></i>
+            </span>
+           {% endif %}
+             
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+            <h6 class="dropdown-header">Yeni Mesajlar:</h6>
+           
+           
+           {% if newMessages %}
+             {% for message in newMessages %}
+             
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">
+                  <strong>{{message.name}} {{message.lastName}}</strong>
+                  <span class="small float-right text-muted">{{message.olusturulma_tarihi|timesince}}</span>
+                  <div class="dropdown-message small">{{message.mesaj|truncatechars:159}}</div>
+                </a>
+               
+             {% endfor %}
+             {% else %}
+                <a class="dropdown-item" href="#">
+                  <div style="color: red;" class="dropdown-message small">Hiç mesajınız bulunmamaktadır.
+                  </div>
+                </a>
+           {% endif %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item small" href="{% url 'showAllMessages' %}">Tüm mesajları görüntüle</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-fw fa-bell"></i>
+            <span class="d-lg-none">eni Bildirimler
+              <span class="badge badge-pill badge-warning">6 New</span>
+            </span>
+
+            
+            {% if newNotifications %}
+            <span class="indicator text-warning d-none d-lg-block">
+              <i class="fa fa-fw fa-circle"></i>
+            </span>
+            {% endif %}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header">Yeni Bİldirimler:</h6>
+
+
+           
+           
+           {% if newNotifications %}
+             {% for not in newNotifications %}
+             <div class="dropdown-divider"></div>
+             <a class="dropdown-item" href="#">
+               <span class="text-success">
+                 <strong>
+                   <i class="fa fa-long-arrow-up fa-fw"></i>
+                   {% if not.type == "billing" %}
+                     Yeni Satın Alım
+                    {% elif not.type == "commentRequest" %}
+                    Yeni Yorum İsteği
+                   {% endif %}
+                     </strong>
+               </span>
+               <span class="small float-right text-muted">{{not.created_date}}</span>
+               <div class="dropdown-message small">{{not.message|truncatechars:43}}</div>
+             </a>
+             {% endfor %}
+            {% else %}
+            <a class="dropdown-item" href="#">
+              <div style="color: red;" class="dropdown-message small">Hiç bildiriminiz bulunmamaktadır.
+              </div>
+            </a>
+           {% endif %}
+           
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item small" href="{% url 'listNotificationsAdmin' %}">Tüm Bİldirimler</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <form class="form-inline my-2 my-lg-0 mr-lg-2">
+            <div class="input-group">
+              <input class="form-control search-top" type="text" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Çıkış</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /Navigation-->

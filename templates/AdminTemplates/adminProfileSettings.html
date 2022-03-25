@@ -1,0 +1,127 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+
+
+
+{% block contentAdmin %}
+
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'indexAdmin' %}">Anasayfa</a>
+            </li>
+            <li class="breadcrumb-item active">Kullanıcı Ayarları</li>
+        </ol>
+
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <center><strong>{{ error|escape }}</strong></center>
+        </div>
+        {% endfor %}
+        {% endfor %}
+       
+
+        {% endif %}
+
+
+        {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+    
+        {% if message.tags == "error" %}
+        <div class="alert alert-danger" role="alert">
+    
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+    
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% endif %}
+   
+  
+  
+  
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+
+
+
+        <form action="{% url 'profileSettingsAdmin' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-user"></i>Kullanıcı Ayarları</h2>
+            </div>
+            <div class="row">
+
+                    <div class="col-md-12 add_top_30">
+
+                        <div class="row">
+
+                            {% for field in form.visible_fields %}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{field.label_tag}}
+                                    {{field}}
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+                        </div>
+                        <!-- /row-->
+
+
+                    </div>
+
+                
+            </div>
+        </div>
+
+
+
+
+
+        <p><button type="submit" class="btn_1 medium">Kaydet</button></p>
+    </form>
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+
+{% endblock contentAdmin %}
+
+
+
+{% block scriptsAdmin %}
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+<script src="{% static 'assetsAdmin/js/admin-datatables.js' %}"></script>
+
+{% endblock scriptsAdmin %}

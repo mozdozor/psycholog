@@ -1,0 +1,192 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+
+
+
+{% block contentAdmin %}
+
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'indexAdmin' %}">Anasayfa</a>
+            </li>
+            <li class="breadcrumb-item active">Yorumlar</li>
+        </ol>
+
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+
+            {% if message.tags == "error" %}
+            <div class="alert alert-danger" role="alert">
+
+                <center><strong>{{message}}</strong></center>
+            </div>
+            {% else %}
+            <div class="alert alert-success" role="alert">
+
+                <center><strong>{{message}}</strong></center>
+            </div>
+            {% endif %}
+
+
+
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+
+        {% if comments %}
+        <div class="box_general">
+            <!-- <div class="header_box">
+				<h2 class="d-inline-block">Yorumlar</h2>
+				<div class="filter">
+					<select name="orderby" class="selectbox">
+						<option value="Any time">Any time</option>
+						<option value="Latest">Latest</option>
+						<option value="Oldest">Oldest</option>
+					</select>
+				</div>
+			</div> -->
+            
+            <div class="list_general reviews">
+                <ul>
+                    {% for comment in comments %}
+                    <li>
+                        <span>{{comment.created_date}}</span>
+                        <span class="rating">
+
+
+                            {% for star in comment.getStar %}
+                            <i class="fa fa-fw fa-star yellow"></i>
+                            {% endfor %}
+                            {% for star in comment.getNoneStar %}
+                            <i class="fa fa-fw fa-star"></i>
+                            {% endfor %}
+                        </span>
+
+
+                        <figure><img src="{{comment.course.image.url}}" alt=""></figure>
+                        <h4>{{comment.course.title}}</h4>
+                        <p>{{comment.comment}}</p>
+
+                        {% if comment.is_published == True %}
+                        <p class="inline-popups"><a onclick="changeFormAction('{{comment.course.slug}}','{{comment.pk}}')" href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray"><i class="fa fa-fw fa-reply"></i> Yanıtla</a></p>
+                        {% else %}
+                        <p><a href="{% url 'acceptCommentsRequestAdmin' comment.pk %}" class="btn_1 gray"><i
+                                    class="fa fa-check"></i> Kabul Et</a>&emsp;<a href="{% url 'deleteComingRequestAdmin' comment.pk %}" class="btn_1 gray"><i
+                                    class="fa fa-times"></i> Reddet</a></p>
+
+                        {% endif %}
+
+                    </li>
+                    
+                    {% if comment.children %}
+                       {% for child in comment.children %}
+                    <li>
+                        <span>{{child.created_date}}</span>
+                        <figure><img src="{{child.course.image.url}}" alt=""></figure>
+                        <h4>{{child.course.title}}</h4>
+                        <p>{{child.comment}}</p>
+                    </li>
+                       {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                 
+                </ul>
+                
+            </div>
+           
+        </div>
+
+        {% else %}
+                        
+        {% if type == "comments" %}
+        <br>
+            <center><p style="color: red; font-weight: bold;">Henüz siteye ekli bir yorum bulunmamaktadır</p></center>
+        {% elif type == "comingRequest" %}
+        <br>
+           <center> <p style="color: red; font-weight: bold;">Henüz bir yorum isteğiniz bulunmamaktadır</p></center>
+        {% endif %}
+            
+
+    {% endif %}
+
+        <!-- /box_general-->
+        <!-- <nav aria-label="...">
+			<ul class="pagination pagination-sm add_bottom_30">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">Previous</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav> -->
+        <!-- /pagination-->
+    </div>
+    <!-- /container-fluid-->
+</div>
+
+
+
+{% endblock contentAdmin %}
+
+
+
+
+
+
+
+
+
+
+{% block scriptsAdmin %}
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+
+
+
+
+<script>
+
+    function changeFormAction(slug,pk){
+        console.log(slug)
+        console.log(pk)
+        let form=document.getElementById("replyForm");
+        form.action="/psyc-admin/admin-yorum-yanit-ekle/"+slug+"/"+pk;
+    }
+
+
+</script>
+
+
+
+
+<!-- Custom scripts for this page-->
+{% endblock scriptsAdmin %}

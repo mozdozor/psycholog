@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+
+
+
+
+<main>
+    <!-- Slider -->
+    <div id="full-slider-wrapper">
+        <div id="layerslider" style="width:100%;height:750px;">
+            <!-- first slide -->
+            
+            {% if sliders %}
+                {% for slider in sliders %}
+                <div class="ls-slide" data-ls="slidedelay: 5000; transition2d:85;">
+                    <img src="{{slider.image.url}}" class="ls-bg" alt="Slide background">
+                    <h3 class="ls-l slide_typo" style="top: 47%; left: 50%;"
+                        data-ls="offsetxin:0;durationin:2000;delayin:1000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">
+                        {{slider.top_title}}</h3>
+                    <p class="ls-l slide_typo_2" style="top:55%; left:50%;"
+                        data-ls="durationin:2000;delayin:1000;easingin:easeOutElastic;">
+                        {{slider.bottom_title}}
+                    </p>
+                    <!-- <a class="ls-l btn_1 rounded" style="top:65%; left:50%;white-space: nowrap;"
+                        data-ls="durationin:2000;delayin:1400;easingin:easeOutElastic;" href='courses-grid.html'>Read
+                        more</a> -->
+                </div>
+                {% endfor %}
+            {% endif %}
+                
+
+
+        </div>
+    </div>
+    <!-- End layerslider -->
+
+    <div class="features clearfix">
+        <div class="container">
+            <ul>
+                <li><i class="pe-7s-study"></i>
+                    <h4>+200 courses</h4><span>Explore a variety of fresh topics</span>
+                </li>
+                <li><i class="pe-7s-cup"></i>
+                    <h4>Expert teachers</h4><span>Find the right instructor for you</span>
+                </li>
+                <li><i class="pe-7s-target"></i>
+                    <h4>Focus on target</h4><span>Increase your personal expertise</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /features -->
+
+    <div class="container-fluid margin_120_0">
+        <div class="main_title_2">
+            <span><em></em></span>
+            <h2>Udema Popular Courses</h2>
+            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+        </div>
+        <div id="reccomended" class="owl-carousel owl-theme">
+            
+            {% if courses %}
+                {% for course in courses %}
+                    <div class="item">
+                        <div class="box_grid">
+                            <figure>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="course-detail.html">
+                                    <div class="preview"><span>Preview course</span></div><img
+                                        src="{{course.image.url}}" class="img-fluid"
+                                        alt="">
+                                </a>
+                                <div class="price">{{course.price}} ₺</div>
+        
+                            </figure>
+                            <div class="wrapper">
+                                <small>{{course.category.name}}</small>
+                                <h3>{{course.title}}</h3>
+                                <p>{{course.description|truncatechars:90}}</p>
+                                <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i
+                                        class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
+                                    <small>(145)</small></div>
+                            </div>
+                            <ul>
+                                <li><i class="icon_clock_alt"></i> 1h 30min</li>
+                                <li><i class="icon_like"></i> 890</li>
+                                <li><a href="course-detail.html">Enroll now</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+                
+                
+            <!-- /item -->
+          
+        </div>
+        <!-- /carousel -->
+        <div class="container">
+            <p class="btn_home_align"><a href="courses-grid.html" class="btn_1 rounded">View all courses</a></p>
+        </div>
+        <!-- /container -->
+        <hr>
+    </div>
+    <!-- /container -->
+
+    <div class="container margin_30_95">
+        <div class="main_title_2">
+            <span><em></em></span>
+            <h2>Udema Categories Courses</h2>
+            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+        </div>
+        <div class="row">
+
+
+            
+            {% for category in categories %}
+                <div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+                    <a href="#0" class="grid_item">
+                        <figure class="block-reveal">
+                            <div class="block-horizzontal"></div>
+                            <img src="{{category.image.url}}" class="img-fluid" alt="">
+                            <div class="info">
+                                <small><i class="ti-layers"></i>{{category.countCourseOfCategory}} kurs</small>
+                                <h3>{{category.name}}</h3>
+                            </div>
+                        </figure>
+                    </a>
+                </div>
+            {% endfor %}
+                
+            <!-- /grid_item -->
+         
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+
+    <div class="bg_color_1">
+        <div class="container margin_120_95">
+            <div class="main_title_2">
+                <span><em></em></span>
+                <h2>News and Events</h2>
+                <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <a class="box_news" href="#0">
+                        <figure><img src="http://via.placeholder.com/500x333/ccc/fff/news_home_1.jpg" alt="">
+                            <figcaption><strong>28</strong>Dec</figcaption>
+                        </figure>
+                        <ul>
+                            <li>Mark Twain</li>
+                            <li>20.11.2017</li>
+                        </ul>
+                        <h4>Pri oportere scribentur eu</h4>
+                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
+                            ullum vidisse....</p>
+                    </a>
+                </div>
+                <!-- /box_news -->
+                <div class="col-lg-6">
+                    <a class="box_news" href="#0">
+                        <figure><img src="http://via.placeholder.com/500x333/ccc/fff/news_home_2.jpg" alt="">
+                            <figcaption><strong>28</strong>Dec</figcaption>
+                        </figure>
+                        <ul>
+                            <li>Jhon Doe</li>
+                            <li>20.11.2017</li>
+                        </ul>
+                        <h4>Duo eius postea suscipit ad</h4>
+                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
+                            ullum vidisse....</p>
+                    </a>
+                </div>
+                <!-- /box_news -->
+                <div class="col-lg-6">
+                    <a class="box_news" href="#0">
+                        <figure><img src="http://via.placeholder.com/500x333/ccc/fff/news_home_3.jpg" alt="">
+                            <figcaption><strong>28</strong>Dec</figcaption>
+                        </figure>
+                        <ul>
+                            <li>Luca Robinson</li>
+                            <li>20.11.2017</li>
+                        </ul>
+                        <h4>Elitr mandamus cu has</h4>
+                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
+                            ullum vidisse....</p>
+                    </a>
+                </div>
+                <!-- /box_news -->
+                <div class="col-lg-6">
+                    <a class="box_news" href="#0">
+                        <figure><img src="http://via.placeholder.com/500x333/ccc/fff/news_home_4.jpg" alt="">
+                            <figcaption><strong>28</strong>Dec</figcaption>
+                        </figure>
+                        <ul>
+                            <li>Paula Rodrigez</li>
+                            <li>20.11.2017</li>
+                        </ul>
+                        <h4>Id est adhuc ignota delenit</h4>
+                        <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse
+                            ullum vidisse....</p>
+                    </a>
+                </div>
+                <!-- /box_news -->
+            </div>
+            <!-- /row -->
+            <p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">View all news</a></p>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /bg_color_1 -->
+
+    <div class="call_section">
+        <div class="container clearfix">
+            <div class="col-lg-5 col-md-6 float-right wow" data-wow-offset="250">
+                <div class="block-reveal">
+                    <div class="block-vertical"></div>
+                    <div class="box_1">
+                        <h3>Enjoy a great students community</h3>
+                        <p>Ius cu tamquam persequeris, eu veniam apeirian platonem qui, id aliquip voluptatibus pri. Ei
+                            mea primis ornatus disputationi. Menandri erroribus cu per, duo solet congue ut. </p>
+                        <a href="#0" class="btn_1 rounded">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/call_section-->
+</main>
+<!-- /main -->
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+{% block jsFiles %}
+    
+
+
+<!-- COMMON SCRIPTS -->
+<script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'assets/js/common_scripts.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/validate.js' %}"></script>
+
+<!-- SPECIFIC SCRIPTS -->
+<script src="{% static 'assets/layerslider/js/greensock.js' %}"></script>
+<script src="{% static 'assets/layerslider/js/layerslider.transitions.js' %}"></script>
+<script src="{% static 'assets/layerslider/js/layerslider.kreaturamedia.jquery.js' %}"></script>
+<script type="text/javascript">
+    'use strict';
+    $('#layerslider').layerSlider({
+        autoStart: true,
+        navButtons: false,
+        navStartStop: false,
+        showCircleTimer: false,
+        responsive: true,
+        responsiveUnder: 1280,
+        layersContainer: 1200,
+        skinsPath: "{% static 'assets/layerslider/skins/' %}"
+            // Please make sure that you didn't forget to add a comma to the line endings
+            // except the last line!
+    });
+</script>
+
+
+{% endblock jsFiles %}

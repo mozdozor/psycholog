@@ -1,0 +1,2 @@
+kullanıcıc yorum isteği yada yeni bir alım gerçekleştirdiğinde bildirim modeli oluştur vr özel mesaj ekle.
+dajngo seo araştır

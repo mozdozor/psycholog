@@ -1,0 +1,157 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Udema a modern educational site template">
+    <meta name="author" content="Ansonika">
+    <title>UDEMA | Modern Educational site template</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon"
+        href="{% static 'assets/img/apple-touch-icon-57x57-precomposed.png' %}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72"
+        href="{% static 'assets/img/apple-touch-icon-72x72-precomposed.png' %}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114"
+        href="{% static 'assets/img/apple-touch-icon-114x114-precomposed.png' %}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144"
+        href="{% static 'assets/img/apple-touch-icon-144x144-precomposed.png' %}">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/vendors.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/icon_fonts/css/all_icons.min.css' %}" rel="stylesheet">
+
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="register_bg">
+
+    <nav id="menu" class="fake_menu"></nav>
+
+    <div id="preloader">
+        <div data-loader="circle-side"></div>
+    </div>
+    <!-- End Preload -->
+
+    <div id="login">
+        <aside>
+            <figure>
+                <a href="{% url 'index' %}"><img src="{% static 'assets/img/logo.png' %}" width="149" height="42"
+                        data-retina="true" alt=""></a>
+            </figure>
+
+            {% if form.errors %}
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <center><strong>{{ error|escape }}</strong></center>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <center><strong>{{ error|escape }}</strong></center>
+            </div>
+            {% endfor %}
+            {% else %}
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+
+                {% if message.tags == "error" %}
+                <div class="alert alert-danger" role="alert">
+
+                    <center><strong>{{message}}</strong></center>
+                </div>
+                {% else %}
+                <div class="alert alert-success" role="alert">
+
+                    <center><strong>{{message}}</strong></center>
+                </div>
+                {% endif %}
+
+
+
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endif %}
+
+
+            <form action="{% url 'registerUser' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+
+                    {% for field in form.visible_fields %}
+                    <span class="input">
+                        {{field}}
+                        <label class="input_label">
+                            <span class="input__label-content">{{field.label}}</span>
+                        </label>
+
+                    </span>
+                    {% if field.name == "password1" %}
+                    <ul style="list-style-type:square">
+                        <li>Parolanız diğer kişisel bilgileriniz ile çok benzer olamaz.</li>
+                        <li>Parolanız en az 8 karakter içermek zorundadır.</li>
+                        <li>Parolanız yaygın olarak kullanılan bir parola olamaz.</li>
+                        <li>Parolanız tamamıyla sayısal olamaz.</li>
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+
+
+                    <div id="pass-info" class="clearfix"></div>
+                </div>
+
+                <button type="submit" class="btn_1 rounded full-width add_top_30">Kayıt Ol</button>
+                <div class="text-center add_top_10">Hesabınız Var mı? <strong><a href="{% url 'login' %}">Giriş
+                            Yap</a></strong></div>
+            </form>
+            <div class="copy">© 2022 Udema</div>
+        </aside>
+    </div>
+    <!-- /login -->
+
+    <!-- COMMON SCRIPTS -->
+    <script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'assets/js/common_scripts.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/validate.js' %}"></script>
+
+    <!-- SPECIFIC SCRIPTS -->
+    <script src="{% static 'assets/js/pw_strenght.js' %}"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            document.getElementById("id_password1").className = "input_field";
+            document.getElementById("id_password2").className = "input_field";
+        });
+
+
+    </script>
+
+
+
+</body>
+
+</html>
