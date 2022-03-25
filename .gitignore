@@ -5,3 +5,5 @@ db.sqlite3
 media
 .env
 prod.sqlite3
+venv
+Pipfile
