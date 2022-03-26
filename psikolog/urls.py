@@ -2,7 +2,8 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from .views import (
-    index,login,logoutIndex,registerUser,changePassword,profileSettings
+    index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
+    AddFavouritesCoursesGridList
 )
 
 urlpatterns = [
@@ -16,5 +17,8 @@ urlpatterns = [
     path('sifremi-sifirla/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name="registration/password_reset_confirm.html"),name='password_reset_confirm'),
     path('sifremi-sifirla/bitti/',auth_views.PasswordResetCompleteView.as_view(template_name="registration/password_reset_complete.html"),name='password_reset_complete'),
     path('kullanici-profil-guncelle',profileSettings,name="profileSettings"),
+    path('tum-kurslar',coursesGridList,name="coursesGridList"),
+    path('favori-kurslar',favouritesCoursesGridList,name="favouritesCoursesGridList"),
+    path('favori-kurs-ekle/<int:pk>',AddFavouritesCoursesGridList,name="AddFavouritesCoursesGridList"),
 
 ]

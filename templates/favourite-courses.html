@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+{% block divFeatures %}id=page{% endblock divFeatures %}
+
+
+
+
+{% block content %}
+
+
+
+<main>
+    <section id="hero_in" class="courses">
+        <div class="wrapper">
+            <div class="container">
+                <h1 class="fadeInUp"><span></span>Favori Kurslarınız</h1>
+            </div>
+        </div>
+    </section>
+    <!--/hero_in-->
+    <div class="filters_listing sticky_horizontal">
+        <div class="container">
+            <ul class="clearfix">
+                <!-- <li>
+                    <div class="switch-field">
+                        <input type="radio" id="all" name="listing_filter" value="all" checked>
+                        <label for="all">All</label>
+                        <input type="radio" id="popular" name="listing_filter" value="popular">
+                        <label for="popular">Popular</label>
+                        <input type="radio" id="latest" name="listing_filter" value="latest">
+                        <label for="latest">Latest</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="layout_view">
+                        <a href="#0" class="active"><i class="icon-th"></i></a>
+                        <a href="courses-list.html"><i class="icon-th-list"></i></a>
+                    </div>
+                </li>
+                <li>
+                    <select name="orderby" class="selectbox">
+                        <option value="category">Category</option>
+                        <option value="category 2">Literature</option>
+                        <option value="category 3">Architecture</option>
+                        <option value="category 4">Economy</option>
+                    </select>
+                </li> -->
+            </ul>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /filters -->
+
+
+
+    <div class="container margin_60_35">
+
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+
+        {% if message.tags == "error" %}
+        <div class="alert alert-danger" role="alert">
+
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% endif %}
+
+
+
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+
+        <div class="row">
+
+
+
+            
+            {% if courses %}
+                {% for course in courses %}
+    
+             
+    
+    
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <div class="box_grid wow">
+                        <figure class="block-reveal">
+                            <div class="block-horizzontal"></div>
+                            <a style="background-color: green;" href="{% url 'AddFavouritesCoursesGridList' course.course.pk %}" class="wish_bt"></a>
+                            <a href="course-detail.html"><img src="{{course.course.image.url}}" class="img-fluid"
+                                    alt=""></a>
+                            <div class="price">{{course.course.price}} ₺</div>
+                            <div class="preview"><span>Kursu Görüntüle</span></div>
+                        </figure>
+                        <div class="wrapper">
+                            <small>{{course.course.category.name}}</small>
+                            <h3>{{course.course.title}}</h3>
+                            <p>{{course.course.description|truncatechars:85}}</p>
+                            <div class="rating">
+                                {% for star in course.course.getStar %}
+                                <i class="icon_star voted"></i>
+                                {% endfor %}
+                                {% for star in course.course.getNoneStar %}
+                                <i class="icon_star"></i>
+                                {% endfor %}
+    
+                                <small>({{course.course.getStarsWithCommentCount}})</small>
+                            </div>
+                        </div>
+                        <ul>
+                            <li><i class="icon_clock_alt"></i> 1h 30min</li>
+                            <li><i class="icon_like"></i> 890</li>
+                            <li><a href="course-detail.html">İncele</a></li>
+                        </ul>
+                    </div>
+                </div>
+    
+                {% endfor %}
+            {% endif %}
+                
+
+        </div>
+        <!-- /row -->
+        <!-- <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p> -->
+        {% if not courses %}
+        <center>
+            <div>
+                <p style="color: red;">Henüz favorilerinize eklediğiniz kurs bulunmamaktadır.</p>
+            </div>
+        </center>
+        {% endif %}
+    </div>
+    <!-- /container -->
+    <div class="bg_color_1">
+        <div class="container margin_60_35">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="#0" class="boxed_list">
+                        <i class="pe-7s-help2"></i>
+                        <h4>Need Help? Contact us</h4>
+                        <p>Cum appareat maiestatis interpretaris et, et sit.</p>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#0" class="boxed_list">
+                        <i class="pe-7s-wallet"></i>
+                        <h4>Payments and Refunds</h4>
+                        <p>Qui ea nemore eruditi, magna prima possit eu mei.</p>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#0" class="boxed_list">
+                        <i class="pe-7s-note2"></i>
+                        <h4>Quality Standards</h4>
+                        <p>Hinc vituperata sed ut, pro laudem nonumes ex.</p>
+                    </a>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /bg_color_1 -->
+</main>
+<!--/main-->
+
+
+{% endblock content %}
+
+
+
+
+{% block jsFiles %}
+
+
+
+<!-- COMMON SCRIPTS -->
+<script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'assets/js/common_scripts.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/validate.js' %}"></script>
+
+{% endblock jsFiles %}

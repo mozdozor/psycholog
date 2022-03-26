@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 
+
+
 # Create your models here.
 
     # def calculateAge(request,self):
@@ -76,6 +78,8 @@ class CommentModel(models.Model):
     @property
     def getNoneStar(self):
         return range(self.none_star)
+
+
     
 
     class Meta:
@@ -103,7 +107,12 @@ class billingCourseModel(models.Model):
     description=models.TextField()
     bottomDescription=models.TextField()
     videoCount=models.PositiveSmallIntegerField(default=0)
+    average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=0)
+    none_average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=5)
     price=models.PositiveSmallIntegerField(default=0)
+    meta_title=models.CharField(max_length=500,blank=True,null=True) 
+    meta_description=models.CharField(max_length=500,blank=True,null=True)   
+    meta_keywords=models.CharField(max_length=500,blank=True,null=True) 
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
 
@@ -134,3 +143,20 @@ class sliderModel(models.Model):
 
     def __str__(self):
         return self.top_title
+
+
+
+
+
+class favouriteCourseModel(models.Model):
+    course=models.ForeignKey("Admin.CourseModel",on_delete=models.CASCADE)
+    user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="favouriteCourses")
+
+
+    class Meta:
+        db_table="Favori_Kurslar"
+        verbose_name = "Favori Kurs"
+        verbose_name_plural = "Favori Kurslar"
+
+    def __str__(self):
+        return self.course.title

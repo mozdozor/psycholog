@@ -1,8 +1,9 @@
 from unicodedata import category
+from urllib import request
 from autoslug import AutoSlugField
 from django.db import models
 
-from psikolog.models import CustomUserModel
+from psikolog.models import CommentModel, CustomUserModel, favouriteCourseModel
 
 # Create your models here.
 
@@ -116,6 +117,8 @@ class CourseModel(models.Model):
     bottomDescription=models.TextField()
     videoCount=models.PositiveSmallIntegerField(default=0)
     price=models.PositiveSmallIntegerField(default=0)
+    average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=0)
+    none_average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=5)
     meta_title=models.CharField(max_length=500,blank=True,null=True) 
     meta_description=models.CharField(max_length=500,blank=True,null=True)   
     meta_keywords=models.CharField(max_length=500,blank=True,null=True)    
@@ -141,6 +144,22 @@ class CourseModel(models.Model):
         for i in courses:
             count+=i.videos.count()
         return count
+
+
+    @property
+    def getStar(self):
+        return range(self.average_star)
+
+
+    @property
+    def getNoneStar(self):
+        return range(self.none_average_star)
+
+    
+    @property
+    def getStarsWithCommentCount(self):
+        return CommentModel.objects.filter(is_published=True,parent=None,course=self).count()
+
 
 
 class whatWillYouLearnModel(models.Model):

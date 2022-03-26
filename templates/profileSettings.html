@@ -98,14 +98,20 @@
                 {% csrf_token %}
                 <div class="form-group">
                     {% for field in form.visible_fields %}
+                    
+                    {% if field.name != "image" %}
+                        
                     <span class="input">
                         {{field}}
                         <label class="input_label">
                             <span class="input__label-content">{{field.label_tag}}</span>
                         </label>
                     </span>
+                    {% else %}
+                   
+                    {{field}}
                     
-
+                    {% endif %}
                    
                    
                     

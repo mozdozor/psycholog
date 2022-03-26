@@ -1,8 +1,8 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from Admin.models import CategoryModel, CourseModel
 from django.contrib.auth import logout
 from psikolog.forms import registerUserForm, userSettingsProfileModelForm
-from psikolog.models import CustomUserModel, sliderModel
+from psikolog.models import CustomUserModel, favouriteCourseModel, sliderModel
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate,update_session_auth_hash,logout
@@ -141,3 +141,63 @@ def profileSettings(request):
         "form":form,
     }
     return render(request,"profileSettings.html",context)
+
+
+
+
+def coursesGridList(request):
+    selectedCategories=[]
+    selectedStars=[]
+    courses=CourseModel.objects.all()
+    categories=CategoryModel.objects.all()
+    if request.method == "POST":
+        if 'categoryName' in request.POST.keys():
+            selectedCategories=request.POST.getlist("categoryName")
+            if "all" in selectedCategories:
+                pass
+            else:
+                catId=[]
+                for i in selectedCategories:
+                    id=CategoryModel.objects.get(name=i)
+                    catId.append(id)
+                courses=courses.filter(category__in=catId)
+        if 'star' in request.POST.keys():
+            selectedStars=request.POST.getlist("star")
+            courses=courses.filter(average_star__in=selectedStars)
+    else:
+        selectedCategories.append("all")
+    context={
+        "courses":courses,
+        "categories":categories,
+        "allCoursesCount":CourseModel.objects.all().count(),
+        "selectedCategories":selectedCategories,
+        "selectedStars":selectedStars
+    }
+    return render(request,"courses-grid-sidebar.html",context)
+
+
+
+
+@login_required(login_url="login")
+def favouritesCoursesGridList(request):
+    courses=request.user.favouriteCourses.all()
+    context={
+        "courses":courses,
+    }
+    return render(request,"favourite-courses.html",context)
+
+
+
+
+@login_required(login_url="login")
+def AddFavouritesCoursesGridList(request,pk):
+    course=get_object_or_404(CourseModel,pk=pk)
+    is_exist=favouriteCourseModel.objects.filter(course=course,user=request.user)
+    if is_exist:
+        is_exist.all().delete()
+        messages.error(request,"Kurs favorilerinizden kaldırılmıştır")
+    else:
+        favouriteCourseModel.objects.create(user=request.user,course=course)
+        messages.success(request,"Kurs favorilerinize başarıyla eklenmiştir")
+    return redirect("favouritesCoursesGridList")
+
