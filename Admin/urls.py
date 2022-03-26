@@ -53,5 +53,6 @@ urlpatterns = [
     path('admin-tum-sliderlar',listSlidersAdmin,name="listSlidersAdmin"),
     path('admin-slider-ekle',createSliderModelAdmin,name="createSliderModelAdmin"),
     path('admin-slider-sil/<int:pk>',deleteSliderAdmin,name="deleteSliderAdmin"),
+    
 
 ]
