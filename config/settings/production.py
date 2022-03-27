@@ -6,7 +6,7 @@ from .base import *
 
 
 
-ALLOWED_HOSTS = ["aydoganss.com","127.0.0.1","3.86.35.163"]
+ALLOWED_HOSTS = ["aydoganss.com","www.aydoganss.com","127.0.0.1","44.202.157.83"]
 
 
 # SECURITY WARNING: don't run with debug turned on in production! 
