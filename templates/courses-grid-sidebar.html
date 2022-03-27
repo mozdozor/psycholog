@@ -187,7 +187,7 @@
 											style="background-color: green;"
 											{% endif %}
 												  href="{% url 'AddFavouritesCoursesGridList' course.pk %}" class="wish_bt"></a>
-											<a href="course-detail.html"><img src="{{course.image.url}}" class="img-fluid" alt=""></a>
+											<a href="{% url 'courseDetail' course.slug %}"><img src="{{course.image.url}}" class="img-fluid" alt=""></a>
 											<div class="price">{{course.price}} ₺</div>
 											<div class="preview"><span>Kursu Görüntüle</span></div>
 										</figure>
@@ -210,7 +210,7 @@
 										<ul>
 											<li><i class="icon_clock_alt"></i> 1h 30min</li>
 											<li><i class="icon_like"></i> 890</li>
-											<li><a href="course-detail.html">İncele</a></li>
+											<li><a href="{% url 'courseDetail' course.slug %}">İncele</a></li>
 										</ul>
 									</div>
 								</div>

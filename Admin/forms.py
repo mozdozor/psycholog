@@ -33,7 +33,7 @@ class categoryModelForm(forms.ModelForm):
 class CourseModelForm(forms.ModelForm):
     class Meta:
         model = CourseModel
-        exclude=("videoCount","created_date","updated_date",)
+        exclude=("videoCount","created_date","updated_date","average_star","none_average_star")
         widgets = {
             "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title","required":"required"}),
             "author" : forms.Select(attrs={"class":"form-control select","name":"author","required":"required"}),

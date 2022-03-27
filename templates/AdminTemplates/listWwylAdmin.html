@@ -24,40 +24,40 @@
     </ol>
 
 
-   
+
 
 
     {% if messages %}
     <ul class="messages">
       {% for message in messages %}
-  
+
       {% if message.tags == "error" %}
       <div class="alert alert-danger" role="alert">
-  
+
         <center><strong>{{message}}</strong></center>
       </div>
       {% else %}
       <div class="alert alert-success" role="alert">
-  
+
         <center><strong>{{message}}</strong></center>
       </div>
       {% endif %}
-  
-  
-  
+
+
+
       {% endfor %}
     </ul>
-  {% endif %}
+    {% endif %}
 
 
 
     <!-- Example DataTables Card-->
-    <div  class="card mb-3">
+    <div class="card mb-3">
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Öğrenecekleriniz
         <div style="float: right;">
-            <a  href="{% url 'courseDetailAdmin' pk=courseId %}" type="button" class="btn btn-warning">Kurs Detay</a>&emsp;
-          <a  href="{% url 'wwylAddAdmin' %}?courseId={{courseId}}" type="button" class="btn btn-warning">Ekle</a>
+          <a href="{% url 'courseDetailAdmin' pk=courseId %}" type="button" class="btn btn-warning">Kurs Detay</a>&emsp;
+          <a href="{% url 'wwylAddAdmin' %}?courseId={{courseId}}" type="button" class="btn btn-warning">Ekle</a>
         </div>
       </div>
 
@@ -68,7 +68,7 @@
               <tr style="font-weight: bold; color: black;">
                 <th>Bağıl Kurs Adı</th>
                 <th>İsim</th>
-                <th>Açıklama</th>
+                <th width="50%">Açıklama</th>
                 <th>İşlemler</th>
               </tr>
             </thead>
@@ -78,10 +78,14 @@
                 <td>{{cat.course.title}}</td>
                 <td>{{cat.title}}</td>
                 <td>{{cat.description}}</td>
-               
+
                 <td>
-                  <center><a href="{% url 'wwylAddAdmin' %}?ogrenId={{cat.pk}}&courseId={{cat.course.pk}}" type="button" class="btn btn-primary btn-xs">Düzenle</a>&emsp;&emsp;&emsp;
-                    <a type="button" class="btn btn-danger btn-xs" href="{% url 'deleteWwylAdmin' cat.pk %}">Sil</a></center>
+                  <center>
+                    <div style="display: inline-block; "><a href="{% url 'wwylAddAdmin' %}?ogrenId={{cat.pk}}&courseId={{cat.course.pk}}" type="button"
+                        class="btn btn-primary btn-xs">Düzenle</a>&emsp;
+                      <a type="button" class="btn btn-danger btn-xs" href="{% url 'deleteWwylAdmin' cat.pk %}">Sil</a>
+                    </div>
+                  </center>
                 </td>
 
               </tr>

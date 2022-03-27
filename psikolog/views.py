@@ -201,3 +201,16 @@ def AddFavouritesCoursesGridList(request,pk):
         messages.success(request,"Kurs favorilerinize başarıyla eklenmiştir")
     return redirect("favouritesCoursesGridList")
 
+
+
+
+
+@login_required(login_url="login")
+def courseDetail(request,slug):
+    course=get_object_or_404(CourseModel,slug=slug)
+    context={
+        "course":course,
+    }
+    return render(request,"course-detail.html",context)
+
+

@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 
 from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
-    AddFavouritesCoursesGridList
+    AddFavouritesCoursesGridList,courseDetail
 )
 
 urlpatterns = [
@@ -20,5 +20,6 @@ urlpatterns = [
     path('tum-kurslar',coursesGridList,name="coursesGridList"),
     path('favori-kurslar',favouritesCoursesGridList,name="favouritesCoursesGridList"),
     path('favori-kurs-ekle/<int:pk>',AddFavouritesCoursesGridList,name="AddFavouritesCoursesGridList"),
+    path('kurs-detay/<slug:slug>',courseDetail,name="courseDetail"),
 
 ]

@@ -6,10 +6,10 @@ from .base import *
 
 
 
-ALLOWED_HOSTS = ["aydoganss.com","127.0.0.1","54.144.236.235"]
+ALLOWED_HOSTS = ["aydoganss.com","127.0.0.1","3.86.35.163"]
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production! 
 DEBUG = False
 
 
