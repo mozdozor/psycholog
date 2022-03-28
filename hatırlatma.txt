@@ -1,2 +1,11 @@
 kullanıcıc yorum isteği yada yeni bir alım gerçekleştirdiğinde bildirim modeli oluştur vr özel mesaj ekle.
-dajngo seo araştır
+logo ekle dinamic
+siteye giriş admin ekle
+footer türkçeleştir 
+footer ütü kaldır
+linkler doğru verilsin footer
+menüler yönlensin
+footer linkler
+sayfaların tepelerindeki imageler gelmişmi bak messesla kurslar sayfasında arka plan image ı en üstte yazının altında
+lorem ipsumlar kalksın yerine doğru bilgiler gelsin
+amazonda collect statics yap

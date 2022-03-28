@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from Admin.models import CategoryModel, CourseModel
 from django.contrib.auth import logout
 from psikolog.forms import registerUserForm, userSettingsProfileModelForm
-from psikolog.models import CustomUserModel, favouriteCourseModel, sliderModel
+from psikolog.models import CustomUserModel, billingCourseModel, favouriteCourseModel, sliderModel
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate,update_session_auth_hash,logout
@@ -205,7 +205,6 @@ def AddFavouritesCoursesGridList(request,pk):
 
 
 
-@login_required(login_url="login")
 def courseDetail(request,slug):
     course=get_object_or_404(CourseModel,slug=slug)
     context={
@@ -214,3 +213,31 @@ def courseDetail(request,slug):
     return render(request,"course-detail.html",context)
 
 
+
+
+
+
+@login_required(login_url="login")
+def learningContentList(request):
+    courses=billingCourseModel.objects.filter(payment_user=request.user)
+    context={
+        "courses":courses,
+    }
+    return render(request,"learning-content.html",context)
+
+
+
+
+
+def aboutUs(request):
+    context={
+    }
+    return render(request,"about.html",context)
+
+
+
+
+def contact(request):
+    context={
+    }
+    return render(request,"contacts.html",context)
