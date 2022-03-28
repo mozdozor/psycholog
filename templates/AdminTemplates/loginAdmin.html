@@ -1,4 +1,6 @@
 {% load static %}
+{% load adminLogo %}
+{% getAdminLogo as adminLogoSite %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +48,7 @@
 	<div id="login">
 		<aside>
 			<figure>
-				<a href="index.html"><img src="{% static 'assets/img/logo.png' %}" width="149" height="42" data-retina="true" alt=""></a>
+				<a href="index.html"><img src="{{adminLogoSite.image.url}}" width="149" height="42" data-retina="true" alt=""></a>
 			</figure>
 			  <form method="POST" action="{% url 'loginAdmin' %}">
 				{% csrf_token %}
@@ -85,7 +87,7 @@
 				<button type="submit" class="btn_1 rounded full-width add_top_60">Giriş Yap</button>
 				<!-- <div class="text-center add_top_10">Burada yeni? <strong><a href="register.html">Sign up!</a></strong></div> -->
 			</form>
-			<div class="copy">© 2022 Udema</div>
+			<div class="copy">© 2022 TURKAZE</div>
 		</aside>
 	</div>
 	<!-- /login -->
