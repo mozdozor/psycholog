@@ -56,8 +56,8 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Öğrenecekleriniz
         <div style="float: right;">
-          <a href="{% url 'courseDetailAdmin' pk=courseId %}" type="button" class="btn btn-warning">Kurs Detay</a>&emsp;
-          <a href="{% url 'wwylAddAdmin' %}?courseId={{courseId}}" type="button" class="btn btn-warning">Ekle</a>
+          <a href="{% url 'courseDetailAdmin' pk=course.pk %}" type="button" class="btn btn-warning">Kurs Detay</a>&emsp;
+          <a href="{% url 'wwylAddAdmin' %}?courseId={{course.pk}}" type="button" class="btn btn-warning">Ekle</a>
         </div>
       </div>
 

@@ -315,24 +315,19 @@ def deleteCourseAdmin(request,pk):
 
 
 
-currentCourseId=""
 
 
 
 
 @permission_required('is_staff',login_url="loginAdmin")
-def wwylListAdmin(request):
-    courseId=request.GET.get("courseId",None)
-    currentCourseId=courseId
-    wwyl=whatWillYouLearnModel.objects.filter(course_id=currentCourseId)
-    if courseId:
-        pass
-    else:
-        if wwyl.count()>0:
-            courseId=wwyl.first().course.pk
+def wwylListAdmin(request,slug):
+    course=get_object_or_404(CourseModel,slug=slug)
+    wwyl=whatWillYouLearnModel.objects.filter(course=course)
+ 
     context={
         "wwyl":wwyl,
-        "courseId":currentCourseId
+        "course":course,
+        
     }
     return render(request,"AdminTemplates/listWwylAdmin.html",context)
 
@@ -343,7 +338,6 @@ def wwylListAdmin(request):
 def wwylAddAdmin(request):
     wwyl=""
     courseId=request.GET.get("courseId",None)
-    currentCourseId=courseId
     ogrenId=request.GET.get("ogrenId",None)
     if request.method == "POST":   
         if ogrenId:
@@ -358,11 +352,11 @@ def wwylAddAdmin(request):
             com.save()
             messages.success(request,"Öğrencekleriniz modeli başarıyla kaydedildi.")
             domainName="http"+request.META['HTTP_HOST']+"?courseId="+courseId
-            return redirect("wwylListAdmin")
+            return redirect("wwylListAdmin",course.slug)
         else:
             messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
             domainName=request.META['HTTP_HOST']+"?courseId="+courseId
-            return redirect("wwylListAdmin")
+            return redirect("wwylListAdmin",course.slug)
     if ogrenId:
         wwyl=get_object_or_404(whatWillYouLearnModel,pk=ogrenId)
         form = whatWillYouLearnModelForm(instance=wwyl)

@@ -95,7 +95,7 @@
 
                             
 						<ul class="buttons">
-                            <li><a href="{% url 'wwylListAdmin' %}?courseId={{course.pk}}" class="btn_1 gray approve">Öğrenecekleriniz Ekle/Çıkar</a></li>
+                            <li><a href="{% url 'wwylListAdmin' course.slug %}" class="btn_1 gray approve">Öğrenecekleriniz Ekle/Çıkar</a></li>
 							 <li><a href="{% url 'courseAddAdmin' %}?courseId={{course.pk}}" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Düzenle</a></li> 
 							<li><a href="#" onclick="deleteObject('{{course.pk}}')" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Sil</a></li>
 						</ul>
