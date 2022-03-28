@@ -5,11 +5,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-
-from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, whatWillYouLearnModelForm
+from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, logoModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, PageModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, notificationModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, notificationModel, topMenuModel, whatWillYouLearnModel
 
 
 
@@ -316,11 +315,16 @@ def deleteCourseAdmin(request,pk):
 
 
 
+currentCourseId=""
+
+
+
 
 @permission_required('is_staff',login_url="loginAdmin")
 def wwylListAdmin(request):
     courseId=request.GET.get("courseId",None)
-    wwyl=whatWillYouLearnModel.objects.filter(course_id=courseId)
+    currentCourseId=courseId
+    wwyl=whatWillYouLearnModel.objects.filter(course_id=currentCourseId)
     if courseId:
         pass
     else:
@@ -328,7 +332,7 @@ def wwylListAdmin(request):
             courseId=wwyl.first().course.pk
     context={
         "wwyl":wwyl,
-        "courseId":courseId
+        "courseId":currentCourseId
     }
     return render(request,"AdminTemplates/listWwylAdmin.html",context)
 
@@ -339,6 +343,7 @@ def wwylListAdmin(request):
 def wwylAddAdmin(request):
     wwyl=""
     courseId=request.GET.get("courseId",None)
+    currentCourseId=courseId
     ogrenId=request.GET.get("ogrenId",None)
     if request.method == "POST":   
         if ogrenId:
@@ -352,9 +357,11 @@ def wwylAddAdmin(request):
             com.course=course
             com.save()
             messages.success(request,"Öğrencekleriniz modeli başarıyla kaydedildi.")
+            domainName="http"+request.META['HTTP_HOST']+"?courseId="+courseId
             return redirect("wwylListAdmin")
         else:
             messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            domainName=request.META['HTTP_HOST']+"?courseId="+courseId
             return redirect("wwylListAdmin")
     if ogrenId:
         wwyl=get_object_or_404(whatWillYouLearnModel,pk=ogrenId)
@@ -789,3 +796,45 @@ def deleteSliderAdmin(request,pk):
     obj.delete()
     messages.success(request,"Slider başarıyla silindi")
     return redirect(request.META['HTTP_REFERER']) 
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def listLogoAdmin(request):
+    logo=LogoModel.objects.all()
+    if logo:
+        print("logo var")
+       
+    else:
+        logo=LogoModel.objects.create(name="Udema")
+        print("logo yok")
+    context={
+        "logo":logo,
+    }
+    return render(request,"AdminTemplates/listLogoAdmin.html",context)
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def updateLogoAdmin(request):
+    logo=LogoModel.objects.all().first()
+    if request.method == "POST":   
+        form = logoModelForm(request.POST or None,request.FILES or None,instance=logo)	
+        if form.is_valid(): 
+            form.save()
+            messages.success(request,"Logo başarıyla kaydedildi.")
+            return redirect("listLogoAdmin")
+        else:
+            messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            return redirect("listLogoAdmin")
+    form = logoModelForm(instance=logo)
+    context={
+        "form":form,
+        
+    }
+    return render(request,"AdminTemplates/addLogoAdmin.html",context)

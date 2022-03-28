@@ -10,3 +10,4 @@ sayfaların tepelerindeki imageler gelmişmi bak messesla kurslar sayfasında ar
 lorem ipsumlar kalksın yerine doğru bilgiler gelsin
 amazonda collect statics yap
 kurs ve bölüm kısımlarına sıra ekle
+listelemelerin hepsinde order by yap

@@ -3,7 +3,7 @@ from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea
 
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, PageModel, courseSessionModel, courseSessionVideoModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, LogoModel, PageModel, courseSessionModel, courseSessionVideoModel, whatWillYouLearnModel
 
 
 
@@ -150,4 +150,19 @@ class CommentModelForm(forms.ModelForm):
         fields=("comment",)
         widgets = {           
             "comment" : Textarea(attrs={"class":"form-control","cols":"40","rows":"3"}),          
+        }
+
+
+
+
+class logoModelForm(forms.ModelForm):
+    class Meta:
+        model = LogoModel
+        fields=("__all__")
+        widgets = {           
+            "name" : TextInput(attrs={"class":"form-control","type":"text","name":"name"}), 
+        }
+        labels = {      
+            'name': "Logo Adı",
+            'image': "Logo Fotoğrafı",
         }

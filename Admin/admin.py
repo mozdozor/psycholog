@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from Admin.models import CategoryModel, CourseModel, IletisimModel, PageModel, bottomMenuModel, courseFeaturesModel, courseSessionModel, courseSessionVideoModel, notificationModel, topMenuModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, bottomMenuModel, courseFeaturesModel, courseSessionModel, courseSessionVideoModel, notificationModel, topMenuModel, whatWillYouLearnModel
 
 # Register your models here.
 
@@ -18,3 +18,4 @@ admin.site.register(PageModel)
 admin.site.register(notificationModel)
 admin.site.register(CategoryModel)
 admin.site.register(whatWillYouLearnModel)
+admin.site.register(LogoModel)

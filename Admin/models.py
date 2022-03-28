@@ -275,3 +275,21 @@ class notificationModel(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+
+
+
+class LogoModel(models.Model):
+    name=models.CharField(max_length=500,blank=True,null=True) 
+    image=models.ImageField(upload_to="logoImages",default='logo/logo.png')    
+    
+    class Meta:
+        db_table="logoModel"
+        verbose_name ="Logo Modeli"  
+        verbose_name_plural ="Logo Modelleri"
+
+    def __str__(self):
+        return self.name

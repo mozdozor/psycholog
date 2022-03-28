@@ -8,7 +8,7 @@ from .views import (
     sessionVideoAddAdmin,deleteSessionVideoAdmin,profileSettingsAdmin,changePasswordAdmin,commentsAdmin,
     commentsRequestAdmin,acceptCommentsRequestAdmin,deleteComingRequestAdmin,showPagesAdmin,createPageModelAdmin,
     deletePageModelAdmin,userListAdmin,addReplyCommentAdmin,listNotificationsAdmin,deleteNotificationsAdmin,
-    listBillingsAdmin,listSlidersAdmin,createSliderModelAdmin,deleteSliderAdmin
+    listBillingsAdmin,listSlidersAdmin,createSliderModelAdmin,deleteSliderAdmin,listLogoAdmin,updateLogoAdmin
     
 )
 
@@ -53,6 +53,8 @@ urlpatterns = [
     path('admin-tum-sliderlar',listSlidersAdmin,name="listSlidersAdmin"),
     path('admin-slider-ekle',createSliderModelAdmin,name="createSliderModelAdmin"),
     path('admin-slider-sil/<int:pk>',deleteSliderAdmin,name="deleteSliderAdmin"),
+    path('admin-logo-listele',listLogoAdmin,name="listLogoAdmin"),
+    path('admin-logo-guncelle',updateLogoAdmin,name="updateLogoAdmin"),
     
 
 ]
