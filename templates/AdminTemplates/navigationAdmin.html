@@ -164,11 +164,12 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
+        <a href="{% url 'index' %}" class="btn btn-light">Anasayfa</a>&emsp;&emsp;
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-envelope"></i>
             <span class="d-lg-none">Yeni Mesajlar
-              <span class="badge badge-pill badge-primary">12 New</span>
+              <span class="badge badge-pill badge-primary"></span>
             </span>
            
            {% if newMessages %}
@@ -206,8 +207,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
-            <span class="d-lg-none">eni Bildirimler
-              <span class="badge badge-pill badge-warning">6 New</span>
+            <span class="d-lg-none">Yeni Bildirimler
+              <span class="badge badge-pill badge-warning"></span>
             </span>
 
             
