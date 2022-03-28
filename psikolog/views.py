@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from Admin.models import CategoryModel, CourseModel
+from Admin.models import CategoryModel, CourseModel, courseSessionModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import registerUserForm, userSettingsProfileModelForm
 from psikolog.models import CustomUserModel, billingCourseModel, favouriteCourseModel, sliderModel
@@ -207,8 +207,12 @@ def AddFavouritesCoursesGridList(request,pk):
 
 def courseDetail(request,slug):
     course=get_object_or_404(CourseModel,slug=slug)
+    learns=whatWillYouLearnModel.objects.filter(course=course).order_by("created_date")
+    sessions=courseSessionModel.objects.filter(course=course).order_by("created_date")
     context={
         "course":course,
+        "learns":learns,
+        "sessions":sessions
     }
     return render(request,"course-detail.html",context)
 

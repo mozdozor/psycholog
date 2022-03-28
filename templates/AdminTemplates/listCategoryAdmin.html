@@ -67,7 +67,7 @@
               <tr style="font-weight: bold; color: black;">
                 <th>Fotoğraf</th>
                 <th>Kategori Adı</th>
-                <th>Bağlı Video Sayısı</th>
+                <th>Bağlı Kurs Sayısı</th>
                 <th>İşlemler</th>
               </tr>
             </thead>
@@ -76,7 +76,7 @@
               <tr>
                 <td><center><img style="width: 140px; height: 100px;" src="{{cat.image.url}}" alt=""></center></td>
                 <td>{{cat.name}}</td>
-                <td>{{cat.videoCount}}</td>
+                <td>{{cat.countCourseOfCategory}}</td>
                
                 <td>
                   <center><a href="{% url 'addCategoryAdmin' %}?categoryId={{cat.pk}}" type="button" class="btn btn-primary btn-xs">Düzenle</a>&emsp;&emsp;&emsp;

@@ -166,6 +166,7 @@ class whatWillYouLearnModel(models.Model):
     course=models.ForeignKey(CourseModel,on_delete=models.CASCADE,related_name="whatWillYouLearns")  
     title=models.CharField(max_length=300)
     description=models.TextField()
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
    
     class Meta:
         db_table="Ogrenecekleriniz"
@@ -195,7 +196,11 @@ class courseFeaturesModel(models.Model):
 class courseSessionModel(models.Model):
     course=models.ForeignKey(CourseModel,on_delete=models.CASCADE,related_name="sessions")  
     title=models.CharField(max_length=300)
-    
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+
+
+    def getVideos(self):
+        return courseSessionVideoModel.objects.filter(courseSession=self).order_by("created_date")
    
     class Meta:
         db_table="Kurs_Bolumleri"

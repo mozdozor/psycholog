@@ -9,3 +9,4 @@ footer linkler
 sayfaların tepelerindeki imageler gelmişmi bak messesla kurslar sayfasında arka plan image ı en üstte yazının altında
 lorem ipsumlar kalksın yerine doğru bilgiler gelsin
 amazonda collect statics yap
+kurs ve bölüm kısımlarına sıra ekle

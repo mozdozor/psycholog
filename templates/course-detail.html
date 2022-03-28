@@ -41,9 +41,9 @@
 						<h5>Neler Öğreneceksiniz</h5>
 						<ul class="list_ok">
 
-							{% if course.whatWillYouLearns.all %}
+							{% if learns %}
 
-							{% for wwyl in course.whatWillYouLearns.all %}
+							{% for wwyl in learns %}
 							<li>
 								<h6>{{wwyl.title}}</h6>
 								<p>{{wwyl.description}}</p>
@@ -91,9 +91,9 @@
 
 
 
-							{% if course.sessions.all %}
+							{% if sessions %}
 
-							{% for session in course.sessions.all %}
+							{% for session in sessions %}
 							<div class="card">
 								<div class="card-header" role="tab" id="headingOne{{session.pk}}">
 									<h5 class="mb-0">
@@ -127,9 +127,9 @@
 									<div class="card-body">
 										<div class="list_lessons">
 											<ul>
-												{% if session.videos.all %}
+												{% if session.getVideos %}
 
-												{% for video in session.videos.all %}
+												{% for video in session.getVideos %}
 												<li><a href="{{video.url}}"
 														class="video">{{video.title}}</a><span>00:59</span></li>
 

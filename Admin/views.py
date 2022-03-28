@@ -202,7 +202,7 @@ def deleteMenu(request,pk,str):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def categoryListAdmin(request):
-    categories=CategoryModel.objects.all()
+    categories=CategoryModel.objects.all().order_by("created_date")
     context={
         "categories":categories,
     }
@@ -320,7 +320,7 @@ def deleteCourseAdmin(request,pk):
 @permission_required('is_staff',login_url="loginAdmin")
 def wwylListAdmin(request):
     courseId=request.GET.get("courseId",None)
-    wwyl=whatWillYouLearnModel.objects.all()
+    wwyl=whatWillYouLearnModel.objects.filter(course_id=courseId)
     if courseId:
         pass
     else:
@@ -390,7 +390,7 @@ def deleteWwylAdmin(request,pk):
 @permission_required('is_staff',login_url="loginAdmin")
 def sessionListAdmin(request,pk):
     course=get_object_or_404(CourseModel,pk=pk)
-    sessions=courseSessionModel.objects.filter(course=course)
+    sessions=courseSessionModel.objects.filter(course=course).order_by("created_date")
     context={
         "sessions":sessions,
         "courseId":pk
