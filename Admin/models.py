@@ -162,6 +162,11 @@ class CourseModel(models.Model):
         return CommentModel.objects.filter(is_published=True,parent=None,course=self).count()
 
     
+   
+    def getCategoryName(self):
+        return self.category.name
+
+    
     def save(self, *args, **kwargs):
         self.slug = f'{self.title}'
         super().save(*args, **kwargs)

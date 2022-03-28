@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render
 from Admin.models import CategoryModel, CourseModel, courseSessionModel, whatWillYouLearnModel
 from django.contrib.auth import logout
@@ -165,7 +166,11 @@ def coursesGridList(request):
             selectedStars=request.POST.getlist("star")
             courses=courses.filter(average_star__in=selectedStars)
     else:
-        selectedCategories.append("all")
+        categoryName=request.GET.get("kategori-adi",None)
+        if categoryName:
+            courses=courses.filter(category__name=categoryName)
+        else:
+            selectedCategories.append("all")
     context={
         "courses":courses,
         "categories":categories,

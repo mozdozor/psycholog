@@ -3,7 +3,7 @@
 
 {% load static %}
 
-
+{% load is_favourite %}
 
 {% block cssFiles %}
 	<!-- SPECIFIC CSS -->
@@ -82,10 +82,13 @@
             
             {% if courses %}
                 {% for course in courses %}
+                {% isFavourite request course.pk as favourite %}
                     <div class="item">
                         <div class="box_grid">
                             <figure>
-                                <a href="#0" class="wish_bt"></a>
+                                <a {% if favourite %}
+                                style="background-color: green;"
+                                {% endif %} href="{% url 'AddFavouritesCoursesGridList' course.pk %}" class="wish_bt"></a>
                                 <a href="{% url 'courseDetail' course.slug %}">
                                     <div class="preview"><span>Kursu Görüntüle</span></div><img
                                         src="{{course.image.url}}" class="img-fluid"
@@ -139,7 +142,7 @@
             {% if categories %}
                 {% for category in categories %}
                     <div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
-                        <a href="#0" class="grid_item">
+                        <a href="{% url 'coursesGridList' %}?kategori-adi={{category.name}}" class="grid_item">
                             <figure class="block-reveal">
                                 <div class="block-horizzontal"></div>
                                 <img src="{{category.image.url}}" class="img-fluid" alt="">
