@@ -146,6 +146,7 @@ class CourseModel(models.Model):
         return count
 
 
+
     @property
     def getStar(self):
         return range(self.average_star)
@@ -159,6 +160,11 @@ class CourseModel(models.Model):
     @property
     def getStarsWithCommentCount(self):
         return CommentModel.objects.filter(is_published=True,parent=None,course=self).count()
+
+    
+    def save(self, *args, **kwargs):
+        self.slug = f'{self.title}'
+        super().save(*args, **kwargs)
 
 
 
