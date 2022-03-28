@@ -118,7 +118,7 @@
         </div>
         <!-- /carousel -->
         <div class="container">
-            <p class="btn_home_align"><a href="courses-grid.html" class="btn_1 rounded">Tüm Kursları Listele</a></p>
+            <p class="btn_home_align"><a href="{% url 'coursesGridList' %}" class="btn_1 rounded">Tüm Kursları Listele</a></p>
         </div>
         <!-- /container -->
         <hr>
@@ -135,20 +135,24 @@
 
 
             
-            {% for category in categories %}
-                <div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
-                    <a href="#0" class="grid_item">
-                        <figure class="block-reveal">
-                            <div class="block-horizzontal"></div>
-                            <img src="{{category.image.url}}" class="img-fluid" alt="">
-                            <div class="info">
-                                <small><i class="ti-layers"></i>{{category.countCourseOfCategory}} kurs</small>
-                                <h3>{{category.name}}</h3>
-                            </div>
-                        </figure>
-                    </a>
-                </div>
-            {% endfor %}
+            
+            {% if categories %}
+                {% for category in categories %}
+                    <div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+                        <a href="#0" class="grid_item">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <img src="{{category.image.url}}" class="img-fluid" alt="">
+                                <div class="info">
+                                    <small><i class="ti-layers"></i>{{category.countCourseOfCategory}} kurs</small>
+                                    <h3>{{category.name}}</h3>
+                                </div>
+                            </figure>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+                
                 
             <!-- /grid_item -->
          
