@@ -4,6 +4,9 @@ from autoslug import AutoSlugField
 from django.db import models
 
 from psikolog.models import CommentModel, CustomUserModel, favouriteCourseModel
+from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 
@@ -113,8 +116,8 @@ class CourseModel(models.Model):
     title=models.CharField(max_length=300)
     slug=AutoSlugField(populate_from="title",unique=True,blank=True,null=True)  
     category=models.ForeignKey(CategoryModel,on_delete=models.CASCADE,related_name="courses")  
-    description=models.TextField()
-    bottomDescription=models.TextField()
+    description=RichTextUploadingField(blank=False,null=False)
+    bottomDescription=RichTextUploadingField(blank=False,null=False)
     videoCount=models.PositiveSmallIntegerField(default=0)
     price=models.PositiveSmallIntegerField(default=0)
     average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=0)

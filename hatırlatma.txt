@@ -1,13 +1,12 @@
 kullanıcıc yorum isteği yada yeni bir alım gerçekleştirdiğinde bildirim modeli oluştur vr özel mesaj ekle.
-logo ekle dinamic
-siteye giriş admin ekle
-footer türkçeleştir 
-footer ütü kaldır
 linkler doğru verilsin footer
-menüler yönlensin
-footer linkler
-sayfaların tepelerindeki imageler gelmişmi bak messesla kurslar sayfasında arka plan image ı en üstte yazının altında
-lorem ipsumlar kalksın yerine doğru bilgiler gelsin
-amazonda collect statics yap
 kurs ve bölüm kısımlarına sıra ekle
 listelemelerin hepsinde order by yap
+admin panel butonları küçült
+aynı anda kategori ekle kısmına bak
+
+pip install req.. yap proddta
+
+
+
+

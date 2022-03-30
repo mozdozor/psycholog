@@ -1,5 +1,6 @@
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render
+from Admin.forms import CommentModelForm
 from Admin.models import CategoryModel, CourseModel, courseSessionModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import registerUserForm, userSettingsProfileModelForm
@@ -211,6 +212,7 @@ def AddFavouritesCoursesGridList(request,pk):
 
 
 def courseDetail(request,slug):
+    form=CommentModelForm()
     course=get_object_or_404(CourseModel,slug=slug)
     learns=whatWillYouLearnModel.objects.filter(course=course).order_by("created_date")
     sessions=courseSessionModel.objects.filter(course=course).order_by("created_date")
@@ -219,6 +221,39 @@ def courseDetail(request,slug):
         "learns":learns,
         "sessions":sessions
     }
+    # if request.method == "POST":
+    #     form=CommentModelForm(data=request.POST)
+    #     if form.is_valid():    
+    #         data=form.save(commit=False)
+    #         data.comment_user=request.user
+    #         data.course=course
+    #         data.none_star=5-data.star
+    #         if len(data.comment)<130:
+    #             lenData=130-len(data.comment)
+    #             for i in range(lenData):
+    #                 data.comment+=" "
+    #         data.save()
+    #         comments=CommentModel.objects.filter(doctor=doctor,parent=None,is_published=True)
+    #         if data.parent is None:
+    #             average_star=comments.aggregate(Avg('star'))
+    #             if average_star["star__avg"] != None:
+    #                 average_star=int(math.ceil(average_star["star__avg"]))
+    #             else:
+    #                 average_star=0
+    #             doctor.average_star=average_star
+    #             none_average_star=5-doctor.average_star 
+    #             doctor.none_average_star=none_average_star
+    #             doctor.parent_comments_count=comments.count()
+    #         doctor.save()
+    #         if doctor==request.user:
+    #             messages.success(request,"Yorumunuz başarılı bir şekilde eklenmiştir.",extra_tags="addingcomment")
+    #         else:
+    #             messages.success(request,"Yorumunuz onaylandıktan sonra sitemize eklenecektir.",extra_tags="addingcomment")
+    #         return redirect("showDoctorProfile",slug=slug)
+            
+    #     else:
+    #         messages.error(request,"Yorumunuz onaylandıktansss sonra sitemize eklenecektir.",extra_tags="addingcomment")
+    #         return redirect("showDoctorProfile",slug=slug)
     return render(request,"course-detail.html",context)
 
 

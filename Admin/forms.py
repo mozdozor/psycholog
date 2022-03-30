@@ -9,8 +9,6 @@ from .models import CategoryModel, CourseModel, LogoModel, PageModel, courseSess
 
 
 
-
-
 class categoryModelForm(forms.ModelForm):
     class Meta:
         model = CategoryModel

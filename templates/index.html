@@ -100,7 +100,7 @@
                             <div class="wrapper">
                                 <small>{{course.category.name}}</small>
                                 <h3>{{course.title}}</h3>
-                                <p>{{course.description|truncatechars:90}}</p>
+                                <p>{{course.description|safe|truncatechars:90}}</p>
                                 <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i
                                         class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
                                     <small>(145)</small></div>

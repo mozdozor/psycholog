@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'psikolog',
     'Admin',
     'storages',
+    'ckeditor',
     'django_cleanup.apps.CleanupConfig', # should be placed after your apps
 ]
 
@@ -95,12 +96,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+
+# STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS=[
     BASE_DIR / "static"
 ]
-#STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
 MEDIA_URL="/media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media/")  
 
@@ -115,14 +118,28 @@ AUTH_USER_MODEL = 'psikolog.CustomUserModel'
 
 
 
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+    },
+}
+
+
+
+
+
+
+
+
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')  
 EMAIL_PORT = '587'  
-# EMAIL_USE_SSL = True  
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_TLS = True
 
 
