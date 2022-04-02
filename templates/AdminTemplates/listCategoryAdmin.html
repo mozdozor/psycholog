@@ -56,7 +56,7 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> KATEGORİLER
         <div style="float: right;">
-          <a  href="{% url 'addCategoryAdmin' %}" type="button" class="btn btn-warning">Kategori Ekle</a>
+          <a  href="{% url 'addCategoryAdmin' %}" type="button" title="Kategori Ekle" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kategori Ekle</a>
         </div>
       </div>
 
@@ -79,8 +79,9 @@
                 <td>{{cat.countCourseOfCategory}}</td>
                
                 <td>
-                  <center><a href="{% url 'addCategoryAdmin' %}?categoryId={{cat.pk}}" type="button" class="btn btn-primary btn-xs">Düzenle</a>&emsp;&emsp;&emsp;
-                    <a href="#" type="button" onclick="deleteObject('{{cat.pk}}')" class="btn btn-danger btn-xs">Sil</a></center>
+                  
+                  <center><a href="{% url 'addCategoryAdmin' %}?categoryId={{cat.pk}}" type="button" title="Düzenle" class="btn btn-primary"><i class="fas fa-solid fa-pen-to-square"></i></a>&emsp;&emsp;&emsp;
+                    <a href="#" type="button" onclick="deleteObject('{{cat.pk}}')" title="Sil" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a></center>
                 </td>
 
               </tr>

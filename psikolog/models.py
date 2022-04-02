@@ -8,6 +8,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 
+
+
 # Create your models here.
 
     # def calculateAge(request,self):
@@ -48,7 +50,8 @@ class CustomUserModel(AbstractUser):
 
 
 class CommentModel(models.Model):
-    course=models.ForeignKey("Admin.CourseModel",on_delete=models.CASCADE,related_name="all_comments") 
+    course=models.ForeignKey("Admin.CourseModel",on_delete=models.CASCADE,related_name="all_comments",blank=True,null=True) 
+    blog=models.ForeignKey("Admin.blogModel",on_delete=models.CASCADE,related_name="blog_comments",blank=True,null=True) 
     comment_user= models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="his_comments")
     is_recommend=models.BooleanField(default=False)
     star=models.PositiveSmallIntegerField(blank=True,null=True,default=0)

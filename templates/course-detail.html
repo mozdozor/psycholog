@@ -4,9 +4,21 @@
 {% load static %}
 
 {% load is_favourite %}
+{% load getVideoInfo %}
+
+
+
+
+
 
 {% block divFeatures %} id="page" class="theia-exception" {% endblock divFeatures %}
 
+
+{% block cssFiles %}
+<link href="https://vjs.zencdn.net/7.18.1/video-js.css" rel="stylesheet" />
+<link href="{% static 'assets/css/blog.css' %}" rel="stylesheet">
+{% endblock cssFiles %}
+	
 
 {% block content %}
 
@@ -79,18 +91,29 @@
 					</section>
 					<!-- /section -->
 
+
+					
+
 					<section id="lessons">
+	
+						
+			
+
+
 						<div class="intro_title">
 							<h2>Videolar</h2>
 							<ul>
-								<li>18 lessons</li>
-								<li>01:02:10</li>
+								<li>{{course.countOfVideos}} kurs videosu</li>
+								<li>Süre?</li>
 							</ul>
 						</div>
+
+					
+
+
 						<div id="accordion_lessons" role="tablist" class="add_bottom_45">
 
-
-
+							
 							{% if sessions %}
 
 							{% for session in sessions %}
@@ -130,8 +153,28 @@
 												{% if session.getVideos %}
 
 												{% for video in session.getVideos %}
-												<li><a href="{{video.url}}"
-														class="video">{{video.title}}</a><span>00:59</span></li>
+												{% youtubeData video.url as videoDuration %}
+
+												
+												
+												{% if video.video_type == "herkes" %}
+												<li ><a style="color: green; font-weight: bold;" href="{{video.url}}"
+													class="video">{{video.title}}</a><span>{{videoDuration}}</span></li>
+												{% else %}
+													
+													{% if has_bougth == "true" %}
+													<li ><a style="color: green; font-weight: bold;" href="{{video.url}}"
+														class="video">{{video.title}}</a><span>{{videoDuration}}</span></li>
+													 {% else %}
+													 <li><a href="#"
+														class="video">{{video.title}}</a><span>{{videoDuration}}</span></li>
+													{% endif %}
+														
+												
+												{% endif %}
+													
+												
+												
 
 												{% endfor %}
 
@@ -159,6 +202,15 @@
 						<!-- /accordion -->
 					</section>
 					<!-- /section -->
+
+
+
+
+
+		
+					
+
+
 
 					<section id="reviews">
 						<h2>Yorumlar</h2>
@@ -238,25 +290,124 @@
 
 
 
+						{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+
+        {% if message.tags == "error" %}
+        <div class="alert alert-danger" role="alert">
+
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% endif %}
+
+
+
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+
+
+{% if commentStatus == "writtenBefore" %}
+	<center><p style="color: red; font-weight: bold;">Daha önceden yorum yaptığınız için başka yorum yapamazsınız</p></center>
+	<br>
+{% elif commentStatus == "pendingComment" %}
+	<center><p style="color: red; font-weight: bold;">Bekleyen bir yorum isteğiniz olduğu için başka yorum yapamazsınız</p></center>
+	<br>
+{% else %}
 						<div id="respond" class="comment-respond">
 							<h3 id="reply-title" class="comment-reply-title">Yorum Yaz <small><a rel="nofollow" id="cancel-comment-reply-link"
 										href="/demosd/udema/?course=eam-id-legimus-torquatos#respond" style="display:none;">Cancel
 										reply</a></small></h3>
-							<form action="" method="post" id=""
+							<form action="{% url 'courseDetail' course.slug %}" method="post" id=""
 								class="comments-form reviews" novalidate>
+								{% csrf_token %}
 								<textarea name="comment" aria-required='true' cols="30" rows="8" class="form-control"
-									placeholder="Comments"></textarea>
-								<div class="form-group" style="margin-top:1rem;"><input type="text" class="form-control  mb-20"
-										placeholder="Name" name="author"></div>
+									placeholder="Yorum Yaz"></textarea>
+								<br>
 								<p class="form-submit"><input name="submit" type="submit" id="submit" class="review_btn btn submit"
-										value="Submit" /> <input type='hidden' name='comment_post_ID' value='827' id='comment_post_ID' />
-									<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+										value="Yorumu Kaydet" /> <input type='hidden' name='star' value='827' id='comment_post_ID' />
+									
 								</p>
-								<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce"
-										value="545f713d13" /></p>
-								<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="70" /></p>
+								
+							
 							</form>
 						</div>
+				
+{% endif %}
+
+
+
+<div style="width: 100%;" id="comments">
+	<h5>Yorumlar</h5>
+	<ul>
+
+		{% if comments %}
+
+		{% for comment in comments %}
+
+
+
+		<li>
+			<div class="avatar">
+				<a href="#"><img src="{{comment.comment_user.image.url}}" alt="">
+				</a>
+			</div>
+			<div class="comment_right clearfix">
+				<div class="comment_info">
+					<a
+						href="#">{{comment.comment_user.get_full_name}}</a><span>|</span>{{comment.created_date.date}}
+				</div>
+				<p>
+					{{comment.comment}}
+				</p>
+			</div>
+
+			{% if comment.children %}
+
+			{% for children in comment.children %}
+			<ul class="replied-to">
+				<li>
+					<div class="avatar">
+						<a href="#"><img src="{{children.comment_user.image.url}}" alt="">
+						</a>
+					</div>
+					<div class="comment_right clearfix">
+						<div class="comment_info">
+							<a
+								href="#">{{children.comment_user.get_full_name}}</a><span>|</span>{{children.created_date.date}}
+						</div>
+						<p>
+							{{children.comment}}
+						</p>
+
+					</div>
+
+				</li>
+			</ul>
+			{% endfor %}
+
+			{% endif %}
+
+		</li>
+		{% endfor %}
+		{% else %}
+		<center><p>Henüz bu kursa yorum yapılmamış.</p></center>
+
+		{% endif %}
+
+
+
+	</ul>
+</div>
+
 				
 
 
@@ -265,80 +416,7 @@
 
 
 
-
-
-
-
-
-
-
-
-						<div class="reviews-container">
-
-							<div class="review-box clearfix">
-								<figure class="rev-thumb"><img
-										src="https://psychologs3.s3.amazonaws.com/media/profile_images/no-avatar.png" alt="">
-								</figure>
-								<div class="rev-content">
-									<div class="rating">
-										<i class="icon_star voted"></i><i class="icon_star voted"></i><i
-											class="icon_star voted"></i><i class="icon_star voted"></i><i
-											class="icon_star"></i>
-									</div>
-									<div class="rev-info">
-										Admin –25 Nisan 2022
-									</div>
-									<div class="rev-text">
-										<p>
-											Gayet güze bir kurstu herkese tavsiye ederim arkadaşlar.
-										</p>
-									</div>
-								</div>
-							</div>
-							<!-- /review-box -->
-							<div class="review-box clearfix">
-								<figure class="rev-thumb"><img
-										src="https://psychologs3.s3.amazonaws.com/media/profile_images/no-avatar.png" alt="">
-								</figure>
-								<div class="rev-content">
-									<div class="rating">
-										<i class="icon-star voted"></i><i class="icon_star voted"></i><i
-											class="icon_star voted"></i><i class="icon_star voted"></i><i
-											class="icon_star"></i>
-									</div>
-									<div class="rev-info">
-										Admin –25 Nisan 2022
-									</div>
-									<div class="rev-text">
-										<p>
-											Online kurslara hep önyargılı yaklaşırdım ama bu kurslar galiba önyargımı yıkmış olabili.Kesinlikle sizde almalısınız
-										</p>
-									</div>
-								</div>
-							</div>
-							<!-- /review-box -->
-							<div class="review-box clearfix">
-								<figure class="rev-thumb"><img
-										src="https://psychologs3.s3.amazonaws.com/media/profile_images/no-avatar.png" alt="">
-								</figure>
-								<div class="rev-content">
-									<div class="rating">
-										<i class="icon-star voted"></i><i class="icon_star voted"></i><i
-											class="icon_star voted"></i><i class="icon_star voted"></i><i
-											class="icon_star"></i>
-									</div>
-									<div class="rev-info">
-										Admin –25 Nisan 2022
-									</div>
-									<div class="rev-text">
-										<p>
-											Çok faydalı bir kurs arkadaşlar.Düşünmeden alın bence.
-										</p>
-									</div>
-								</div>
-							</div>
-							<!-- /review-box -->
-						</div>
+						
 						<!-- /review-container -->
 					</section>
 					<!-- /section -->
@@ -360,7 +438,7 @@
 						{% isFavourite request course.pk as favouritea %}
 
 						<a href="#0" class="btn_1 full-width">Satın Al</a>
-						<a href="#0" 
+						<a href="{% url 'AddFavouritesCoursesGridList' course.pk %}" 
 						{% if favouritea %}
 							style="color: green;"
 						{% endif %}
@@ -401,6 +479,8 @@
 <script src="{% static 'assets/js/common_scripts.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 <script src="{% static 'assets/validate.js' %}"></script>
+<script src="https://vjs.zencdn.net/7.18.1/video.min.js"></script>
+
 
 
 {% endblock jsFiles %}

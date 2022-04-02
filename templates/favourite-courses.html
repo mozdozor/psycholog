@@ -99,7 +99,7 @@
                         <figure class="block-reveal">
                             <div class="block-horizzontal"></div>
                             <a style="background-color: green;" href="{% url 'AddFavouritesCoursesGridList' course.course.pk %}" class="wish_bt"></a>
-                            <a href="course-detail.html"><img src="{{course.course.image.url}}" class="img-fluid"
+                            <a href="{% url 'courseDetail' course.course.slug %}"><img src="{{course.course.image.url}}" class="img-fluid"
                                     alt=""></a>
                             <div class="price">{{course.course.price}} ₺</div>
                             <div class="preview"><span>Kursu Görüntüle</span></div>
@@ -122,7 +122,7 @@
                         <ul>
                             <li><i class="icon_clock_alt"></i> 1h 30min</li>
                             <li><i class="icon_like"></i> 890</li>
-                            <li><a href="course-detail.html">İncele</a></li>
+                            <li><a href="{% url 'courseDetail' course.course.slug %}">İncele</a></li>
                         </ul>
                     </div>
                 </div>

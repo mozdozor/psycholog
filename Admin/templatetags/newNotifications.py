@@ -9,5 +9,5 @@ register=template.Library()
 
 @register.simple_tag
 def new_notifications():
-    return notificationModel.objects.filter(has_readen="no").all()
+    return notificationModel.objects.filter(has_readen="no").order_by("-created_date")
 

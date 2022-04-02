@@ -14,10 +14,10 @@
                 <div class="follow_us">
                     <ul>
                         <li>Bizi Takip Et</li>
-                        <li><a target="blank" href="https://tr-tr.facebook.com/"><i class="ti-facebook"></i></a></li>
-                        <li><a target="blank" href="https://twitter.com/"><i class="ti-twitter-alt"></i></a></li>
-                        <li><a target="blank" href="https://tr.pinterest.com/"><i class="ti-pinterest"></i></a></li>
-                        <li><a target="blank" href="https://www.instagram.com/"><i class="ti-instagram"></i></a></li>
+                        <li><a target="blank" href="{{sm.facebook}}"><i class="ti-facebook"></i></a></li>
+                        <li><a target="blank" href="{{sm.twitter}}"><i class="ti-twitter-alt"></i></a></li>
+                        <li><a target="blank" href="{{sm.pinterest}}"><i class="ti-pinterest"></i></a></li>
+                        <li><a target="blank" href="{{sm.instagram}}"><i class="ti-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -27,15 +27,15 @@
                     <li><a href="{% url 'aboutUs' %}">Hakkımızda</a></li>
                     <li><a href="{% url 'login' %}">Giriş</a></li>
                     <li><a href="{% url 'registerUser' %}">Kayıt</a></li>
-                    <li><a href="#0">Blog & Haberler</a></li>
+                    <li><a href="{% url 'allBlogs' %}">Blog & Haberler</a></li>
                     <li><a href="{% url 'contact' %}">İletişim</a></li>
                 </ul>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6"> 
                 <h5>Bizimle iletişime geçin</h5>
                 <ul class="contacts">
-                    <li><a href="tel://61280932400"><i class="ti-mobile"></i> + 61 23 8093 3400</a></li>
-                    <li><a href="mailto:info@turkaze.com"><i class="ti-email"></i> info@turkaze.com</a></li>
+                    <li><a href=""><i class="ti-mobile"></i>{{sm.phone_number}}</a></li>
+                    <li><a href=""><i class="ti-email"></i>{{sm.email}}</a></li>
                 </ul>
                 <div id="newsletter">
                 <h6>Gelişmelerden haberdar olmak için kayıt olun</h6>
@@ -54,8 +54,9 @@
         <div class="row">
             <div class="col-md-8">
                 <ul id="additional_links">
-                    <li><a href="#0">Hüküm ve Koşulluluklar</a></li>
-                    <li><a href="#0">Gizlilik</a></li>
+                    <li><a href="{% url 'aydinlatmaMetni' %}">Aydınlatma Metni</a></li>
+                    <li><a href="{% url 'kvkkMetni' %}">KVKK</a></li>
+                    <li><a href="{% url 'gizlilikPolitikası' %}">Gizlilik Politikası</a></li>
                 </ul>
             </div>
             <div class="col-md-4">

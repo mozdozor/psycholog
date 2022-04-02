@@ -3,10 +3,6 @@
 
 {% load static %}
 
-{% block cssFiles %}
-<link href="{% static 'assetsAdmin/vendor/dropzone.css' %}" rel="stylesheet">
-<link href="{% static 'assetsAdmin/css/date_picker.css' %}" rel="stylesheet">
-{% endblock cssFiles %}
 
 
 {% block contentAdmin %}
@@ -20,7 +16,7 @@
       <li class="breadcrumb-item">
         <a href="{% url 'indexAdmin' %}">Anasayfa</a>
       </li>
-      <li class="breadcrumb-item active">Sliderlar</li>
+      <li class="breadcrumb-item active">Blog Kategori Listesi</li>
     </ol>
 
 
@@ -54,9 +50,10 @@
     <!-- Example DataTables Card-->
     <div  class="card mb-3">
       <div style="font-weight: bold; color: red;" class="card-header">
-        <i class="fa fa-table"></i> Sliderlar
+        <i class="fa fa-table"></i> Blog Kategori Listesi
         <div style="float: right;">
-          <a  href="{% url 'createSliderModelAdmin' %}" type="button" class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i> Ekle</a>
+            <a  href="{% url 'blogListAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-list"></i> Blog Listesi</a>
+          <a  href="{% url 'addBlogCategoryAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kategori Ekle</a>
         </div>
       </div>
 
@@ -65,25 +62,20 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr style="font-weight: bold; color: black;">
-                <th>Foto</th>
-                <th>Üst Başlık</th>
-                <th>Alt Başlık</th>
-                <th>Sıra</th>
+                <th>Kategori Adı</th>
                 <th>İşlemler</th>
-                
               </tr>
-            </thead>    
+            </thead>
             <tbody>
-              {% for slider in sliders %}
+              {% for cat in categories %}
               <tr>
-                <td><center><img style="width: 140px; height: 100px;" src="{{slider.image.url}}" alt=""></center></td>
-                <td>{{slider.top_title}}</td>
-                <td>{{slider.bottom_title}}</td>
-                <td>{{slider.sira}}</td>
+                <td>{{cat.name}}</td>
+               
                 <td>
-                    <center><a href="{% url 'createSliderModelAdmin' %}?sliderId={{slider.pk}}" type="button" class="btn btn-primary btn-xs" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;
-                      <a href="#" onclick="deleteObject('{{slider.pk}}')" type="button" title="Sil" class="btn btn-danger btn-xs"><i class="fa-solid fa-trash-can"></i></a></center>
+                  <center><a href="{% url 'addBlogCategoryAdmin' %}?categoryId={{cat.pk}}" title="Düzenle" type="button" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;&emsp;&emsp;
+                    <a href="#" type="button" onclick="deleteObject('{{cat.pk}}')" title="Sil" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a></center>
                 </td>
+
               </tr>
 
               {% endfor %}
@@ -127,13 +119,14 @@
 <script src="{% static 'assetsAdmin/js/admin-datatables.js' %}"></script>
 
 <script>
-    function deleteObject(pk){
-        var result= confirm("Bu slideri silmek istediğinize emin misiniz?");
-        if (result){
-            document.location.href = "/psyc-admin/admin-slider-sil/" + pk;
-        }
-    }
+  function deleteObject(pk){
+      var result= confirm("Bu kategoriyi silmek istediğinize emin misiniz?");
+      if (result){
+          document.location.href = "/psyc-admin/admin-blog-kategori-sil/" + pk;
+      }
+  }
 </script>
+
 
 
 

@@ -3,7 +3,8 @@ from django.contrib.auth import views as auth_views
 
 from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
-    AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact
+    AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
+    kvkkMetni,blogDetail,allBlogs
 )
 
 urlpatterns = [
@@ -24,5 +25,10 @@ urlpatterns = [
     path('ogrenim-icerigim',learningContentList,name="learningContentList"),
     path('hakkimizda',aboutUs,name="aboutUs"),
     path('iletisim',contact,name="contact"),
+    path('aydinlatma-metni',aydinlatmaMetni,name="aydinlatmaMetni"),
+    path('gizlilik-politikasi',gizlilikPolitikası,name="gizlilikPolitikası"),
+    path('kvkk-metni',kvkkMetni,name="kvkkMetni"),
+    path('blog-detay/<slug:slug>',blogDetail,name="blogDetail"),
+    path('tum-blog-yazilari',allBlogs,name="allBlogs"),
 
 ]

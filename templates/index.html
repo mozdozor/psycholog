@@ -55,6 +55,10 @@
     </div>
     <!-- End layerslider -->
 
+
+   
+
+
     <div class="features clearfix">
         <div class="container">
             <ul>
@@ -172,65 +176,33 @@
                 <p>En yeni yazılmış blog yazılarına,makalelere ve güncel haberlerden haberdar olabilirsiniz.</p>
             </div>
             <div class="row">
-                <div class="col-lg-6">
-                    <a class="box_news" href="#0">
-                        <figure><img src="https://psychologs3.s3.amazonaws.com/static/assets/img/news_home_1.jpg" alt="">
-                            <figcaption><strong>28</strong>Dec</figcaption>
-                        </figure>
-                        <ul>
-                            <li>Ali Aslan</li>
-                            <li>20.11.2017</li>
-                        </ul>
-                        <h4>FOBİ, Aslında Korktuğumuz Nedir?</h4>
-                        <p>Sık görülen fobiler, topluluk önünde konuşma yapmayı, başkaları tarafından değerlendirilme imkanı doğurabilecek sosyal...</p>
-                    </a>
-                </div>
-                <!-- /box_news -->
-                <div class="col-lg-6">
-                    <a class="box_news" href="#0">
-                        <figure><img src="https://psychologs3.s3.amazonaws.com/static/assets/img/news_home_2.jpg" alt="">
-                            <figcaption><strong>28</strong>Dec</figcaption>
-                        </figure>
-                        <ul>
-                            <li>Ali Aslan</li>
-                            <li>20.11.2017</li>
-                        </ul>
-                        <h4>Kuşaklar Arası Travma Aktarımı</h4>
-                        <p>Kuşaklar arası travma aktarımı bir travmanın takip eden nesilleri etkilemesine verilen isimdir. Tarihe baktığımızda...</p>
-                    </a>
-                </div>
-                <!-- /box_news -->
-                <div class="col-lg-6">
-                    <a class="box_news" href="#0">
-                        <figure><img src="https://psychologs3.s3.amazonaws.com/static/assets/img/news_home_3.jpg" alt="">
-                            <figcaption><strong>28</strong>Dec</figcaption>
-                        </figure>
-                        <ul>
-                            <li>Yusuf Gezer</li>
-                            <li>20.11.2017</li>
-                        </ul>
-                        <h4>İlişkilerde Bağlanma Biçimleri ve Kendin Olmak</h4>
-                        <p>İnsanların bağlanma şekilleriyle ilgili bugüne kadar bir çok araştırma yapıldı, kitap yazıldı. Ama özetlemek gerekirse üç bağlanma şeklinden bahsedebiliriz....</p>
-                    </a>
-                </div>
-                <!-- /box_news -->
-                <div class="col-lg-6">
-                    <a class="box_news" href="#0">
-                        <figure><img src="https://psychologs3.s3.amazonaws.com/static/assets/img/news_home_4.jpg" alt="">
-                            <figcaption><strong>28</strong>Dec</figcaption>
-                        </figure>
-                        <ul>
-                            <li>Yusuf Gezer</li>
-                            <li>20.11.2017</li>
-                        </ul>
-                        <h4>Çocuklarda Ayrılık Kaygısı ve Okul Reddi</h4>
-                        <p>Okul reddi, çocukların yaşadıkları anksiyete gibi duygusal problemlerden dolayı okula gitmeyi reddetmesi, okula devam edememesi...</p>
-                    </a>
-                </div>
-                <!-- /box_news -->
+
+                
+                {% if blogs %}
+                    
+                    {% for blog in blogs %}
+                    <div class="col-lg-6">
+                        <a class="box_news" href="{% url 'blogDetail' blog.slug %}">
+                            <figure><img src="{{blog.image.url}}" alt="">
+                                <figcaption><strong>{{blog.created_date.date.day}}</strong>{{blog.getCreatedMonth}}</figcaption>
+                            </figure>
+                            <ul>
+                                <li>{{blog.author.get_full_name}}</li>
+                                <li>{{blog.created_date.date}}</li>
+                            </ul>
+                            <h4>{{blog.title}}</h4>
+                            <p>{{blog.description|safe|truncatechars:110}}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                        
+                {% endif %}
+                    
+                
+          
             </div>
             <!-- /row -->
-            <p class="btn_home_align"><a href="#" class="btn_1 rounded">Hepsini Görüntüle</a></p>
+            <p class="btn_home_align"><a href="{% url 'allBlogs' %}" class="btn_1 rounded">Hepsini Görüntüle</a></p>
         </div>
         <!-- /container -->
     </div>
@@ -252,8 +224,12 @@
         </div>
     </div> -->
     <!--/call_section-->
+
+   
+
 </main>
 <!-- /main -->
+
 
 
 

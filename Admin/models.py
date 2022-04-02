@@ -231,6 +231,7 @@ class courseSessionVideoModel(models.Model):
     courseSession=models.ForeignKey(courseSessionModel,on_delete=models.CASCADE,related_name="videos")  
     title=models.CharField(max_length=300)
     url=models.CharField(max_length=300)
+    video_type=models.CharField(max_length=300,default="everybody",blank=True,null=True)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
     
@@ -271,7 +272,8 @@ class notificationModel(models.Model):
     message=models.CharField(max_length=400,blank=True,null=True)
     type=models.CharField(max_length=200)
     noti_user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="allNotifications")  
-    object=models.ForeignKey(CourseModel,on_delete=models.CASCADE,related_name="notificationsOfCourse")  
+    object=models.ForeignKey(CourseModel,on_delete=models.CASCADE,related_name="notificationsOfCourse",blank=True,null=True)  
+    blogObject=models.ForeignKey("Admin.blogModel",on_delete=models.CASCADE,related_name="notificationsOfBlogs",blank=True,null=True)  
     has_readen=models.CharField(max_length=200,default="no")
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
@@ -301,3 +303,153 @@ class LogoModel(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+
+
+
+class aydinlatmaMetniModel(models.Model):
+    description=RichTextUploadingField(blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+    
+    class Meta:
+        db_table="aydinlatmaMetniModel"
+        verbose_name ="Aydınlatma Metni"  
+        verbose_name_plural ="Aydınlatma Metni"
+
+    def __str__(self):
+        return self.description
+
+
+
+
+class kvkkMetniModel(models.Model):
+    description=RichTextUploadingField(blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+    
+    class Meta:
+        db_table="kvkkMetniModel"
+        verbose_name ="KVKK Metni"  
+        verbose_name_plural ="KVKK Metni"
+
+    def __str__(self):
+        return self.description
+
+
+
+
+
+class gizlilikMetniModel(models.Model):
+    description=RichTextUploadingField(blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+    
+    class Meta:
+        db_table="gizlilikMetniModel"
+        verbose_name ="Gizlilik Metni"  
+        verbose_name_plural ="Gizlilik Metni"
+
+    def __str__(self):
+        return self.description
+
+
+
+
+
+
+
+class blogCategoryModel(models.Model):
+    name=models.CharField(max_length=100,blank=False,null=False)
+    slug=AutoSlugField(populate_from='name',unique=True)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+
+    class Meta:
+        db_table="BlogCategory"
+        verbose_name ="Blog Kategori"
+        verbose_name_plural ="Blog Kategoriler"
+
+    def __str__(self):
+        return self.name
+
+    
+    def getBlogCount(self):
+        count=0
+        for blog in blogModel.objects.all():
+            for cat in blog.categories.all():
+                if cat.name==self.name:
+                    count+=1
+        return count
+
+
+
+
+
+
+class blogModel(models.Model):
+    title=models.CharField(max_length=500,blank=True,null=True) 
+    author=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="blogs",blank=True,null=True) 
+    slug=AutoSlugField(populate_from="title",unique=True,blank=True,null=True)   
+    categories=models.ManyToManyField(blogCategoryModel,related_name="posts")
+    image=models.ImageField(upload_to="blogImages")    
+    description=RichTextUploadingField(blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+    
+    class Meta:
+        db_table="blogModel"
+        verbose_name ="Blog"  
+        verbose_name_plural ="Bloglar"
+
+
+    def __str__(self):
+        return self.title
+
+
+    def save(self, *args, **kwargs):
+        self.slug = f'{self.title}'
+        super().save(*args, **kwargs)
+
+    
+    def getCreatedMonth(self):
+        monthIndex=self.created_date.month
+        months=["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran","Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
+        return months[monthIndex-1]
+
+    
+    def totalCommentCount(self):
+        return CommentModel.objects.filter(is_published=True).all().count()
+
+    
+    def get_categories(self):
+        return ", ".join([str(p) for p in self.categories.all()])
+
+
+
+
+
+
+
+
+
+
+class socialModel(models.Model):
+    facebook=models.CharField(max_length=200,blank=True,null=True)
+    twitter=models.CharField(max_length=400,blank=True,null=True)
+    pinterest=models.CharField(max_length=200,blank=True,null=True)
+    instagram=models.CharField(max_length=200,blank=True,null=True)
+    phone_number=models.CharField(max_length=200)
+    email=models.EmailField(max_length=200)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+   
+    class Meta:
+        db_table="SosyalMedya"
+        verbose_name = "Sosyal Medya"
+        verbose_name_plural = "Sosyal Medya"
+
+    def __str__(self):
+        return self.email

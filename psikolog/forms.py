@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,PasswordInput, Select
-from psikolog.models import CustomUserModel, sliderModel
+from psikolog.models import CommentModel, CustomUserModel, sliderModel
 
 
 
@@ -74,4 +74,19 @@ class userSettingsProfileModelForm(forms.ModelForm):
             'email': "Email",
             'address': "Adres",
             'image': "Profil Fotoğrafı",
+        }
+
+
+
+
+
+
+
+
+class CommentModelStarsForm(forms.ModelForm):
+    class Meta:
+        model = CommentModel
+        fields=("comment","star")
+        widgets = {           
+            "comment" : Textarea(attrs={"class":"form-control","cols":"40","rows":"3"}),          
         }

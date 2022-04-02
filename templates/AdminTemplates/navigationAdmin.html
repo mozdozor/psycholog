@@ -108,7 +108,7 @@
         </li>
 
 
-
+        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfile" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
@@ -125,7 +125,22 @@
               <a href="{% url 'showPagesAdmin' %}">Seo Ayarları</a>
             </li>
             <li>
+              <a href="{% url 'blogListAdmin' %}">Blog Ayarları</a>
+            </li>
+            <li>
+              <a href="{% url 'socialMediaAdmin' %}">Sosyal Medya Ayarları</a>
+            </li>
+            <li>
               <a href="{% url 'listLogoAdmin' %}">Logo Ayarları</a>
+            </li>
+            <li>
+              <a href="{% url 'aydinlatmaMetniAdmin' %}">Aydınlatma Metni</a>
+            </li>
+            <li>
+              <a href="{% url 'gizlilikMetniAdmin' %}">Gizlilik Politikası</a>
+            </li>
+            <li>
+              <a href="{% url 'kvkkMetniAdmin' %}">KVKK Metni</a>
             </li>
             <!-- <li>
               <a href="user-profile.html">User profile</a>
@@ -164,7 +179,7 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <a href="{% url 'index' %}" class="btn btn-light">Siteye Geç</a>&emsp;&emsp;
+        <a href="{% url 'index' %}" title="Siteye Geç" class="btn btn-light"><i class="fa-solid fa-backward"></i></a>&emsp;&emsp;
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-envelope"></i>
@@ -227,13 +242,13 @@
            {% if newNotifications %}
              {% for not in newNotifications %}
              <div class="dropdown-divider"></div>
-             <a class="dropdown-item" href="#">
+             <a class="dropdown-item" href="{% url 'listNotificationsAdmin' %}">
                <span class="text-success">
                  <strong>
                    <i class="fa fa-long-arrow-up fa-fw"></i>
-                   {% if not.type == "billing" %}
+                   {% if not.type == "billing" %} 
                      Yeni Satın Alım
-                    {% elif not.type == "commentRequest" %}
+                    {% else %}
                     Yeni Yorum İsteği
                    {% endif %}
                      </strong>

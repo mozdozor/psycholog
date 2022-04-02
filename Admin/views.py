@@ -5,10 +5,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, logoModelForm, whatWillYouLearnModelForm
+from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, kvkkMetniModelForm, logoModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, notificationModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
 
@@ -686,14 +686,21 @@ def userListAdmin(request):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def addReplyCommentAdmin(request,slug,pk):
-    course=get_object_or_404(CourseModel,slug=slug)
+    typeObj=request.GET.get("type",None)
+    if typeObj == "course":
+        course=get_object_or_404(CourseModel,slug=slug)
+    elif typeObj == "blog":
+        blog=get_object_or_404(blogModel,slug=slug)
     parent=get_object_or_404(CommentModel,pk=pk)
     if request.method == "POST":
         form=CommentModelForm(data=request.POST)
         if form.is_valid():
             data=form.save(commit=False)
             data.comment_user=request.user
-            data.course=course
+            if typeObj == "course":
+                data.course=course
+            elif typeObj == "blog":
+                data.blog=blog
             data.parent=parent
             data.star=0
             data.none_star=5
@@ -710,7 +717,7 @@ def addReplyCommentAdmin(request,slug,pk):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def listNotificationsAdmin(request):
-    notifications=notificationModel.objects.all()
+    notifications=notificationModel.objects.all().order_by("-created_date")
     for i in notifications:
         i.has_readen="yes"
         i.save()
@@ -800,11 +807,9 @@ def deleteSliderAdmin(request,pk):
 def listLogoAdmin(request):
     logo=LogoModel.objects.all()
     if logo:
-        print("logo var")
-       
+        pass
     else:
         logo=LogoModel.objects.create(name="Udema")
-        print("logo yok")
     context={
         "logo":logo,
     }
@@ -832,3 +837,253 @@ def updateLogoAdmin(request):
         
     }
     return render(request,"AdminTemplates/addLogoAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def aydinlatmaMetniAdmin(request):
+    metinler=aydinlatmaMetniModel.objects.all()
+    if request.method == 'POST':
+        if metinler:
+            form=aydinlatmaMetniModelForm(request.POST or None,request.FILES or None,instance=metinler.first())
+        else:
+            form=aydinlatmaMetniModelForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Aydınlatma Metni başarıyla kaydedildi.")
+            return redirect("aydinlatmaMetniAdmin")
+        else:
+            messages.error(request,"Bir hata oluştu.Yönetici ile iletişime geçiniz.")
+            return redirect("aydinlatmaMetniAdmin")
+    else:
+        if metinler:
+            form = aydinlatmaMetniModelForm(instance=metinler.first())
+        else:
+            form = aydinlatmaMetniModelForm()
+    context={
+        "form":form,
+        "type":"aydinlatma",
+        "metin":"Aydınlatma Metni"
+    }
+    return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)
+
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def kvkkMetniAdmin(request):
+    metinler=kvkkMetniModel.objects.all()
+    if request.method == 'POST':
+        if metinler:
+            form=kvkkMetniModelForm(request.POST or None,request.FILES or None,instance=metinler.first())
+        else:
+            form=kvkkMetniModelForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"KVKK Metni başarıyla kaydedildi.")
+            return redirect("kvkkMetniAdmin")
+        else:
+            messages.error(request,"Bir hata oluştu.Yönetici ile iletişime geçiniz.")
+            return redirect("kvkkMetniAdmin")
+    else:
+        if metinler:
+            form = kvkkMetniModelForm(instance=metinler.first())
+        else:
+            form = kvkkMetniModelForm()
+    context={
+        "form":form,
+        "type":"kvkk",
+        "metin":"KVKK Metni"
+    }
+    return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def gizlilikMetniAdmin(request):
+    metinler=gizlilikMetniModel.objects.all()
+    if request.method == 'POST':
+        if metinler:
+            form=gizlilikMetniModelForm(request.POST or None,request.FILES or None,instance=metinler.first())
+        else:
+            form=gizlilikMetniModelForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Gizlilik politikası başarıyla kaydedildi.")
+            return redirect("gizlilikMetniAdmin")
+        else:
+            messages.error(request,"Bir hata oluştu.Yönetici ile iletişime geçiniz.")
+            return redirect("gizlilikMetniAdmin")
+    else:
+        if metinler:
+            form = gizlilikMetniModelForm(instance=metinler.first())
+        else:
+            form = gizlilikMetniModelForm()
+    context={
+        "form":form,
+        "type":"gizlilik",
+        "metin":"Gizlilik Politikası"
+    }
+    return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def blogListAdmin(request):
+    blogs=blogModel.objects.all().order_by("created_date")
+    context={
+        "blogs":blogs,
+    }
+    return render(request,"AdminTemplates/listBlogsAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def createBlogModelAdmin(request):
+    blog=""
+    blogId=request.GET.get("blogId",None)
+    if request.method == "POST":   
+        if blogId:
+            blog=get_object_or_404(blogModel,pk=blogId)
+            form = blogModelForm(request.POST or None,request.FILES or None,instance=blog)	
+        else:
+            form = blogModelForm(request.POST or None,request.FILES or None)	
+        if form.is_valid(): 
+            data=form.save(commit=False)            
+            data.author=request.user
+            data.save()
+            form.save_m2m()   
+            messages.success(request,"Blog başarıyla kaydedildi.")
+            return redirect("blogListAdmin")
+        else:
+            messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            return redirect("blogListAdmin")
+    if blogId:
+        blog=get_object_or_404(blogModel,pk=blogId)
+        form = blogModelForm(instance=blog)
+    else:
+        form = blogModelForm()
+    context={
+        "form":form,
+        "blog":blog
+    }
+    return render(request,"AdminTemplates/addBlogAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteBlogAdmin(request,pk):
+    obj=get_object_or_404(blogModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Blog başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER']) 
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def blogCategoryListAdmin(request):
+    categories=blogCategoryModel.objects.all().order_by("created_date")
+    context={
+        "categories":categories,
+    }
+    return render(request,"AdminTemplates/listBlogCategoriesAdmin.html",context)
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def addBlogCategoryAdmin(request):
+    category=""
+    categoryId=request.GET.get("categoryId",None)
+    if request.method == "POST":   
+        if categoryId:
+            category=get_object_or_404(blogCategoryModel,pk=categoryId)
+            form = blogCategoryModelForm(request.POST, request.FILES or None,instance=category)	
+        else:
+            form = blogCategoryModelForm(request.POST, request.FILES or None)	
+        if form.is_valid(): 
+            form.save()            
+            messages.success(request,"Kategori başarıyla kaydedildi.")
+            return redirect("blogCategoryListAdmin")
+        else:
+            messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            return redirect("blogCategoryListAdmin")
+    if categoryId:
+        category=get_object_or_404(blogCategoryModel,pk=categoryId)
+        form = blogCategoryModelForm(instance=category)
+    else:
+        form = blogCategoryModelForm()
+    context={
+        "form":form,
+        "category":category
+        
+    }
+    
+    return render(request,"AdminTemplates/addBlogCategoryAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteCategoryBlogAdmin(request,pk):
+    obj=get_object_or_404(blogCategoryModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Kategori başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER']) 
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def socialMediaAdmin(request):
+    metinler=socialModel.objects.all()
+    if request.method == 'POST':
+        if metinler:
+            form=socialModelForm(request.POST or None,request.FILES or None,instance=metinler.first())
+        else:
+            form=socialModelForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Sosyal medya ayarlarınız başarıyla kaydedildi.")
+            return redirect("socialMediaAdmin")
+        else:
+            messages.error(request,"Bir hata oluştu.Yönetici ile iletişime geçiniz.")
+            return redirect("socialMediaAdmin")
+    else:
+        if metinler:
+            form = socialModelForm(instance=metinler.first())
+        else:
+            form = socialModelForm()
+    context={
+        "form":form,
+    }
+    return render(request,"AdminTemplates/socialMediaAdmin.html",context)

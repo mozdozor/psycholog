@@ -8,7 +8,9 @@ from .views import (
     sessionVideoAddAdmin,deleteSessionVideoAdmin,profileSettingsAdmin,changePasswordAdmin,commentsAdmin,
     commentsRequestAdmin,acceptCommentsRequestAdmin,deleteComingRequestAdmin,showPagesAdmin,createPageModelAdmin,
     deletePageModelAdmin,userListAdmin,addReplyCommentAdmin,listNotificationsAdmin,deleteNotificationsAdmin,
-    listBillingsAdmin,listSlidersAdmin,createSliderModelAdmin,deleteSliderAdmin,listLogoAdmin,updateLogoAdmin
+    listBillingsAdmin,listSlidersAdmin,createSliderModelAdmin,deleteSliderAdmin,listLogoAdmin,updateLogoAdmin,
+    aydinlatmaMetniAdmin,kvkkMetniAdmin,gizlilikMetniAdmin,blogListAdmin,createBlogModelAdmin,deleteBlogAdmin,
+    blogCategoryListAdmin,addBlogCategoryAdmin,deleteCategoryBlogAdmin,socialMediaAdmin
     
 )
 
@@ -55,6 +57,17 @@ urlpatterns = [
     path('admin-slider-sil/<int:pk>',deleteSliderAdmin,name="deleteSliderAdmin"),
     path('admin-logo-listele',listLogoAdmin,name="listLogoAdmin"),
     path('admin-logo-guncelle',updateLogoAdmin,name="updateLogoAdmin"),
+    path('admin-aydinlatma-metni-guncelle',aydinlatmaMetniAdmin,name="aydinlatmaMetniAdmin"),
+    path('admin-kvkk-metni-guncelle',kvkkMetniAdmin,name="kvkkMetniAdmin"),
+    path('admin-gizlilik-sozlesmesi-guncelle',gizlilikMetniAdmin,name="gizlilikMetniAdmin"),
+    path('admin-blog-listele',blogListAdmin,name="blogListAdmin"),
+    path('admin-blog-ekle',createBlogModelAdmin,name="createBlogModelAdmin"),
+    path('admin-blog-sil/<int:pk>',deleteBlogAdmin,name="deleteBlogAdmin"),
+    path('admin-blog-kategori-listele',blogCategoryListAdmin,name="blogCategoryListAdmin"),
+    path('admin-blog-kategori-ekle',addBlogCategoryAdmin,name="addBlogCategoryAdmin"),
+    path('admin-blog-kategori-sil/<int:pk>',deleteCategoryBlogAdmin,name="deleteCategoryBlogAdmin"),
+    path('admin-sosyal-medya-ekle',socialMediaAdmin,name="socialMediaAdmin"),
+    
     
 
 ]

@@ -51,14 +51,23 @@
                     {% for not in notifications %}
 
                     <li>
+                        
+                        {% if not.type == "comment" %}
                         <figure><img src="{{not.object.image.url}}" alt=""></figure>
                         <small>{{not.object.category.name}}</small>
                         <h4>{{not.object.title}}</h4>
+                        {% elif not.type == "commentBlog" %}
+                        <figure><img src="{{not.blogObject.image.url}}" alt=""></figure>
+                        <!-- <small>{{not.blogObject.title}}</small> -->
+                        <h4>{{not.blogObject.title}}</h4>
+                        {% endif %}
+                            
+                        
                         <p>{{not.message}}</p>
                         <!-- <p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-eye"></i> View course</a></p> -->
                         <ul class="buttons">
                             <li><a onclick="ConfirmDelete()" href="{% url 'deleteNotificationsAdmin' not.pk %}"  class="btn_1 gray delete" >
-                                <i class="fa fa-fw fa-times-circle-o"></i> Delete</a></li>
+                                <i class="fa fa-fw fa-times-circle-o"></i> Sil</a></li>
                         </ul>
                     </li>
                     {% endfor %}
@@ -137,7 +146,6 @@ for (let i = 0; i < 13; i++) {
 var today = new Date();
 var month=months[today.getMonth()]
 var dat=today.getDate();
-console.log(dat+" "+month);
 }
 
 </script>

@@ -1,9 +1,9 @@
 from dataclasses import fields
 from django import forms
-from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea
+from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, LogoModel, PageModel, courseSessionModel, courseSessionVideoModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, socialModel, whatWillYouLearnModel
 
 
 
@@ -87,9 +87,15 @@ class courseSessionModelForm(forms.ModelForm):
 
 
 class courseSessionVideoModelForm(forms.ModelForm):
+    CHOICES= (
+        ('herkes','Herkes'),
+        ('satinAlanlar','Sadece satın alanlar izlesin'),
+        
+    )
+    video_type=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"video_type","required":"required"}), choices=CHOICES)
     class Meta:
         model = courseSessionVideoModel
-        fields=("title","url",)
+        fields=("title","url","video_type")
         widgets = {
             "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title","required":"required"}),
             "url" : TextInput(attrs={"class":"form-control","type":"text","name":"url","required":"required"}),
@@ -97,6 +103,7 @@ class courseSessionVideoModelForm(forms.ModelForm):
         labels = {      
             'title': "Video Başlığı",
             'url': "URL Adresi",
+            'video_type': "Video Kimlere Gözüksün",
         }
 
 
@@ -163,4 +170,117 @@ class logoModelForm(forms.ModelForm):
         labels = {      
             'name': "Logo Adı",
             'image': "Logo Fotoğrafı",
+        }
+
+
+
+
+
+
+
+class aydinlatmaMetniModelForm(forms.ModelForm):
+    class Meta:
+        model = aydinlatmaMetniModel
+        fields=("description",)
+        widgets = {           
+            "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    
+        }
+        labels = {      
+            'description': "Metin",
+            
+        }
+
+
+
+
+class kvkkMetniModelForm(forms.ModelForm):
+    class Meta:
+        model = kvkkMetniModel
+        fields=("description",)
+        widgets = {           
+            "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    
+        }
+        labels = {      
+            'description': "Metin",
+            
+        }
+
+
+
+class gizlilikMetniModelForm(forms.ModelForm):
+    class Meta:
+        model = gizlilikMetniModel
+        fields=("description",)
+        widgets = {           
+            "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    
+        }
+        labels = {      
+            'description': "Metin",
+            
+        }
+
+    
+
+
+
+class blogModelForm(forms.ModelForm):
+    class Meta:
+        model = blogModel
+        exclude=("created_date","updated_date","author","slug")
+        widgets = {           
+            "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title"}), 
+            "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),   
+            "categories" : SelectMultiple(attrs={"class":"form-control"}), 
+        }
+        labels = {      
+            'title': "Başlık",
+            'description': "Blog Metni",
+            'image': "Fotoğraf (800x400)",
+            'categories': "Kategoriler (Birden fazla kategori seçimi için CTRL tuşunu kullanabilirsiniz)",
+            
+            
+        }
+
+
+
+
+
+
+
+class blogCategoryModelForm(forms.ModelForm):
+    class Meta:
+        model = blogCategoryModel
+        fields=("name",)
+        widgets = {
+            "name" : TextInput(attrs={"class":"form-control","type":"text","name":"name","required":"required"}),
+        }
+        labels = {      
+            'name': "Kategori İsmi",
+        }
+
+
+
+
+
+
+
+class socialModelForm(forms.ModelForm):
+    class Meta:
+        model = socialModel
+        exclude=("created_date","updated_date")
+        widgets = {
+            "facebook" : TextInput(attrs={"class":"form-control","type":"text","name":"facebook"}),
+            "twitter" : TextInput(attrs={"class":"form-control","type":"text","name":"twitter"}),
+            "pinterest" : TextInput(attrs={"class":"form-control","type":"text","name":"pinterest"}),
+            "instagram" : TextInput(attrs={"class":"form-control","type":"text","name":"instagram"}),
+            "phone_number" : TextInput(attrs={"class":"form-control","type":"text","name":"phone_number","required":"required"}),
+            "email" : EmailInput(attrs={"class":"form-control","name":"email","required":"required"}),
+        }
+        labels = {      
+            'facebook': "Facebook Adresiniz",
+            'twitter': "Twitter Adresiniz",
+            'pinterest': "Pinterest Adresiniz",
+            'instagram': "Instagram Adresiniz",
+            'phone_number': "Tellefon",
+            'email': "Email Adresiniz",
         }

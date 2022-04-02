@@ -6,7 +6,7 @@ admin panel butonları küçült
 aynı anda kategori ekle kısmına bak
 
 pip install req.. yap proddta
-
+migrate yap prodda
 
 
 

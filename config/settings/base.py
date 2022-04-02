@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'Admin',
     'storages',
     'ckeditor',
+    'fontawesomefree',
     'django_cleanup.apps.CleanupConfig', # should be placed after your apps
 ]
 

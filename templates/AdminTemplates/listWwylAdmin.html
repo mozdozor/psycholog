@@ -56,8 +56,8 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Öğrenecekleriniz
         <div style="float: right;">
-          <a href="{% url 'courseDetailAdmin' pk=course.pk %}" type="button" class="btn btn-warning">Kurs Detay</a>&emsp;
-          <a href="{% url 'wwylAddAdmin' %}?courseId={{course.pk}}" type="button" class="btn btn-warning">Ekle</a>
+          <a href="{% url 'courseDetailAdmin' pk=course.pk %}" type="button" class="btn btn-warning"><i class="fa-solid fa-eye"></i> Kurs Detay</a>&emsp;
+          <a href="{% url 'wwylAddAdmin' %}?courseId={{course.pk}}" type="button" class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i> Ekle</a>
         </div>
       </div>
 
@@ -82,8 +82,8 @@
                 <td>
                   <center>
                     <div style="display: inline-block; "><a href="{% url 'wwylAddAdmin' %}?ogrenId={{cat.pk}}&courseId={{cat.course.pk}}" type="button"
-                        class="btn btn-primary btn-xs">Düzenle</a>&emsp;
-                      <a type="button" class="btn btn-danger btn-xs" href="{% url 'deleteWwylAdmin' cat.pk %}">Sil</a>
+                        class="btn btn-primary btn-xs" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;
+                      <a type="button" class="btn btn-danger btn-xs" href="{% url 'deleteWwylAdmin' cat.pk %}" title="Sil"><i class="fa-solid fa-trash-can"></i></a>
                     </div>
                   </center>
                 </td>
