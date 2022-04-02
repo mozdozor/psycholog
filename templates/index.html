@@ -93,7 +93,7 @@
                                 <a {% if favourite %}
                                 style="background-color: green;"
                                 {% endif %} href="{% url 'AddFavouritesCoursesGridList' course.pk %}" class="wish_bt"></a>
-                                <a href="{% url 'courseDetail' course.slug %}">
+                                <a  href="{% url 'courseDetail' course.slug %}">
                                     <div class="preview"><span>Kursu Görüntüle</span></div><img
                                         src="{{course.image.url}}" class="img-fluid"
                                         alt="">
@@ -112,6 +112,7 @@
                             <ul>
                                 <li><i class="icon_clock_alt"></i> 1h 30min</li>
                                 <li><i class="icon_like"></i> 890</li>
+                                <li><a class="video" href="{{course.sessions.all.first.videos.all.first.url}}"><i class="fa-solid fa-video"></i> Önizle</a></li>
                                 <li><a href="{% url 'courseDetail' course.slug %}">İncele</a></li>
                             </ul>
                         </div>
