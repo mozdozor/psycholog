@@ -3,6 +3,8 @@
 
 {% load logo %}
 {% getLogo as logoSite %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,12 +54,14 @@
 			<figure>
 				<a href="{% url 'index' %}"><img src="{{logoSite.image.url}}" width="149" height="42" data-retina="true" alt=""></a>
 			</figure>
+{% load socialaccount %}
+
 
 			  <form action="{% url 'login' %}" method="post">
                   {% csrf_token %}
 				<div class="access_social">
 					<a href="#0" class="social_bt facebook">Facebook ile Giriş Yap</a>
-					<a href="#0" class="social_bt google">Google ile Giriş Yap</a>
+					<a href="{% provider_login_url 'google' %}"  process="connect" class="social_bt google">Google ile Giriş Yap</a>
 					<!-- <a href="#0" class="social_bt linkedin">Login with Linkedin</a> -->
 				</div>
 				<div class="divider"><span>Ya da </span></div>
