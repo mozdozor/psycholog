@@ -206,7 +206,7 @@
                             {% for blog in lastThreeBlogs %}
                                 <li>
                                     <div class="alignleft">
-                                        <a href="{% url 'blogDetail' blog.slug %}"><img width="400px;" src="{{blog.image.url}}"
+                                        <a href="{% url 'blogDetail' blog.slug %}"><img src="{{blog.image.url}}"
                                                 alt=""></a>
                                     </div>
                                     <small>{{blog.created_date.date}}</small>

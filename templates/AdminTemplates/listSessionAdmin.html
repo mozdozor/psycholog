@@ -56,8 +56,8 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Kurs Bölümleri
         <div style="float: right;">
-          <a  href="{% url 'courseListAdmin' %}" type="button" class="btn btn-secondary"><i class="fa-solid fa-list"></i> Kurs Listesi</a>&emsp;
-          <a  href="{% url 'sessionAddAdmin' pk=courseId %}" type="button" class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i> Kursa Bölüm Ekle</a>
+          <a  href="{% url 'courseListAdmin' %}" type="button" class="btn btn-secondary btn-sm"><i class="fa-solid fa-list"></i> Kurs Listesi</a>&emsp;
+          <a  href="{% url 'sessionAddAdmin' pk=courseId %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kursa Bölüm Ekle</a>
         </div>
       </div>
 
@@ -80,8 +80,8 @@
                 <td>{{ses.videos.all.count}}</td>
                
                 <td>
-                  <center><a href="{% url 'sessionAddAdmin' pk=courseId %}?currentId={{ses.pk}}" type="button" class="btn btn-primary btn-xs" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;<a type="button"  class="btn btn-dark btn-xs" href="{% url 'sessionVideoListAdmin' ses.pk %}" title="Video İşlemleri"><i class="fa-solid fa-video"></i></a>&emsp;
-                    <a type="button" class="btn btn-danger btn-xs" onclick="deleteObject('{{ses.pk}}')" href="#" title="Sil"><i class="fa-solid fa-trash-can"></i></a></center>
+                  <center><a href="{% url 'sessionAddAdmin' pk=courseId %}?currentId={{ses.pk}}" type="button" class="btn btn-primary btn-sm" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;<a type="button"  class="btn btn-dark btn-sm" href="{% url 'sessionVideoListAdmin' ses.pk %}" title="Video İşlemleri"><i class="fa-solid fa-video"></i></a>&emsp;
+                    <a type="button" class="btn btn-danger btn-sm" onclick="deleteObject('{{ses.pk}}')" href="#" title="Sil"><i class="fa-solid fa-trash-can"></i></a></center>
                 </td>
 
               </tr>

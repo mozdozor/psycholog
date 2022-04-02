@@ -56,9 +56,9 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> ÜST MENÜLER
         <div style="float: right;">
-          <a  href="{% url 'addMenu' %}?tip=ust-menu-ekle" type="button" class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i> Üst
+          <a  href="{% url 'addMenu' %}?tip=ust-menu-ekle" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Üst
             Menü Ekle</a>&emsp;&emsp;
-          <a href="{% url 'addMenu' %}?tip=alt-menu-ekle" type="button" class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i> Alt Menü Ekle</a>
+          <a href="{% url 'addMenu' %}?tip=alt-menu-ekle" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Alt Menü Ekle</a>
 
 
         </div>
@@ -86,8 +86,8 @@
                 <td>{{menu.menuType}}</td>
                 <td>{{menu.menuSira}}</td>
                 <td>
-                  <center><a href="{% url 'addMenu' %}?tip=ust-menu-ekle&menuId={{menu.pk}}" type="button" class="btn btn-primary btn-xs" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;&emsp;&emsp;
-                    <a href="#" onclick="deleteObject('{{menu.pk}}','ust-menu')"  type="button" class="btn btn-danger btn-xs" title="Sil"><i class="fa-solid fa-trash-can"></i></a></center>
+                  <center><a href="{% url 'addMenu' %}?tip=ust-menu-ekle&menuId={{menu.pk}}" type="button" class="btn btn-primary btn-sm" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;&emsp;&emsp;
+                    <a href="#" onclick="deleteObject('{{menu.pk}}','ust-menu')"  type="button" class="btn btn-danger btn-sm" title="Sil"><i class="fa-solid fa-trash-can"></i></a></center>
                 </td>
 
               </tr>
@@ -134,8 +134,8 @@
                 <td>{{menu.menuType}}</td>
                 <td>{{menu.menuSira}}</td>
                 <td>
-                  <center><a href="{% url 'addMenu' %}?tip=alt-menu-ekle&menuId={{menu.pk}}" type="button" class="btn btn-primary btn-xs" title="Düzenle"><i class="fa-solid fa-trash-can"></i></a>&emsp;&emsp;&emsp;<a
-                      href="#" onclick="deleteObject('{{menu.pk}}','alt-menu')" type="button" title="Sil" class="btn btn-danger btn-xs"><i class="fa-solid fa-trash-can"></i></a></center>
+                  <center><a href="{% url 'addMenu' %}?tip=alt-menu-ekle&menuId={{menu.pk}}" type="button" class="btn btn-primary btn-sm" title="Düzenle"><i class="fa-solid fa-trash-can"></i></a>&emsp;&emsp;&emsp;<a
+                      href="#" onclick="deleteObject('{{menu.pk}}','alt-menu')" type="button" title="Sil" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a></center>
                 </td>
 
               </tr>

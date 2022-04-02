@@ -103,7 +103,7 @@ class courseSessionVideoModelForm(forms.ModelForm):
         labels = {      
             'title': "Video Başlığı",
             'url': "URL Adresi",
-            'video_type': "Video Kimlere Gözüksün",
+            'video_type': "Video Tipi"
         }
 
 

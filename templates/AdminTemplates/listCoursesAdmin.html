@@ -57,7 +57,7 @@
         <i class="fa fa-table"></i> KURSLAR
         <div style="float: right;">
           
-          <a  href="{% url 'courseAddAdmin' %}" type="button" class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i> Kurs Ekle</a>
+          <a  href="{% url 'courseAddAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kurs Ekle</a>
         </div>
       </div>
 
@@ -95,8 +95,8 @@
                     <td>
                       <center>
                         <div>
-                          <a href="{% url 'courseDetailAdmin' course.pk %}" type="button" title="Görüntüle" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>&emsp;<a href="{% url 'courseAddAdmin' %}?courseId={{course.pk}}" type="button" title="Düzenle" class="btn btn-primary btn-xs"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;<a href="{% url 'sessionListAdmin' course.pk %}" type="button" title="Bölüm/Video İşlemleri" class="btn btn-dark btn-xs"> <i class="fa-solid fa-video"></i></a>&emsp;
-                            <a type="button" onclick="deleteObject('{{course.pk}}')" title="Sil" class="btn btn-danger btn-xs" href="#"><i class="fa-solid fa-trash-can"></i></a>
+                          <a href="{% url 'courseDetailAdmin' course.pk %}" type="button" title="Görüntüle" class="btn btn-info btn-sm"><i class="fa-solid fa-eye"></i></a>&emsp;<a href="{% url 'courseAddAdmin' %}?courseId={{course.pk}}" type="button" title="Düzenle" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;<a href="{% url 'sessionListAdmin' course.pk %}" type="button" title="Bölüm/Video İşlemleri" class="btn btn-dark btn-sm"> <i class="fa-solid fa-video"></i></a>&emsp;
+                            <a type="button" onclick="deleteObject('{{course.pk}}')" title="Sil" class="btn btn-danger btn-sm" href="#"><i class="fa-solid fa-trash-can"></i></a>
                         </div>
                       </center>
                     </td>

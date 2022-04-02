@@ -56,8 +56,8 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Kurs Bölüm Videoları
         <div style="float: right;">
-            <a  href="{% url 'sessionListAdmin' session.course.pk %}" type="button" class="btn btn-secondary"><i class="fa-solid fa-list"></i> Kurs Bölümleri</a>&emsp;
-          <a  href="{% url 'sessionVideoAddAdmin' session.pk %}" type="button" class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i> Bölüme Video Ekle</a>
+            <a  href="{% url 'sessionListAdmin' session.course.pk %}" type="button" class="btn btn-secondary btn-sm"><i class="fa-solid fa-list"></i> Kurs Bölümleri</a>&emsp;
+          <a  href="{% url 'sessionVideoAddAdmin' session.pk %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Bölüme Video Ekle</a>
         </div>
       </div>
 
@@ -93,8 +93,8 @@
                   <td>{{video.created_date.date}}</td>
                  
                   <td>
-                    <center><a href="{% url 'sessionVideoAddAdmin' pk=session.pk %}?currentId={{video.pk}}" type="button" class="btn btn-primary btn-xs" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;
-                      <a type="button" class="btn btn-danger btn-xs" onclick="deleteObject('{{video.pk}}')" title="Sil" href="#"><i class="fa-solid fa-trash-can"></i></a></center>
+                    <center><a href="{% url 'sessionVideoAddAdmin' pk=session.pk %}?currentId={{video.pk}}" type="button" class="btn btn-primary btn-sm" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>&emsp;
+                      <a type="button" class="btn btn-danger btn-sm" onclick="deleteObject('{{video.pk}}')" title="Sil" href="#"><i class="fa-solid fa-trash-can"></i></a></center>
                   </td>
   
                 </tr>
