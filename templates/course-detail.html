@@ -314,6 +314,8 @@
 
 
 
+{% if request.user.is_authenticated %}
+		
 
 {% if commentStatus == "writtenBefore" %}
 	<center><p style="color: red; font-weight: bold;">Daha önceden yorum yaptığınız için başka yorum yapamazsınız</p></center>
@@ -341,6 +343,9 @@
 							</form>
 						</div>
 				
+{% endif %}
+{% else %}
+<center><p style="color: red; font-weight: bold;">Yorum yapmak için giriş yapmanız gerekmektedir.</p></center>
 {% endif %}
 
 
