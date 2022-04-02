@@ -228,12 +228,12 @@ def courseDetail(request,slug):
     learns=whatWillYouLearnModel.objects.filter(course=course).order_by("created_date")
     sessions=courseSessionModel.objects.filter(course=course).order_by("created_date")
     comments=CommentModel.objects.filter(course=course,parent=None).order_by("created_date")
-    billings=billingCourseModel.objects.filter(payment_user=request.user,course=course).all()
     has_bougth="false"
-    if billings:
-        has_bougth="true"
-    for cs in comments:
-        if request.user.is_authenticated:
+    if request.user.is_authenticated:
+        billings=billingCourseModel.objects.filter(payment_user=request.user,course=course).all()
+        if billings:
+            has_bougth="true"
+        for cs in comments:
             if cs.comment_user==request.user and cs.is_published==True:
                 commentStatus="writtenBefore"
             elif cs.comment_user==request.user and cs.is_published==False:
