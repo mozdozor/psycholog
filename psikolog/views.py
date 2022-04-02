@@ -233,10 +233,11 @@ def courseDetail(request,slug):
     if billings:
         has_bougth="true"
     for cs in comments:
-        if cs.comment_user==request.user and cs.is_published==True:
-            commentStatus="writtenBefore"
-        elif cs.comment_user==request.user and cs.is_published==False:
-            commentStatus="pendingComment"
+        if request.user.is_authenticated:
+            if cs.comment_user==request.user and cs.is_published==True:
+                commentStatus="writtenBefore"
+            elif cs.comment_user==request.user and cs.is_published==False:
+                commentStatus="pendingComment"
     comments=comments.filter(is_published=True).order_by("created_date")
     context={
         "course":course,
