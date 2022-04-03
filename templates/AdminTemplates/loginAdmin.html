@@ -48,7 +48,7 @@
 	<div id="login">
 		<aside>
 			<figure>
-				<a href="index.html"><img src="{{adminLogoSite.image.url}}" width="149" height="42" data-retina="true" alt=""></a>
+				<a href="{% url 'loginAdmin' %}"><img src="{{adminLogoSite.image.url}}" width="149" height="42" data-retina="true" alt=""></a>
 			</figure>
 			  <form method="POST" action="{% url 'loginAdmin' %}">
 				{% csrf_token %}
