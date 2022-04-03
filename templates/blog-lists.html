@@ -55,7 +55,7 @@
 							<div class="post_info">
 								<small>{{blog.created_date.date}}</small>
 								<h3><a href="{% url 'blogDetail' blog.slug %}">{{blog.title}}</a></h3>
-								<p>{{blog.description|safe|truncatechars:142}}</p>
+								<p>{{blog.description|safe|truncatechars:140}}</p>
 								<ul>
 									<li>
 										<div class="thumb"><img src="{{blog.author.image.url}}" alt=""></div>
@@ -79,24 +79,6 @@
 
 				{% endif %}
 
-				<!-- /article -->
-
-
-
-				<!-- <nav aria-label="...">
-						<ul class="pagination pagination-sm">
-							<li class="page-item disabled">
-								<a class="page-link" href="#" tabindex="-1">Previous</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#">Next</a>
-							</li>
-						</ul>
-					</nav> -->
-				<!-- /pagination -->
 			</div>
 			<!-- /col -->
 
