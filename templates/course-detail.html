@@ -4,7 +4,6 @@
 {% load static %}
 
 {% load is_favourite %}
-{% load getVideoInfo %}
 
 
 
@@ -104,7 +103,7 @@
 							<h2>Videolar</h2>
 							<ul>
 								<li>{{course.countOfVideos}} kurs videosu</li>
-								<li>Süre?</li>
+								<li></li>
 							</ul>
 						</div>
 
@@ -153,21 +152,21 @@
 												{% if session.getVideos %}
 
 												{% for video in session.getVideos %}
-												{% youtubeData video.url as videoDuration %}
+												
 
 												
 												
 												{% if video.video_type == "herkes" %}
 												<li ><a style="color: green; font-weight: bold;" href="{{video.url}}"
-													class="video">{{video.title}}</a><span>{{videoDuration}}</span></li>
+													class="video">{{video.title}}</a><span></span></li>
 												{% else %}
 													
 													{% if has_bougth == "true" %}
 													<li ><a style="color: green; font-weight: bold;" href="{{video.url}}"
-														class="video">{{video.title}}</a><span>{{videoDuration}}</span></li>
+														class="video">{{video.title}}</a><span></span></li>
 													 {% else %}
 													 <li><a href="#" style="pointer-events: none; cursor: default;"
-														class="video"><i class="fa-solid fa-lock"></i> {{video.title}}</a><span>{{videoDuration}}</span></li>
+														class="video"><i class="fa-solid fa-lock"></i> {{video.title}}</a><span></span></li>
 													{% endif %}
 														
 												
