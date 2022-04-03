@@ -36,6 +36,7 @@ SECRET_KEY = env('SECRET_KEY')
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -44,15 +45,15 @@ INSTALLED_APPS = [
     'Admin',
     'storages',
     'ckeditor',
-    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     'django_cleanup.apps.CleanupConfig', # should be placed after your apps
 ]
 
-SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,11 +144,7 @@ CKEDITOR_CONFIGS = {
 
 
 
-EMAIL_HOST = 'smtp.gmail.com'  
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')  
-EMAIL_PORT = '587'  
-EMAIL_USE_TLS = True
+
 
 
 
@@ -158,6 +155,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
+
+SITE_ID = 1
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -174,3 +173,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+
+SOCIALACCOUNT_ADAPTER = "psikolog.adapter.MySocialAccountAdapter"

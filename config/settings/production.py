@@ -74,3 +74,12 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 DEFAULT_FILE_STORAGE = 'config.storage_backend.MediaStorage'
+
+
+
+
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')  
+EMAIL_PORT = '587'  
+EMAIL_USE_SSL = True
