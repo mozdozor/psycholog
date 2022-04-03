@@ -317,7 +317,7 @@ def contact(request):
             try:
                 send_mail(
                     form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"]+" )",
-                    form.cleaned_data["mesaj"]+"\n\n\n ( "+form.cleaned_data["email"]+" )",
+                    "turkazepsikolog.com sitesinden yeni bir mailiniz var.\n\n"+form.cleaned_data["mesaj"]+"\n\n\n ( "+form.cleaned_data["email"]+" )",
                     form.cleaned_data["phone_number"],
                     ["muhammetay651@gmail.com","muhammet19071340@gmail.com"],
                 )
