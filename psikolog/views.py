@@ -16,6 +16,8 @@ from django.core.mail import send_mail
 from django.db.models import Avg
 import urllib
 import json
+import smtplib , ssl
+import getpass
 
 
 # Create your views here.
@@ -312,15 +314,20 @@ def contact(request):
         form = IletisimModelForm(request.POST)
         if form.is_valid(): 
             form.save()
-           # print(form.cleaned_data["mesaj"])
-            send_mail(
-                form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"]+" )",
-                form.cleaned_data["mesaj"]+"\n\n\n ( "+form.cleaned_data["email"]+" )",
-                form.cleaned_data["phone_number"],
-                ["muhammetay651@gmail.com","muhammet19071340@gmail.com"],
-            )
-            messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.")
-            return redirect("contact")
+            try:
+                send_mail(
+                    form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"]+" )",
+                    form.cleaned_data["mesaj"]+"\n\n\n ( "+form.cleaned_data["email"]+" )",
+                    form.cleaned_data["phone_number"],
+                    ["muhammetay651@gmail.com","muhammet19071340@gmail.com"],
+                )
+                messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.")
+                return redirect("contact")
+            except:
+                messages.error(request,"Mesajınız gönderilirken bir hata oldu.Lütfen yönetici ile iletişime geçiniz.")
+                return redirect("contact")
+
+            
     form = IletisimModelForm()
     context={
         "form":form,
