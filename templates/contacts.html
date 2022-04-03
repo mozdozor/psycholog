@@ -32,18 +32,18 @@
 					<li>
 						<i class="pe-7s-map-marker"></i>
 						<h4>Adres</h4>
-						<span>İzmir/Buca ADATAPE Mahallesi </span>
+						<span></span>
 					</li>
 					<li>
 						<i class="pe-7s-mail-open-file"></i>
 						<h4>Email Adresi</h4>
-						<span>admission@turkaze.com - info@turkaze.com<br><small> Pazartesinden Cumaya 7/24 Destek</small></span>
+						<span>{{sm.email}}<br><small> </small></span>
 
 					</li>
 					<li>
 						<i class="pe-7s-phone"></i>
 						<h4>Telefon</h4>
-						<span>05355355353<br><small> Pazartesinden Cumaya 7/24 Destek</small></span>
+						<span>{{sm.phone_number}}<br><small></small></span>
 					</li>
 				</ul>
 			</div>
@@ -55,9 +55,8 @@
 			<div class="container margin_120_95">
 				<div class="row justify-content-between">
 					<div class="col-lg-5">
-						<div class="map_contact">
-						</div>
-						<!-- /map -->
+						<lottie-player src="https://assets4.lottiefiles.com/packages/lf20_ukyEZh.json"  background="transparent"  speed="1"  style="width:100%;"  loop autoplay></lottie-player>
+
 					</div>
 					<div class="col-lg-6">
 						<h4>Mesaj Gönder</h4>
@@ -89,7 +88,7 @@
                 {% endif %}
 
 						<div id="message-contact"></div>
-						<form method="post" action="{% url 'contact' %}" id="contactform" autocomplete="off">
+						<form method="post" action="{% url 'contact' %}">
 							{% csrf_token %}
 							<div class="row">
 
@@ -161,6 +160,9 @@
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 	<script type="text/javascript" src="{% static 'assets/js/mapmarker.jquery.js' %}"></script>
 	<script type="text/javascript" src="{% static 'assets/js/mapmarker_func.jquery.js' %}"></script>
+
+
+	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 {% endblock jsFiles %}
 

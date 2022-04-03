@@ -210,7 +210,7 @@
                                                 alt=""></a>
                                     </div>
                                     <small>{{blog.created_date.date}}</small>
-                                    <h3><a href="{% url 'blogDetail' blog.slug %}" title="">{{blog.description|safe|truncatechars:30}}</a></h3>
+                                    <h3><a href="{% url 'blogDetail' blog.slug %}" title="">{{blog.title|safe|truncatechars:30}}</a></h3>
                                 </li>
                             {% endfor %}
                                 
