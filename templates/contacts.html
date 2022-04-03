@@ -63,55 +63,67 @@
 						<h4>Mesaj Gönder</h4>
 						
 					
-							
 						<p>Aklınıza takılan ne varsa bizimle iletişime geçebilirsiniz.</p>
+
+						<br>
+						{% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+
+                    {% if message.tags == "error" %}
+                    <div class="alert alert-danger" role="alert">
+
+                        <center><strong>{{message}}</strong></center>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-success" role="alert">
+
+                        <center><strong>{{message}}</strong></center>
+                    </div>
+                    {% endif %}
+
+
+
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
 						<div id="message-contact"></div>
 						<form method="post" action="{% url 'contact' %}" id="contactform" autocomplete="off">
 							{% csrf_token %}
 							<div class="row">
-								<div class="col-md-6">
+
+								
+								{% for field in form.visible_fields %}
+									
+								
+								{% if forloop.last %}
+								<div class="col-md-12">
 									<span class="input">
-										{{form.visible_fields.0}}
+										{{field}}
 										<label class="input_label">
-											<span class="input__label-content">İsim</span>
+											<span class="input__label-content">{{field.label_tag}}</span>
 										</label>
 									</span>
 								</div>
+								{% else %}
 								<div class="col-md-6">
 									<span class="input">
-										{{form.visible_fields.1}}
+										{{field}}
 										<label class="input_label">
-											<span class="input__label-content">Soyisim</span>
+											<span class="input__label-content">{{field.label_tag}}</span>
 										</label>
 									</span>
 								</div>
+								{% endif %}
+									
+							
+
+								{% endfor %}
+								
 							</div>
 							<!-- /row -->
-							<div class="row">
-								<div class="col-md-6">
-									<span class="input">
-										{{form.visible_fields.2}}
-										<label class="input_label">
-											<span class="input__label-content">Email</span>
-										</label>
-									</span>
-								</div>
-								<div class="col-md-6">
-									<span class="input">
-										{{form.visible_fields.3}}
-										<label class="input_label">
-											<span class="input__label-content">Telefon</span>
-										</label>
-									</span>
-								</div>
-							</div>
-							<!-- /row -->
-							<span class="input">
-								{{form.visible_fields.4}}
-									<label class="input_label">
-										<span class="input__label-content">Mesajınız</span>
-									</label>
-							</span>
+						
 							<!-- <span class="input">
 									<input class="input_field" type="text" id="verify_contact" name="verify_contact">
 									<label class="input_label">

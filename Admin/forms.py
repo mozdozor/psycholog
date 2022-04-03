@@ -298,14 +298,14 @@ class IletisimModelForm(forms.ModelForm):
             "lastName" : TextInput(attrs={"class":"input_field","type":"text","name":"lastName","required":"required"}),
             "phone_number" : TextInput(attrs={"class":"input_field","type":"text","name":"phone_number","required":"required"}),
             "email" : TextInput(attrs={"class":"input_field","type":"email","name":"email","required":"required"}),
-            "mesaj" : TextInput(attrs={"class":"input_field","type":"text","name":"mesaj","required":"required"}),
+            "mesaj" : Textarea(attrs={"class":"input_field","type":"text","name":"mesaj","required":"required"}),
             
         }
-        # labels = {      
-        #     'name': "İsim",
-        #     'lastName': "Soyisim",
-        #     'phone_number': "Telefon",
-        #     'email': "Email",
-        #     'mesaj': "Mesaj",
+        labels = {      
+            'name': "İsim",
+            'lastName': "Soyisim",
+            'phone_number': "Telefon",
+            'email': "Email",
+            'mesaj': "Mesaj",
             
-        # }
+        }
