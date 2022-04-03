@@ -104,11 +104,11 @@
 						{% for blog in lastThreeBlogs %}
 						<li>
 							<div class="alignleft">
-								<a href="{% url 'blogDetail' blog.slug %}"><img src="{{blog.image.url}}"
-										alt=""></a>
+								<a href="{% url 'blogDetail' blog.slug %}"><img src="{{blog.image.url}}" alt=""></a>
+										
 							</div>
 							<small>{{blog.created_date.date}}</small>
-							<h3><a href="#" title="">{{blog.description|safe|truncatechars:30}}</a></h3>
+							<h3><a href="{% url 'blogDetail' blog.slug %}" title="">{{blog.description|safe|truncatechars:20}}</a></h3>
 						</li>
 						{% endfor %}
 
@@ -134,20 +134,8 @@
 					</ul>
 				</div>
 				<!-- /widget -->
-				<!-- <div class="widget">
-					<div class="widget-title">
-						<h4>Popular Tags</h4>
-					</div>
-					<div class="tags">
-						<a href="#">Information tecnology</a>
-						<a href="#">Students</a>
-						<a href="#">Community</a>
-						<a href="#">Carreers</a>
-						<a href="#">Literature</a>
-						<a href="#">Seminars</a>
-					</div>
-				</div> -->
-				<!-- /widget -->
+				
+				
 			</aside>
 			<!-- /aside -->
 		</div>
