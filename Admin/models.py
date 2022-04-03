@@ -70,7 +70,7 @@ class IletisimModel(models.Model):
     lastName=models.CharField(max_length=100)
     email=models.EmailField(max_length=100)
     phone_number=models.CharField(max_length=20)
-    subject=models.CharField(max_length=100)
+    subject=models.CharField(max_length=100,default="",blank=True,null=True)
     mesaj=models.TextField()
     olusturulma_tarihi=models.DateTimeField(auto_now_add=True)
     okundu_bilgisi = models.CharField(

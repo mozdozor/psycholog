@@ -3,7 +3,7 @@ from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, socialModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, socialModel, whatWillYouLearnModel
 
 
 
@@ -284,3 +284,28 @@ class socialModelForm(forms.ModelForm):
             'phone_number': "Tellefon",
             'email': "Email Adresiniz",
         }
+
+
+
+
+
+class IletisimModelForm(forms.ModelForm):
+    class Meta:
+        model = IletisimModel
+        fields=("name","lastName","email","phone_number","mesaj")
+        widgets = {
+            "name" : TextInput(attrs={"class":"input_field","type":"text","name":"name","required":"required"}),
+            "lastName" : TextInput(attrs={"class":"input_field","type":"text","name":"lastName","required":"required"}),
+            "phone_number" : TextInput(attrs={"class":"input_field","type":"text","name":"phone_number","required":"required"}),
+            "email" : TextInput(attrs={"class":"input_field","type":"email","name":"email","required":"required"}),
+            "mesaj" : TextInput(attrs={"class":"input_field","type":"text","name":"mesaj","required":"required"}),
+            
+        }
+        # labels = {      
+        #     'name': "İsim",
+        #     'lastName': "Soyisim",
+        #     'phone_number': "Telefon",
+        #     'email': "Email",
+        #     'mesaj': "Mesaj",
+            
+        # }

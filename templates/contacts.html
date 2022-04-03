@@ -49,6 +49,7 @@
 			</div>
 		</div>
 		<!--/contact_info-->
+	
 
 		<div class="bg_color_1">
 			<div class="container margin_120_95">
@@ -60,13 +61,17 @@
 					</div>
 					<div class="col-lg-6">
 						<h4>Mesaj Gönder</h4>
+						
+					
+							
 						<p>Aklınıza takılan ne varsa bizimle iletişime geçebilirsiniz.</p>
 						<div id="message-contact"></div>
-						<form method="post" action="assets/contact.php" id="contactform" autocomplete="off">
+						<form method="post" action="{% url 'contact' %}" id="contactform" autocomplete="off">
+							{% csrf_token %}
 							<div class="row">
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="text" id="name_contact" name="name_contact">
+										{{form.visible_fields.0}}
 										<label class="input_label">
 											<span class="input__label-content">İsim</span>
 										</label>
@@ -74,7 +79,7 @@
 								</div>
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="text" id="lastname_contact" name="lastname_contact">
+										{{form.visible_fields.1}}
 										<label class="input_label">
 											<span class="input__label-content">Soyisim</span>
 										</label>
@@ -85,7 +90,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="email" id="email_contact" name="email_contact">
+										{{form.visible_fields.2}}
 										<label class="input_label">
 											<span class="input__label-content">Email</span>
 										</label>
@@ -93,7 +98,7 @@
 								</div>
 								<div class="col-md-6">
 									<span class="input">
-										<input class="input_field" type="text" id="phone_contact" name="phone_contact">
+										{{form.visible_fields.3}}
 										<label class="input_label">
 											<span class="input__label-content">Telefon</span>
 										</label>
@@ -102,7 +107,7 @@
 							</div>
 							<!-- /row -->
 							<span class="input">
-									<textarea class="input_field" id="message_contact" name="message_contact" style="height:150px;"></textarea>
+								{{form.visible_fields.4}}
 									<label class="input_label">
 										<span class="input__label-content">Mesajınız</span>
 									</label>

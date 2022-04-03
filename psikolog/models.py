@@ -163,3 +163,10 @@ class favouriteCourseModel(models.Model):
 
     def __str__(self):
         return self.course.title
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@ from email import message
 import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render
-from Admin.forms import CommentModelForm
+from Admin.forms import CommentModelForm, IletisimModelForm
 from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, gizlilikMetniModel, kvkkMetniModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
@@ -308,7 +308,22 @@ def aboutUs(request):
 
 
 def contact(request):
+    if request.method == "POST":
+        form = IletisimModelForm(request.POST)
+        if form.is_valid(): 
+            form.save()
+           # print(form.cleaned_data["mesaj"])
+            send_mail(
+                form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"]+" )",
+                form.cleaned_data["mesaj"]+"\n\n\n ( "+form.cleaned_data["email"]+" )",
+                form.cleaned_data["phone_number"],
+                ["muhammetay651@gmail.com","muhammet19071340@gmail.com"],
+            )
+            messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.")
+            return redirect("contact")
+    form = IletisimModelForm()
     context={
+        "form":form,
     }
     return render(request,"contacts.html",context)
 
@@ -446,3 +461,5 @@ def allBlogs(request):
         
     }
     return render(request,"blog-lists.html",context)
+
+

@@ -37,10 +37,11 @@ method="post"
 
                 
                 {% for field in form.visible_fields  %}
+				{{ field.label_tag }}
                 
 				<div class="col-md-12">
 					<div class="form-group">
-						{{ field.label_tag }}
+						
                         {{ field }}
 						
 					</div>

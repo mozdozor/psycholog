@@ -90,3 +90,6 @@ class CommentModelStarsForm(forms.ModelForm):
         widgets = {           
             "comment" : Textarea(attrs={"class":"form-control","cols":"40","rows":"3"}),          
         }
+
+
+
