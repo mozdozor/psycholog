@@ -14,10 +14,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.core.mail import send_mail
 from django.db.models import Avg
-import urllib
-import json
-import smtplib , ssl
-import getpass
+from django.db.models import Q
 
 
 # Create your views here.
@@ -176,6 +173,17 @@ def coursesGridList(request):
         if 'star' in request.POST.keys():
             selectedStars=request.POST.getlist("star")
             courses=courses.filter(average_star__in=selectedStars)
+        if 'q' in request.POST.keys():
+            q=request.POST.get("q",None)
+            lower_map = {
+                ord(u'I'): u'ı',
+                ord(u'İ'): u'i',
+            }
+            q= q.translate(lower_map).lower()
+            for co in courses:
+                title= co.title.translate(lower_map).lower()
+                if q not in title:
+                    courses.pop(co)
     else:
         categoryName=request.GET.get("kategori-adi",None)
         if categoryName:
@@ -310,6 +318,7 @@ def aboutUs(request):
 
 
 def contact(request):
+    user=CustomUserModel.objects.filter(is_staff=1).first()
     if request.method == "POST":
         form = IletisimModelForm(request.POST)
         if form.is_valid(): 
@@ -331,6 +340,7 @@ def contact(request):
     form = IletisimModelForm()
     context={
         "form":form,
+        "address":user.address
     }
     return render(request,"contacts.html",context)
 

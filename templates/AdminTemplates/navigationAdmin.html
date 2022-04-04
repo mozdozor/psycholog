@@ -57,6 +57,7 @@
           </ul>
         </li>
 
+       
 
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
@@ -70,6 +71,13 @@
           <a class="nav-link" href="{% url 'userListAdmin' %}">
             <i class="fa fa-fw fa-users"></i>
             <span class="nav-link-text">Kullanıcılar</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+          <a class="nav-link" href="{% url 'blogListAdmin' %}">
+            <i class="fa-solid fa-bookmark"></i>
+            <span class="nav-link-text"> Blog Ayarları</span>
           </a>
         </li>
        
@@ -124,9 +132,7 @@
             <li>
               <a href="{% url 'showPagesAdmin' %}">Seo Ayarları</a>
             </li>
-            <li>
-              <a href="{% url 'blogListAdmin' %}">Blog Ayarları</a>
-            </li>
+            
             <li>
               <a href="{% url 'socialMediaAdmin' %}">Sosyal Medya Ayarları</a>
             </li>
@@ -269,11 +275,12 @@
           </div>
         </li>
         <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
+          <form class="form-inline my-2 my-lg-0 mr-lg-2" action="{% url 'showAllMessages' %}" method="post">
+            {% csrf_token %}
             <div class="input-group">
-              <input class="form-control search-top" type="text" placeholder="Search for...">
+              <input class="form-control search-top" type="text" name="q" placeholder="Mesajlarda Ara...">
               <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="submit">
                   <i class="fa fa-search"></i>
                 </button>
               </span>

@@ -100,6 +100,20 @@ def showAllMessages(request):
         i.okundu_bilgisi="okundu"
         i.save()
     new_messages=IletisimModel.objects.all()
+    messages=list()
+    if request.method == "POST":
+        if "q" in request.POST.keys():
+            q=request.POST.get("q",None)
+            lower_map = {
+                ord(u'I'): u'ı',
+                ord(u'İ'): u'i',
+            }
+            q= q.translate(lower_map).lower()
+            for co in new_messages:
+                title= co.mesaj.translate(lower_map).lower()
+                if q in title:
+                    messages.append(co)
+            new_messages=messages
     context={
         "new_messages":new_messages,
     }
@@ -809,7 +823,7 @@ def listLogoAdmin(request):
     if logo:
         pass
     else:
-        logo=LogoModel.objects.create(name="Udema")
+        logo=LogoModel.objects.create(name="Turkaze")
     context={
         "logo":logo,
     }

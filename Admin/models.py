@@ -174,6 +174,11 @@ class CourseModel(models.Model):
         self.slug = f'{self.title}'
         super().save(*args, **kwargs)
 
+    
+  
+    def countOfAllComments(self):
+        return CommentModel.objects.filter(is_published=True,course=self).count()
+
 
 
 class whatWillYouLearnModel(models.Model):
@@ -421,7 +426,7 @@ class blogModel(models.Model):
 
     
     def totalCommentCount(self):
-        return CommentModel.objects.filter(is_published=True).all().count()
+        return CommentModel.objects.filter(is_published=True,blog=self).all().count()
 
     
     def get_categories(self):

@@ -8,6 +8,8 @@
 {% block cssFiles %}
 	<!-- SPECIFIC CSS -->
     <link href="{% static 'assets/layerslider/css/layerslider.css' %}" rel="stylesheet">
+
+   
 {% endblock cssFiles %}
     
 
@@ -110,9 +112,9 @@
                                     <small>(145)</small></div>
                             </div>
                             <ul>
-                                <li><i class="icon_clock_alt"></i> 1h 30min</li>
-                                <li><i class="icon_like"></i> 890</li>
-                                <li><a class="video" href="{{course.sessions.all.first.videos.all.first.url}}"><i class="fa-solid fa-video"></i> Önizle</a></li>
+                                <li><i class="icon_clock_alt"></i> 1 saat 15 dk</li>
+                                <li><i class="fa-solid fa-comment"></i> {{course.countOfAllComments}}</li>
+                                <li><a class="video" href="{{course.sessions.all.first.videos.all.first.url}}"><i class="fa-solid fa-video"></i></a></li>
                                 <li><a href="{% url 'courseDetail' course.slug %}">İncele</a></li>
                             </ul>
                         </div>
@@ -226,6 +228,7 @@
     </div> -->
     <!--/call_section-->
 
+    
    
 
 </main>
