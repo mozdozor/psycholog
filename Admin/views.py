@@ -80,8 +80,10 @@ def loginAdmin(request):
                 return redirect("indexAdmin")
             else:
                 messages.error(request,"Kullanıcı adı ya da parolanız hatalıdır.")
+                return redirect("indexAdmin")
         else:
             messages.error(request,"Kullanıcı adı ya da parolanız hatalıdır.")
+            return redirect("indexAdmin")
     form = AuthenticationForm()
     return render(request=request, template_name="AdminTemplates/loginAdmin.html", context={"form":form})
 
