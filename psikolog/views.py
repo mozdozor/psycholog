@@ -603,7 +603,7 @@ def callback(request):
 
     # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     # POST değerleri ile hash oluştur.
-    hash_str = post['merchant_oid'] + merchant_salt + post['status'] + post['total_amount']
+    hash_str = post['merchant_oid'] + merchant_salt + post['status'] + str(post['total_amount'])
     hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode(), hashlib.sha256).digest())
 
     # Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır
