@@ -628,8 +628,7 @@ def callback(request):
         3) 1. ADIM'da gönderilen payment_amount sipariş tutarı taksitli alışveriş yapılması durumunda değişebilir. 
         Güncel tutarı post['total_amount'] değerinden alarak muhasebe işlemlerinizde kullanabilirsiniz.
         """
-        context['success'] = 'Başarılı'
-        #print(request)
+        print(request)
     else:  # Ödemeye Onay Verilmedi
         """
         BURADA YAPILMASI GEREKENLER
@@ -638,8 +637,7 @@ def callback(request):
         post['failed_reason_code'] - başarısız hata kodu
         post['failed_reason_msg'] - başarısız hata mesajı
         """
-        context['failure'] = 'Başarısız'
-        #print(request)
+        print(request)
 
     # Bildirimin alındığını PayTR sistemine bildir.
     return HttpResponse(str('OK'))
