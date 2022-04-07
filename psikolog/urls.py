@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
-    kvkkMetni,blogDetail,allBlogs
+    kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback
 )
 
 urlpatterns = [
@@ -30,5 +30,9 @@ urlpatterns = [
     path('kvkk-metni',kvkkMetni,name="kvkkMetni"),
     path('blog-detay/<slug:slug>',blogDetail,name="blogDetail"),
     path('tum-blog-yazilari',allBlogs,name="allBlogs"),
+    path('odeme-sayfasi/<slug:slug>',paymentPage,name="paymentPage"),
+    path('basarili-odeme/<slug:slug>',successPayment,name="successPayment"),
+    path('hatali-odeme/<slug:slug>',failPayment,name="failPayment"),
+    path('odeme-sonucu',callback,name="callback"),
 
-]
+]   

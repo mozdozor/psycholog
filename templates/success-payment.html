@@ -1,0 +1,77 @@
+
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+
+
+
+
+{% block divFeatures %} id="page"{% endblock divFeatures %}
+
+
+{% block cssFiles %}
+<link href="{% static 'assets/css/custom.css' %}" rel="stylesheet">
+{% endblock cssFiles %}
+
+
+
+{% block content %}
+	
+	
+	<main>
+		<section id="hero_in" class="cart_section">
+			<div class="wrapper">
+				<div class="container">
+					<div class="bs-wizard clearfix">
+						<div class="bs-wizard-step">
+							<div class="text-center bs-wizard-stepnum">Kurs Beğen</div>
+							<div class="progress">
+								<div class="progress-bar"></div>
+							</div>
+							<a href="{% url 'coursesGridList' %}" class="bs-wizard-dot"></a>
+						</div>
+
+						<div class="bs-wizard-step">
+							<div class="text-center bs-wizard-stepnum">Ödeme</div>
+							<div class="progress">
+								<div class="progress-bar"></div>
+							</div>
+							<a href="#0" class="bs-wizard-dot"></a>
+						</div>
+
+						<div class="bs-wizard-step active">
+							<div class="text-center bs-wizard-stepnum">Sonuç</div>
+							<div class="progress">
+								<div class="progress-bar"></div>
+							</div>
+							<a href="#0" class="bs-wizard-dot"></a>
+						</div>
+					</div>
+					<!-- End bs-wizard -->
+					<div id="confirm">
+						<h4>Kursu başarıyla satın aldınız!</h4>
+						<p>Hemen şimdi kursa başlayabilirsiniz</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+	</main>
+	<!--/main-->
+	
+	{% endblock content %}
+
+
+
+{% block jsFiles %}
+		
+<script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'assets/js/common_scripts.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/validate.js' %}"></script>
+		
+{% endblock jsFiles %}
+	

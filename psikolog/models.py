@@ -170,3 +170,20 @@ class favouriteCourseModel(models.Model):
 
 
 
+
+
+class orderModel(models.Model):
+    course=models.ForeignKey("Admin.CourseModel",on_delete=models.CASCADE)
+    user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="orderCourses")
+    status=models.CharField(max_length=10)
+    merchant_oid=models.CharField(max_length=250)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+
+    class Meta:
+        db_table="siparis"
+        verbose_name = "Siparis"
+        verbose_name_plural = "Siparisler"
+
+    def __str__(self):
+        return self.course.title

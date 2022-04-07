@@ -441,7 +441,7 @@
 						</div>
 						{% isFavourite request course.pk as favouritea %}
 
-						<a href="#0" class="btn_1 full-width">Satın Al</a>
+						<a href="{% url 'paymentPage' course.slug %}" class="btn_1 full-width">Satın Al</a>
 						<a href="{% url 'AddFavouritesCoursesGridList' course.pk %}" 
 						{% if favouritea %}
 							style="color: green;"

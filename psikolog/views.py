@@ -1,12 +1,12 @@
 from email import message
 import math
 from unicodedata import category
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm
 from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, gizlilikMetniModel, kvkkMetniModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
-from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, sliderModel
+from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, orderModel, sliderModel
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate,update_session_auth_hash,logout
@@ -15,8 +15,14 @@ from django.contrib.auth.decorators import login_required, permission_required, 
 from django.core.mail import send_mail
 from django.db.models import Avg
 from django.db.models import Q
-
-
+import base64
+import hmac
+import hashlib
+import requests
+import json
+import environ
+import secrets
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -480,3 +486,195 @@ def allBlogs(request):
     return render(request,"blog-lists.html",context)
 
 
+
+
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+
+
+currentCourse=""
+currentUser=""
+
+
+
+
+
+@login_required(login_url="login")
+def paymentPage(request,slug):
+    course=get_object_or_404(CourseModel,slug=slug)
+    currentCourse=course
+    currentUser=request.user
+    env = environ.Env()
+    environ.Env.read_env("../config/.env")
+    merchant_id = env("merchant_id")
+    merchant_key = env("merchant_key").encode()
+    merchant_salt = env("merchant_salt").encode()
+    email = request.user.email
+    payment_amount = (course.price)* 100 
+    merchant_oid = "SPR"+secrets.token_hex(10)
+    user_name = request.user.get_full_name()
+    user_address = request.user.address
+    user_phone = request.user.phone_number
+    merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-odeme/'+course.slug  #turkaze olarak değiştirirelecek
+    merchant_fail_url = 'http://'+request.META['HTTP_HOST']+'/hatali-odeme/'+course.slug  #turkaze olarak değiştirirelecek
+    user_basket = base64.b64encode(json.dumps([[course.title, payment_amount, 1],]).encode())
+        
+    user_ip = get_client_ip(request)  #canlıda test yap
+    timeout_limit = '30'
+    debug_on = '1'   #canlıda 0 yap
+    test_mode = '1' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
+    no_installment = '0' # Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
+    max_installment = '0'
+    currency = 'TL'
+
+        # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
+    hash_str = merchant_id + user_ip + merchant_oid + email + str(payment_amount) + user_basket.decode() + no_installment + max_installment + currency + test_mode
+    paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode() + merchant_salt, hashlib.sha256).digest())
+
+    params = {
+        'merchant_id': merchant_id,
+        'user_ip': user_ip,
+        'merchant_oid': merchant_oid,
+        'email': email,
+        'payment_amount': payment_amount,
+        'paytr_token': paytr_token,
+        'user_basket': user_basket,
+        'debug_on': debug_on,
+        'no_installment': no_installment,
+        'max_installment': max_installment,
+        'user_name': user_name,
+        'user_address': user_address,
+        'user_phone': user_phone,
+        'merchant_ok_url': merchant_ok_url,
+        'merchant_fail_url': merchant_fail_url,
+        'timeout_limit': timeout_limit,
+        'currency': currency,
+        'test_mode': test_mode
+    }
+
+    result = requests.post('https://www.paytr.com/odeme/api/get-token', params)
+    res = json.loads(result.text)
+    print(res)
+    context={
+        "course":course,
+        'token': res['token']
+        
+    }
+    if res['status'] == 'success':
+        print("success")
+      
+    else:
+        context["failOfToken"]="Token Hatası"
+        return render(request,"fail-payment.html",context)
+
+    return render(request,"payment-page.html",context)
+
+
+
+
+
+
+
+
+
+
+@csrf_exempt
+def callback(request):  
+    context={}
+    env = environ.Env()
+    environ.Env.read_env("../config/.env")
+    if request.method != 'POST':
+        return HttpResponse(str(''))
+
+    post = request.POST
+
+    # API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
+    merchant_key = env("merchant_key").encode()
+    merchant_salt = env("merchant_salt")   
+
+    # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
+    # POST değerleri ile hash oluştur.
+    hash_str = post['merchant_oid'] + merchant_salt + post['status'] + post['total_amount']
+    hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode(), hashlib.sha256).digest())
+
+    # Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır
+    # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
+    # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
+    if hash != post['hash']:
+        return HttpResponse(str('PAYTR notification failed: bad hash'))
+
+    
+  
+
+    # BURADA YAPILMASI GEREKENLER
+    # 1) Siparişin durumunu post['merchant_oid'] değerini kullanarak veri tabanınızdan sorgulayın.
+    # 2) Eğer sipariş zaten daha önceden onaylandıysa veya iptal edildiyse "OK" yaparak sonlandırın.
+
+    if post['status'] == 'success':  # Ödeme Onaylandı
+
+        orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
+
+        """
+        BURADA YAPILMASI GEREKENLER
+        1) Siparişi onaylayın.
+        2) Eğer müşterinize mesaj / SMS / e-posta gibi bilgilendirme yapacaksanız bu aşamada yapmalısınız.
+        3) 1. ADIM'da gönderilen payment_amount sipariş tutarı taksitli alışveriş yapılması durumunda değişebilir. 
+        Güncel tutarı post['total_amount'] değerinden alarak muhasebe işlemlerinizde kullanabilirsiniz.
+        """
+        context['success'] = 'Başarılı'
+        print(request)
+    else:  # Ödemeye Onay Verilmedi
+        """
+        BURADA YAPILMASI GEREKENLER
+        1) Siparişi iptal edin.
+        2) Eğer ödemenin onaylanmama sebebini kayıt edecekseniz aşağıdaki değerleri kullanabilirsiniz.
+        post['failed_reason_code'] - başarısız hata kodu
+        post['failed_reason_msg'] - başarısız hata mesajı
+        """
+        context['failure'] = 'Başarısız'
+        print(request)
+
+    # Bildirimin alındığını PayTR sistemine bildir.
+    return HttpResponse(str('OK'))
+
+
+
+
+
+
+
+
+
+
+
+@login_required(login_url="login")
+def successPayment(request,slug):
+    course=get_object_or_404(CourseModel,slug=slug)
+    context={
+        "course":course,
+        
+    }
+    return render(request,"success-payment.html",context)
+
+
+
+
+
+
+@login_required(login_url="login")
+def failPayment(request,slug):
+    course=get_object_or_404(CourseModel,slug=slug)
+    context={
+        "course":course,
+        
+    }
+    return render(request,"fail-payment.html",context)
