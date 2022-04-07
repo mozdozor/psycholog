@@ -619,7 +619,7 @@ def callback(request):
 
     if post['status'] == 'success':  # Ödeme Onaylandı
 
-        orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
+       # orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
 
         """
         BURADA YAPILMASI GEREKENLER
