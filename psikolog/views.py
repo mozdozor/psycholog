@@ -246,7 +246,7 @@ def courseDetail(request,slug):
     comments=CommentModel.objects.filter(course=course,parent=None).order_by("created_date")
     has_bougth="false"
     if request.user.is_authenticated:
-        billings=billingCourseModel.objects.filter(payment_user=request.user,course=course).all()
+        billings=orderModel.objects.filter(user=request.user,course=course).all()
         if billings:
             has_bougth="true"
         for cs in comments:
@@ -573,7 +573,7 @@ def paymentPage(request,slug):
         print("success")
       
     else:
-        context["failOfToken"]="Token Hatası"
+        context["failMessage"]="Ödeme formu açılırken bir hata ile karşılaşıldı.Sistem yöneticiniz ile ileişime geçiniz"
         return render(request,"fail-payment.html",context)
 
     return render(request,"payment-page.html",context)
@@ -593,7 +593,8 @@ def callback(request):
     env = environ.Env()
     environ.Env.read_env("../config/.env")
     if request.method != 'POST':
-        return HttpResponse(str(''))
+        context["failMessage"]="PayTr tarafından post hatası ile karşılaştınız.Sistem yöneticiniz ile iletişime geçiniz."
+        return render(request,"fail-payment.html",context)
 
     post = request.POST
 
@@ -610,7 +611,8 @@ def callback(request):
     # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
     # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
     if hash != post['hash']:
-        return HttpResponse(str('PAYTR notification failed: bad hash'))
+        context["failMessage"]="Hash hatası ile karşılaştınız.Giden ve dönen değerler arasında uyuşmazlık tespit edildi.Sistem yöneticiniz ile iletişime geçiniz."
+        return render(request,"fail-payment.html",context)
 
     
   
@@ -631,7 +633,7 @@ def callback(request):
         Güncel tutarı post['total_amount'] değerinden alarak muhasebe işlemlerinizde kullanabilirsiniz.
         """
         context['success'] = 'Başarılı'
-        print(request)
+        #print(request)
     else:  # Ödemeye Onay Verilmedi
         """
         BURADA YAPILMASI GEREKENLER
@@ -641,7 +643,7 @@ def callback(request):
         post['failed_reason_msg'] - başarısız hata mesajı
         """
         context['failure'] = 'Başarısız'
-        print(request)
+        #print(request)
 
     # Bildirimin alındığını PayTR sistemine bildir.
     return HttpResponse(str('OK'))

@@ -53,13 +53,8 @@
 					<!-- End bs-wizard -->
 					<div id="confirm">
 						
-						{% if failOfToken %}
-						<h4>Ödeme formu açılırken bir hata ile karşılaşıldı.Sistem yöneticiniz ile ileişime geçiniz</h4>
+						<h4>{{failMessage}}</h4>
 						<p>Lütfen tekrar deneyiniz</p>
-						{% else %}
-						<h4>Ödemenizi alamadık.Formu doğru doldurduğunuzdan emin olunuz</h4>
-						<p>Lütfen tekrar deneyiniz</p>
-						{% endif %}
 							
 						
 					</div>

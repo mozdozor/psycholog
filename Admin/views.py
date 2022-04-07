@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, kvkkMetniModelForm, logoModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
-from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, sliderModel
+from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, orderModel, sliderModel
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
@@ -752,7 +752,7 @@ def deleteNotificationsAdmin(request,pk):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def listBillingsAdmin(request):
-    billings=billingCourseModel.objects.all()
+    billings=orderModel.objects.all()
     context={
         "billings":billings,
 

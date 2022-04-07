@@ -175,6 +175,7 @@ class favouriteCourseModel(models.Model):
 class orderModel(models.Model):
     course=models.ForeignKey("Admin.CourseModel",on_delete=models.CASCADE)
     user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="orderCourses")
+    price=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
     status=models.CharField(max_length=10)
     merchant_oid=models.CharField(max_length=250)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)

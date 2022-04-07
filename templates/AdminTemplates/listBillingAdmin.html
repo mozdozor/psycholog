@@ -80,11 +80,11 @@
             <tbody>
               {% for bill in billings %}
               <tr>
-                <td><center><img style="width: 140px; height: 100px;" src="{{bill.payment_user.image.url}}" alt=""></center></td>
+                <td><center><img style="width: 140px; height: 100px;" src="{{bill.user.image.url}}" alt=""></center></td>
                 <td>{{bill.course.title}}</td>
-                <td>{{bill.payment_user.get_full_name}}</td>
-                <td>{{bill.price}}</td>
-                <td>{{bill.created_date}}</td>
+                <td>{{bill.user.get_full_name}}</td>
+                <td>{{bill.price}} ₺</td>
+                <td>{{bill.created_date.date}}</td>
                 
               </tr>
 
