@@ -589,7 +589,7 @@ def paymentPage(request,slug):
 
 @csrf_exempt
 def callback(request):  
-    return HttpResponse(str(currentUser.email))
+    return HttpResponse(str("geliyor"))
     env = environ.Env()
     environ.Env.read_env("../config/.env")
     if request.method != 'POST':
