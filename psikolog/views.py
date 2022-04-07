@@ -591,9 +591,6 @@ def paymentPage(request,slug):
 def callback(request):  
     env = environ.Env()
     environ.Env.read_env("../config/.env")
-    return HttpResponse(str(env("merchant_key")))
-    env = environ.Env()
-    environ.Env.read_env("../config/.env")
     if request.method != 'POST':
         return HttpResponse(str(''))
 
@@ -601,7 +598,7 @@ def callback(request):
 
     # API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
     merchant_key = env("merchant_key").encode()
-    merchant_salt = env("merchant_salt").encode()
+    merchant_salt = env("merchant_salt")
 
     # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     # POST değerleri ile hash oluştur.
