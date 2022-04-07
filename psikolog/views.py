@@ -527,7 +527,6 @@ def paymentPage(request,slug):
     merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-odeme/'+course.slug  #turkaze olarak değiştirirelecek
     merchant_fail_url = 'http://'+request.META['HTTP_HOST']+'/hatali-odeme/'+course.slug  #turkaze olarak değiştirirelecek
     user_basket = base64.b64encode(json.dumps([[course.title, payment_amount, 1],]).encode())
-        
     user_ip = get_client_ip(request)  #canlıda test yap
     timeout_limit = '30'
     debug_on = '1'   #canlıda 0 yap
@@ -537,9 +536,8 @@ def paymentPage(request,slug):
     currency = 'TL'
 
         # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
-    hash_str = merchant_id + user_ip + merchant_oid + email + str(payment_amount) + user_basket.decode() + no_installment + max_installment + currency + test_mode
+    hash_str = str(merchant_id) + str(user_ip) + str(merchant_oid) + str(email) + str(payment_amount) + str(user_basket.decode()) + no_installment + max_installment + currency + test_mode
     paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode() + merchant_salt, hashlib.sha256).digest())
-
     params = {
         'merchant_id': merchant_id,
         'user_ip': user_ip,
@@ -602,7 +600,7 @@ def callback(request):
 
     # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     # POST değerleri ile hash oluştur.
-    hash_str = post['merchant_oid'] + merchant_salt + post['status'] + str(post['total_amount'])
+    hash_str = str(post['merchant_oid']) + str(merchant_salt) + str(post['status']) + str(post['total_amount'])
     hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode(), hashlib.sha256).digest())
 
     # Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır
