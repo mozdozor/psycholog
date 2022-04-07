@@ -593,8 +593,7 @@ def callback(request):
     env = environ.Env()
     environ.Env.read_env("../config/.env")
     if request.method != 'POST':
-        context["failMessage"]="PayTr tarafından post hatası ile karşılaştınız.Sistem yöneticiniz ile iletişime geçiniz."
-        return render(request,"fail-payment.html",context)
+        return HttpResponse(str(''))
 
     post = request.POST
 
@@ -611,10 +610,7 @@ def callback(request):
     # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
     # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
     if hash != post['hash']:
-        context["failMessage"]="Hash hatası ile karşılaştınız.Giden ve dönen değerler arasında uyuşmazlık tespit edildi.Sistem yöneticiniz ile iletişime geçiniz."
-        return render(request,"fail-payment.html",context)
-
-    
+        return HttpResponse(str('PAYTR notification failed: bad hash'))
   
 
     # BURADA YAPILMASI GEREKENLER
