@@ -593,7 +593,7 @@ def callback(request):
         return HttpResponse(str(''))
 
     post = request.POST
-
+    return HttpResponse(post)
     # API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
     merchant_key = env("merchant_key").encode()
     merchant_salt = env("merchant_salt")
