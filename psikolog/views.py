@@ -593,7 +593,6 @@ def callback(request):
         return HttpResponse(str(''))
 
     post = request.POST
-    return HttpResponse(post)
     # API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
     merchant_key = env("merchant_key").encode()
     merchant_salt = env("merchant_salt")
@@ -607,6 +606,7 @@ def callback(request):
     # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
     # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
     if hash != post['hash']:
+        return HttpResponse(post['hash'])
         return HttpResponse(str('PAYTR notification failed: bad hash'))
   
 
