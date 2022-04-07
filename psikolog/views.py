@@ -589,7 +589,7 @@ def paymentPage(request,slug):
 
 @csrf_exempt
 def callback(request):  
-    context={}
+    return HttpResponse(str(currentUser.email))
     env = environ.Env()
     environ.Env.read_env("../config/.env")
     if request.method != 'POST':
@@ -629,6 +629,7 @@ def callback(request):
         Güncel tutarı post['total_amount'] değerinden alarak muhasebe işlemlerinizde kullanabilirsiniz.
         """
         print(request)
+        return HttpResponse(str('başarılı'))
     else:  # Ödemeye Onay Verilmedi
         """
         BURADA YAPILMASI GEREKENLER
