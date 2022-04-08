@@ -538,7 +538,7 @@ def paymentPage(request,slug):
     currency = 'TL'
 
         # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
-    hash_str = str(merchant_id) + str(user_ip) + str(merchant_oid) + str(email) + str(payment_amount) + str(user_basket.decode()) + no_installment + max_installment + currency + test_mode
+    hash_str = str(merchant_id) + str(user_ip) + str(merchant_oid) + str(email) + str(payment_amount) + user_basket.decode() + no_installment + max_installment + currency + test_mode
     paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8') + merchant_salt, hashlib.sha256).digest())
     params = {
         'merchant_id': merchant_id,
@@ -612,7 +612,7 @@ def callback(request):
     # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
     # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
     if hash != post['hash']:
-        return HttpResponse(str('PAYTR notification failed: bad hash\n')+hash+"\n"+post['hash'])
+        return HttpResponse(str('PAYTR notification failed: bad hash'))
   
 
     # BURADA YAPILMASI GEREKENLER
