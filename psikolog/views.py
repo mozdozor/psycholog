@@ -606,7 +606,6 @@ def callback(request):
     # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
     # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
     if hash != post['hash']:
-        return HttpResponse(post['hash']+" "+hash)
         return HttpResponse(str('PAYTR notification failed: bad hash'))
   
 
