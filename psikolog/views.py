@@ -595,12 +595,16 @@ def callback(request):
     post = request.POST
     # API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
     merchant_key = env("merchant_key").encode()
-    merchant_salt = env("merchant_salt").encode()
+    merchant_salt = env("merchant_salt")
+
 
     # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     # POST değerleri ile hash oluştur.
-    hash_str = str(post['merchant_oid']) + str(merchant_salt) + str(post['status']) + str(post['total_amount'])
+    hash_str = str(post['merchant_oid']) + merchant_salt + str(post['status']) + str(post['total_amount'])
     hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode(), hashlib.sha256).digest())
+
+  
+
 
     # Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır
     # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
