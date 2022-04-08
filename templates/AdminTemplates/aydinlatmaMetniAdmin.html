@@ -10,6 +10,8 @@
 action="{% url 'aydinlatmaMetniAdmin' %}"
 {% elif type == "kvkk" %}
 action="{% url 'kvkkMetniAdmin' %}"
+{% elif type == "mesafeli" %}
+action="{% url 'mesafeliSatisAdmin' %}"
 {% else %}
 action="{% url 'gizlilikMetniAdmin' %}"
 {% endif %}

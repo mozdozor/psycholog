@@ -3,7 +3,7 @@ from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, socialModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
 
 
 
@@ -307,5 +307,22 @@ class IletisimModelForm(forms.ModelForm):
             'phone_number': "Telefon",
             'email': "Email",
             'mesaj': "Mesaj",
+            
+        }
+
+
+
+
+
+
+class mesafeliSatisModelForm(forms.ModelForm):
+    class Meta:
+        model = mesafeliSatisModel
+        fields=("description",)
+        widgets = {           
+            "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    
+        }
+        labels = {      
+            'description': "Metin",
             
         }

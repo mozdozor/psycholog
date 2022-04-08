@@ -458,3 +458,22 @@ class socialModel(models.Model):
 
     def __str__(self):
         return self.email
+
+
+
+
+
+
+
+class mesafeliSatisModel(models.Model):
+    description=RichTextUploadingField(blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+    
+    class Meta:
+        db_table="mesafeliSatisModel"
+        verbose_name ="Mesafelili Satis"  
+        verbose_name_plural ="Mesafelili Satis"
+
+    def __str__(self):
+        return self.description

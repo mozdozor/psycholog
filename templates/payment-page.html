@@ -122,10 +122,7 @@
 					
 						<hr>
 						<!--End step -->
-						<div id="policy">
-							<h5>Cancellation policy</h5>
-							<p class="nomargin">Lorem ipsum dolor sit amet, vix <a href="#0">cu justo blandit deleniti</a>, discere omittantur consectetuer per eu. Percipit repudiare similique ad sed, vix ad decore nullam ornatus.</p>
-						</div>
+					
 						</div>
 					</div>
 					<!-- /col -->
@@ -136,8 +133,8 @@
 								Fiyat <span class="float-right">{{course.price}} ₺</span>
 							</div>
 							<div class="add_bottom_30"><strong>{{course.title}}</strong> adlı kursu satın almak üzeresiniz.</div>
-							<a href="cart-3.html" class="btn_1 full-width">Checkout</a>
-							<a href="courses-grid-sidebar.html" class="btn_1 full-width outline"><i class="icon-right"></i> Continue Shopping</a>
+							<!-- <a href="cart-3.html" class="btn_1 full-width">Checkout</a> -->
+							<a href="{% url 'courseDetail' course.slug %}" class="btn_1 full-width outline"><i class="icon-right"></i>Kursa Geri Dön</a>
 						</div>
 					</aside>
 				</div>

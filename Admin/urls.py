@@ -10,7 +10,7 @@ from .views import (
     deletePageModelAdmin,userListAdmin,addReplyCommentAdmin,listNotificationsAdmin,deleteNotificationsAdmin,
     listBillingsAdmin,listSlidersAdmin,createSliderModelAdmin,deleteSliderAdmin,listLogoAdmin,updateLogoAdmin,
     aydinlatmaMetniAdmin,kvkkMetniAdmin,gizlilikMetniAdmin,blogListAdmin,createBlogModelAdmin,deleteBlogAdmin,
-    blogCategoryListAdmin,addBlogCategoryAdmin,deleteCategoryBlogAdmin,socialMediaAdmin
+    blogCategoryListAdmin,addBlogCategoryAdmin,deleteCategoryBlogAdmin,socialMediaAdmin,mesafeliSatisAdmin
     
 )
 
@@ -67,6 +67,7 @@ urlpatterns = [
     path('admin-blog-kategori-ekle',addBlogCategoryAdmin,name="addBlogCategoryAdmin"),
     path('admin-blog-kategori-sil/<int:pk>',deleteCategoryBlogAdmin,name="deleteCategoryBlogAdmin"),
     path('admin-sosyal-medya-ekle',socialMediaAdmin,name="socialMediaAdmin"),
+    path('admin-mesafeli-satis-sozlesmesi-ekle',mesafeliSatisAdmin,name="mesafeliSatisAdmin"),
     
     
 

@@ -5,10 +5,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, kvkkMetniModelForm, logoModelForm, socialModelForm, whatWillYouLearnModelForm
+from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
 
@@ -1103,3 +1103,36 @@ def socialMediaAdmin(request):
         "form":form,
     }
     return render(request,"AdminTemplates/socialMediaAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def mesafeliSatisAdmin(request):
+    metinler=mesafeliSatisModel.objects.all()
+    if request.method == 'POST':
+        if metinler:
+            form=mesafeliSatisModelForm(request.POST or None,request.FILES or None,instance=metinler.first())
+        else:
+            form=mesafeliSatisModelForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Mesafeli satış sözleşmesi başarıyla kaydedildi.")
+            return redirect("mesafeliSatisAdmin")
+        else:
+            messages.error(request,"Bir hata oluştu.Yönetici ile iletişime geçiniz.")
+            return redirect("mesafeliSatisAdmin")
+    else:
+        if metinler:
+            form = mesafeliSatisModelForm(instance=metinler.first())
+        else:
+            form = mesafeliSatisModelForm()
+    context={
+        "form":form,
+        "type":"mesafeli",
+        "metin":"Mesafeli Satış Sözleşmesi"
+    }
+    return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)

@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
-    kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback
+    kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback,mesafeliSatis
 )
 
 urlpatterns = [
@@ -34,5 +34,6 @@ urlpatterns = [
     path('basarili-odeme/<slug:slug>',successPayment,name="successPayment"),
     path('hatali-odeme/<slug:slug>',failPayment,name="failPayment"),
     path('odeme-sonucu',callback,name="callback"),
+    path('mesafeli-satis-sozlesmesi',mesafeliSatis,name="mesafeliSatis"),
 
 ]   

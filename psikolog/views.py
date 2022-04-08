@@ -3,7 +3,7 @@ import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm
-from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, gizlilikMetniModel, kvkkMetniModel, notificationModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, orderModel, sliderModel
@@ -305,7 +305,7 @@ def courseDetail(request,slug):
 
 @login_required(login_url="login")
 def learningContentList(request):
-    courses=billingCourseModel.objects.filter(payment_user=request.user)
+    courses=orderModel.objects.filter(user=request.user,status="yes")
     context={
         "courses":courses,
     }
@@ -561,7 +561,6 @@ def paymentPage(request,slug):
 
     result = requests.post('https://www.paytr.com/odeme/api/get-token', params)
     res = json.loads(result.text)
-    print(res)
     context={
         "course":course,
         'token': res['token']
@@ -595,17 +594,13 @@ def callback(request):
     post = request.POST
 
 
-
-  
-  
-
     # BURADA YAPILMASI GEREKENLER
     # 1) Siparişin durumunu post['merchant_oid'] değerini kullanarak veri tabanınızdan sorgulayın.
     # 2) Eğer sipariş zaten daha önceden onaylandıysa veya iptal edildiyse "OK" yaparak sonlandırın.
 
     if post['status'] == 'success':  # Ödeme Onaylandı
 
-       # orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
+        orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
 
         """
         BURADA YAPILMASI GEREKENLER
@@ -660,3 +655,22 @@ def failPayment(request,slug):
         
     }
     return render(request,"fail-payment.html",context)
+
+
+
+
+
+
+
+
+def mesafeliSatis(request):
+    metinler=mesafeliSatisModel.objects.all()
+    metin=""
+    if metinler:
+        metin=metinler.first()
+    context={
+        "metin":metin,
+        "metinType":"mesafeli",
+        "printMetin":"Mesafeli Satış Sözleşmesi",
+    }
+    return render(request,"metinler.html",context)
