@@ -518,8 +518,6 @@ def paymentPage(request,slug):
     merchant_id = env("merchant_id")
     merchant_key = env("merchant_key").encode('UTF-8')
     merchant_salt = env("merchant_salt").encode('UTF-8')
-    print(merchant_key)
-    print(merchant_salt)
     email = request.user.email
     payment_amount = (course.price)* 100 
     merchant_oid = "SPR"+secrets.token_hex(10)
@@ -595,26 +593,10 @@ def callback(request):
         return HttpResponse(str(''))
 
     post = request.POST
-    # API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
-    merchant_key = env("merchant_key").encode('UTF-8')
-    merchant_salt = env("merchant_salt")
 
 
-    # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
-    # POST değerleri ile hash oluştur.
-    hash_str = post['merchant_oid'] + merchant_salt + post['status'] + post['total_amount']
-    orderModel.objects.create(course=currentCourse,user=currentUser,status="hash_str",merchant_oid=hash_str)
-    hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8'), hashlib.sha256).digest())
-    orderModel.objects.create(course=currentCourse,user=currentUser,status="hash",merchant_oid=hash)
 
   
-
-
-    # Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır
-    # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
-    # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
-    if hash != post['hash']:
-        return HttpResponse(str('PAYTR notification failed: bad hash'))
   
 
     # BURADA YAPILMASI GEREKENLER
@@ -633,7 +615,6 @@ def callback(request):
         Güncel tutarı post['total_amount'] değerinden alarak muhasebe işlemlerinizde kullanabilirsiniz.
         """
         print(request)
-        return HttpResponse(str('başarılı'))
     else:  # Ödemeye Onay Verilmedi
         """
         BURADA YAPILMASI GEREKENLER
