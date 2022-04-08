@@ -516,8 +516,10 @@ def paymentPage(request,slug):
     env = environ.Env()
     environ.Env.read_env("../config/.env")
     merchant_id = env("merchant_id")
-    merchant_key = env("merchant_key").encode()
-    merchant_salt = env("merchant_salt").encode()
+    merchant_key = env("merchant_key").encode('UTF-8')
+    merchant_salt = env("merchant_salt").encode('UTF-8')
+    print(merchant_key)
+    print(merchant_salt)
     email = request.user.email
     payment_amount = (course.price)* 100 
     merchant_oid = "SPR"+secrets.token_hex(10)
@@ -526,7 +528,7 @@ def paymentPage(request,slug):
     user_phone = request.user.phone_number
     merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-odeme/'+course.slug  #turkaze olarak değiştirirelecek
     merchant_fail_url = 'http://'+request.META['HTTP_HOST']+'/hatali-odeme/'+course.slug  #turkaze olarak değiştirirelecek
-    user_basket = base64.b64encode(json.dumps([[course.title, payment_amount, 1],]).encode())
+    user_basket = base64.b64encode(json.dumps([[course.title, payment_amount, 1],]).encode('UTF-8'))
     user_ip = get_client_ip(request)  #canlıda test yap
     timeout_limit = '30'
     debug_on = '1'   #canlıda 0 yap
@@ -537,7 +539,7 @@ def paymentPage(request,slug):
 
         # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     hash_str = str(merchant_id) + str(user_ip) + str(merchant_oid) + str(email) + str(payment_amount) + str(user_basket.decode()) + no_installment + max_installment + currency + test_mode
-    paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode() + merchant_salt, hashlib.sha256).digest())
+    paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8') + merchant_salt, hashlib.sha256).digest())
     params = {
         'merchant_id': merchant_id,
         'user_ip': user_ip,
@@ -594,14 +596,14 @@ def callback(request):
 
     post = request.POST
     # API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
-    merchant_key = env("merchant_key").encode()
+    merchant_key = env("merchant_key").encode('UTF-8')
     merchant_salt = env("merchant_salt")
 
 
     # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     # POST değerleri ile hash oluştur.
     hash_str = post['merchant_oid'] + merchant_salt + post['status'] + post['total_amount']
-    hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode(), hashlib.sha256).digest())
+    hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8'), hashlib.sha256).digest())
 
   
 
@@ -610,7 +612,7 @@ def callback(request):
     # (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
     # Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
     if hash != post['hash']:
-        return HttpResponse(str('PAYTR notification failed: bad hash'))
+        return HttpResponse(str('PAYTR notification failed: bad hash\n')+hash+"\n"+post['hash'])
   
 
     # BURADA YAPILMASI GEREKENLER
