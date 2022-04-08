@@ -177,7 +177,6 @@ class orderModel(models.Model):
     user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="orderCourses")
     price=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
     status=models.CharField(max_length=10)
-    hash=models.CharField(max_length=750,blank=True,null=True)
     merchant_oid=models.CharField(max_length=250)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
