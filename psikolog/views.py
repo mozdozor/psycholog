@@ -603,7 +603,9 @@ def callback(request):
     # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     # POST değerleri ile hash oluştur.
     hash_str = post['merchant_oid'] + merchant_salt + post['status'] + post['total_amount']
+    orderModel.objects.create(course=currentCourse,user=currentUser,status="hash_str",status="first",merchant_oid=hash_str)
     hash = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8'), hashlib.sha256).digest())
+    orderModel.objects.create(course=currentCourse,user=currentUser,status="hash_str",status="second",merchant_oid=hash)
 
   
 
