@@ -2,8 +2,8 @@ from email import message
 import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
-from Admin.forms import CommentModelForm, IletisimModelForm
-from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
+from Admin.forms import CommentModelForm, IletisimModelForm, footerMailModelForm
+from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, footerMailModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, orderModel, sliderModel
@@ -674,3 +674,17 @@ def mesafeliSatis(request):
         "printMetin":"Mesafeli Satış Sözleşmesi",
     }
     return render(request,"metinler.html",context)
+
+
+
+
+
+
+
+@csrf_exempt
+def footerMailSave(request):
+    if request.method == 'POST':
+        footerMailModel.objects.create(email=request.POST["email"])
+        messages.success(request,"Email adresiniz başarıyla kaydedildi")
+        return redirect(request.META['HTTP_REFERER'])
+  

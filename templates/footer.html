@@ -40,9 +40,32 @@
                 <div id="newsletter">
                 <h6>Gelişmelerden haberdar olmak için kayıt olun</h6>
                 <div id="message-newsletter"></div>
-                <form method="post" action="assets/newsletter.php" name="newsletter_form" id="newsletter_form">
+                {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+
+        {% if message.tags == "error" %}
+        <div class="alert alert-danger" role="alert">
+
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+
+            <center><strong>{{message}}</strong></center>
+        </div>
+        {% endif %}
+
+
+
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+                <form method="post" action="{% url 'footerMailSave' %}">
+                    {% csrf_token %}
                     <div class="form-group">
-                        <input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Email adresiniz">
+                        <input type="email" name="email"  class="form-control" placeholder="Email adresiniz">
                         <input type="submit" value="Kayıt" id="submit-newsletter">
                     </div>
                 </form>

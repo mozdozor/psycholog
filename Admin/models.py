@@ -477,3 +477,22 @@ class mesafeliSatisModel(models.Model):
 
     def __str__(self):
         return self.description
+
+
+
+
+
+
+
+class footerMailModel(models.Model):
+    email=models.EmailField(max_length=200)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+   
+    class Meta:
+        db_table="fotoerMail"
+        verbose_name = "Footer Mail"
+        verbose_name_plural = "Footer Mailler"
+
+    def __str__(self):
+        return self.email

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required
 from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
 
@@ -101,7 +101,7 @@ def showAllMessages(request):
     for i in IletisimModel.objects.all():
         i.okundu_bilgisi="okundu"
         i.save()
-    new_messages=IletisimModel.objects.all()
+    new_messages=IletisimModel.objects.all().order_by("-olusturulma_tarihi")
     messages=list()
     if request.method == "POST":
         if "q" in request.POST.keys():
@@ -1136,3 +1136,28 @@ def mesafeliSatisAdmin(request):
         "metin":"Mesafeli Satış Sözleşmesi"
     }
     return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def listFooterMailAdmin(request):
+    emails=footerMailModel.objects.all()
+    context={
+        "emails":emails,
+    }
+    return render(request,"AdminTemplates/listFooterMailAdmin.html",context)
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteFooterMail(request,pk):
+    obj=get_object_or_404(footerMailModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Email başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER']) 
+
