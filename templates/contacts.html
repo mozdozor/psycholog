@@ -69,20 +69,31 @@
                 <ul class="messages">
                     {% for message in messages %}
 
-                    {% if message.tags == "error" %}
-                    <div class="alert alert-danger" role="alert">
+					
+					{% if 'contactMessages' in message.extra_tags  %}
+						
+					
+						
+
+                    {% if message.tags == "error"  %}
+					
+				
+					<div class="alert alert-danger" role="alert">
 
                         <center><strong>{{message}}</strong></center>
                     </div>
+				
+					
                     {% else %}
-                    <div class="alert alert-success" role="alert">
+					
+					<div class="alert alert-success" role="alert">
 
                         <center><strong>{{message}}</strong></center>
                     </div>
+			
                     {% endif %}
 
-
-
+					{% endif %}
                     {% endfor %}
                 </ul>
                 {% endif %}

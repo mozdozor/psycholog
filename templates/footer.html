@@ -43,8 +43,13 @@
                 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
+        
+        {% if 'footerMail' in message.extra_tags %}
+            
+       
+            
 
-        {% if message.tags == "error" %}
+        {% if message.tags == "error"  %}
         <div class="alert alert-danger" role="alert">
 
             <center><strong>{{message}}</strong></center>
@@ -54,6 +59,8 @@
 
             <center><strong>{{message}}</strong></center>
         </div>
+        {% endif %}
+
         {% endif %}
 
 

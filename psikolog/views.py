@@ -336,10 +336,10 @@ def contact(request):
                     form.cleaned_data["phone_number"],
                     ["turkazepsikolog@gmail.com",],
                 )
-                messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.")
+                messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="contactMessages")
                 return redirect("contact")
             except:
-                messages.error(request,"Mesajınız gönderilirken bir hata oldu.Lütfen yönetici ile iletişime geçiniz.")
+                messages.error(request,"Mesajınız gönderilirken bir hata oldu.Lütfen yönetici ile iletişime geçiniz.",extra_tags="contactMessages")
                 return redirect("contact")
 
             
@@ -696,6 +696,6 @@ def mesafeliSatis(request):
 def footerMailSave(request):
     if request.method == 'POST':
         footerMailModel.objects.create(email=request.POST["email"])
-        messages.success(request,"Email adresiniz başarıyla kaydedildi")
+        messages.success(request,"Email adresiniz başarıyla kaydedildi",extra_tags="footerMail")
         return redirect(request.META['HTTP_REFERER'])
   
