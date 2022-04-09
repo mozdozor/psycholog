@@ -5,10 +5,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
+from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
 
@@ -1167,3 +1167,36 @@ def deleteFooterMail(request,pk):
     messages.success(request,"Email başarıyla silindi")
     return redirect(request.META['HTTP_REFERER']) 
 
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def hakkimizdaAdmin(request):
+    metinler=hakkimizdaModel.objects.all()
+    if request.method == 'POST':
+        if metinler:
+            form=hakkimizdaModelForm(request.POST or None,request.FILES or None,instance=metinler.first())
+        else:
+            form=hakkimizdaModelForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Hakkımızda modeli başarıyla kaydedildi.")
+            return redirect("hakkimizdaAdmin")
+        else:
+            messages.error(request,"Bir hata oluştu.Yönetici ile iletişime geçiniz.")
+            return redirect("hakkimizdaAdmin")
+    else:
+        if metinler:
+            form = hakkimizdaModelForm(instance=metinler.first())
+        else:
+            form = hakkimizdaModelForm()
+    context={
+        "form":form,
+        "type":"hakkimizda",
+        "metin":"Hakkımızda"
+    }
+    return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)

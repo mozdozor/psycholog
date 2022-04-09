@@ -538,3 +538,53 @@ class footerMailModel(models.Model):
 
     def __str__(self):
         return self.email
+
+
+
+
+
+
+
+class appointmentModel(models.Model):
+    name=models.CharField(max_length=250,blank=True,null=True)
+    surname=models.CharField(max_length=250,blank=True,null=True)
+    phone_number=models.CharField(max_length=250,blank=True,null=True)
+    email=models.EmailField(max_length=250,blank=True,null=True)
+    date=models.DateField(max_length=250,blank=True,null=True)
+    starting_time=models.TimeField(max_length=250,blank=True,null=True)
+    finishing_time=models.TimeField(max_length=250,blank=True,null=True)
+    message=models.TextField(blank=True,null=True)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+   
+    class Meta:
+        db_table="appointment"
+        verbose_name = "Randevu"
+        verbose_name_plural = "Randevular"
+
+    def __str__(self):
+        return self.name+" "+self.surname
+
+
+
+
+
+
+
+
+
+
+
+
+class hakkimizdaModel(models.Model):
+    image=models.ImageField(upload_to="hakkimizdaImages",blank=True,null=True)
+    description=RichTextUploadingField(blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+    
+    class Meta:
+        db_table="hakkimzida"
+        verbose_name ="Hakkımızda"  
+        verbose_name_plural ="Hakkımızda"
+
+    def __str__(self):
+        return self.description

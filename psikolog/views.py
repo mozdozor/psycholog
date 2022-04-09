@@ -3,7 +3,7 @@ import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm, footerMailModelForm
-from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, footerMailModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, orderModel, sliderModel
@@ -316,8 +316,16 @@ def learningContentList(request):
 
 
 def aboutUs(request):
+    metinler=hakkimizdaModel.objects.all()
+    metin=""
+    if metinler:
+        metin=metinler.first()
     context={
+        "metin":metin,
+        "metinType":"hakkimizda",
+        "printMetin":"Hakkımızda",
     }
+   
     return render(request,"about.html",context)
 
 
@@ -699,3 +707,36 @@ def footerMailSave(request):
         messages.success(request,"Email adresiniz başarıyla kaydedildi",extra_tags="footerMail")
         return redirect(request.META['HTTP_REFERER'])
   
+
+
+
+
+
+
+
+def appointment(request):
+    user=CustomUserModel.objects.filter(is_staff=1).first()
+    if request.method == "POST":
+        form = IletisimModelForm(request.POST)
+        if form.is_valid(): 
+            form.save()
+            try:
+                send_mail(
+                    form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"],
+                    "turkazepsikolog.com sitesinden yeni bir mailiniz var.\n\n"+form.cleaned_data["mesaj"]+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"],
+                    form.cleaned_data["phone_number"],
+                    ["turkazepsikolog@gmail.com",],
+                )
+                messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="contactMessages")
+                return redirect("contact")
+            except:
+                messages.error(request,"Mesajınız gönderilirken bir hata oldu.Lütfen yönetici ile iletişime geçiniz.",extra_tags="contactMessages")
+                return redirect("contact")
+
+            
+    form = IletisimModelForm()
+    context={
+        "form":form,
+        "address":user.address
+    }
+    return render(request,"contacts.html",context)

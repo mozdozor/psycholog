@@ -3,11 +3,11 @@ from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
 
 from string import Template
 from django.utils.safestring import mark_safe
-from django.forms import ImageField
+from django.forms import ImageField, TimeInput
 
 
 
@@ -356,4 +356,57 @@ class footerMailModelForm(forms.ModelForm):
         }
         labels = {      
             'email': "Email",
+        }
+
+
+
+
+
+
+
+class appointmentModelForm(forms.ModelForm):
+    class Meta:
+        model = appointmentModel
+        exclude=("created_date",)
+        widgets = {
+            "name" : TextInput(attrs={"class":"input_field","type":"text","name":"name","required":"required"}),
+            "surname" : TextInput(attrs={"class":"input_field","type":"text","name":"surname","required":"required"}),
+            "phone_number" : TextInput(attrs={"class":"input_field","type":"text","name":"phone_number","required":"required"}),
+            "email" : TextInput(attrs={"class":"input_field","type":"email","name":"email","required":"required"}),
+            "date" : DateInput(attrs={"class":"input_field","name":"date","required":"required"}),
+            "starting_time" : TimeInput(attrs={"class":"input_field","name":"starting_time","required":"required"}),
+            "finishing_time" : TimeInput(attrs={"class":"input_field","name":"finishing_time","required":"required"}),
+            "message" : Textarea(attrs={"class":"input_field","type":"text","name":"message"}),
+            
+        }
+        labels = {      
+            'name': "İsim",
+            'lastName': "Soyisim",
+            'phone_number': "Telefon",
+            'email': "Email",
+            'date': "Tarih",
+            'starting_time': "Başlangıç Saati",
+            'finishing_time': "Bitiş Saati",
+            'message': "İletmek istediğiniz özel bir mesajınız varsa yazınız",
+            
+        }
+
+
+
+
+
+
+
+
+class hakkimizdaModelForm(forms.ModelForm):
+    class Meta:
+        model = hakkimizdaModel
+        fields=("image","description",)
+        widgets = {           
+            "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    
+        }
+        labels = {     
+            'image': "Fotoğraf", 
+            'description': "Metin",
+            
         }

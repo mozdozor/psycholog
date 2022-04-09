@@ -12,6 +12,8 @@ action="{% url 'aydinlatmaMetniAdmin' %}"
 action="{% url 'kvkkMetniAdmin' %}"
 {% elif type == "mesafeli" %}
 action="{% url 'mesafeliSatisAdmin' %}"
+{% elif type == "hakkimizda" %}
+action="{% url 'hakkimizdaAdmin' %}"
 {% else %}
 action="{% url 'gizlilikMetniAdmin' %}"
 {% endif %}
@@ -71,7 +73,7 @@ method="post" enctype="multipart/form-data"
 					{% for field in form.visible_fields %}
                     {{field.label_tag}}
 					<div class="form-group">
-							<center>{{field}}</center>
+							{{field}}
 					</div>
 					{% endfor %}
 				</div>

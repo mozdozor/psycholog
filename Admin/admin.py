@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from Admin.models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, bottomMenuModel, courseFeaturesModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentModel, aydinlatmaMetniModel, bottomMenuModel, courseFeaturesModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
 
 # Register your models here.
 
@@ -23,3 +23,4 @@ admin.site.register(mesafeliSatisModel)
 admin.site.register(kvkkMetniModel)
 admin.site.register(aydinlatmaMetniModel)
 admin.site.register(gizlilikMetniModel)
+admin.site.register(appointmentModel)

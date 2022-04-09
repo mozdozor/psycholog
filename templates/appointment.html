@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+{% block divFeatures %}id=page{% endblock divFeatures %}
+
+
+
+
+	
+
+{% block content %}
+	
+	
+
+	
+	<main>
+		<section id="hero_in" class="contacts">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Randevu Talebinde Bulunun</h1>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+
+		<div class="contact_info">
+			<div class="container">
+				<ul class="clearfix">
+					<li>
+						<i class="pe-7s-map-marker"></i>
+						<h4>Adres</h4>
+						<span>{{address}}</span>
+					</li>
+					<li>
+						<i class="pe-7s-mail-open-file"></i>
+						<h4>Email Adresi</h4>
+						<span>{{sm.email}}<br><small> </small></span>
+
+					</li>
+					<li>
+						<i class="pe-7s-phone"></i>
+						<h4>Telefon</h4>
+						<span>{{sm.phone_number}}<br><small></small></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--/contact_info-->
+	
+
+		<div class="bg_color_1">
+			<div class="container margin_120_95">
+				<div class="row justify-content-between">
+					<div class="col-lg-5">
+						<lottie-player src="https://assets4.lottiefiles.com/packages/lf20_ukyEZh.json"  background="transparent"  speed="1"  style="width:100%;"  loop autoplay></lottie-player>
+
+					</div>
+					<div class="col-lg-6">
+						<h4>Randevu isteğinde bulunun</h4>
+						
+					
+						<p>Şimdi zamanı seçin ve randevu isteiğinde bulunun.</p>
+
+						<br>
+						{% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+
+					
+					{% if 'contactMessages' in message.extra_tags  %}
+						
+					
+						
+
+                    {% if message.tags == "error"  %}
+					
+				
+					<div class="alert alert-danger" role="alert">
+
+                        <center><strong>{{message}}</strong></center>
+                    </div>
+				
+					
+                    {% else %}
+					
+					<div class="alert alert-success" role="alert">
+
+                        <center><strong>{{message}}</strong></center>
+                    </div>
+			
+                    {% endif %}
+
+					{% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+						<div id="message-contact"></div>
+						<form method="post" action="{% url 'contact' %}">
+							{% csrf_token %}
+							<div class="row">
+
+								
+								{% for field in form.visible_fields %}
+									
+								
+								{% if forloop.last %}
+								<div class="col-md-12">
+									<span class="input">
+										{{field}}
+										<label class="input_label">
+											<span class="input__label-content">{{field.label_tag}}</span>
+										</label>
+									</span>
+								</div>
+								{% else %}
+								<div class="col-md-6">
+									<span class="input">
+										{{field}}
+										<label class="input_label">
+											<span class="input__label-content">{{field.label_tag}}</span>
+										</label>
+									</span>
+								</div>
+								{% endif %}
+									
+							
+
+								{% endfor %}
+								
+							</div>
+							<!-- /row -->
+						
+							<!-- <span class="input">
+									<input class="input_field" type="text" id="verify_contact" name="verify_contact">
+									<label class="input_label">
+									<span class="input__label-content">Are you human? 3 + 1 =</span>
+									</label>
+							</span> -->
+							<p class="add_top_30"><input type="submit" value="Gönder" class="btn_1 rounded" id="submit-contact"></p>
+						</form>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /bg_color_1 -->
+	</main>
+	<!--/main-->
+	
+	{% endblock content %}
+
+
+
+	
+	{% block jsFiles %}
+
+
+<!-- COMMON SCRIPTS -->
+<script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'assets/js/common_scripts.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/validate.js' %}"></script>
+
+
+	<!-- SPECIFIC SCRIPTS -->
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript" src="{% static 'assets/js/mapmarker.jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'assets/js/mapmarker_func.jquery.js' %}"></script>
+
+
+	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+{% endblock jsFiles %}
+
