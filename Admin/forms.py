@@ -90,8 +90,8 @@ class courseSessionModelForm(forms.ModelForm):
 
 class courseSessionVideoModelForm(forms.ModelForm):
     CHOICES= (
-        ('herkes','Herkes'),
         ('satinAlanlar','Sadece satın alanlar izlesin'),
+        ('herkes','Herkes'),
         
     )
     video_type=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"video_type","required":"required"}), choices=CHOICES)
