@@ -109,12 +109,11 @@
                             <h3>{{course.course.title}}</h3>
                             <p>{{course.course.description|safe|truncatechars:85}}</p>
                             <div class="rating">
-                                {% for star in course.course.getStar %}
                                 <i class="icon_star voted"></i>
-                                {% endfor %}
-                                {% for star in course.course.getNoneStar %}
-                                <i class="icon_star"></i>
-                                {% endfor %}
+                                <i class="icon_star voted"></i>
+                                <i class="icon_star voted"></i>
+                                <i class="icon_star voted"></i>
+                                <i class="icon_star voted"></i>
     
                                 <small>({{course.course.getStarsWithCommentCount}})</small>
                             </div>
