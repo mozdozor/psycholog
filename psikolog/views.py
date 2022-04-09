@@ -600,8 +600,8 @@ def callback(request):
 
     if post['status'] == 'success':  # Ödeme Onaylandı
 
-        orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
-
+      #  orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
+        return HttpResponse(str(currentCourse.title))
         """
         BURADA YAPILMASI GEREKENLER
         1) Siparişi onaylayın.
