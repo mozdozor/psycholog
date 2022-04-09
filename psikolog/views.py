@@ -518,7 +518,7 @@ def paymentPage(request,slug):
         orderOfUser=has_created_order.first()
     else:
         merchant_oid = "SPR"+secrets.token_hex(10)
-        orderOfUser=orderModel.objects.create(course=course,user=request.user,status="no",merchant_oid=merchant_oid)
+        orderOfUser=orderModel.objects.create(course=course,user=request.user,status="no",merchant_oid=merchant_oid,price=course.price)
 
 
 
@@ -540,7 +540,7 @@ def paymentPage(request,slug):
     user_ip = get_client_ip(request)  #canlıda test yap
     timeout_limit = '30'
     debug_on = '0'   #canlıda 0 yap
-    test_mode = '1' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
+    test_mode = '0' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
     no_installment = '0' # Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
     max_installment = '0'
     currency = 'TL'
