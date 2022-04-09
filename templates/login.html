@@ -62,8 +62,8 @@
 			  <form action="{% url 'login' %}" method="post">
                   {% csrf_token %}
 				<div class="access_social">
-					<a href="{% provider_login_url 'facebook' method='oauth2' %}" class="social_bt facebook">Facebook ile Giriş Yap</a>
-					<a href="{% provider_login_url 'google' %}"  class="social_bt google">Google ile Giriş Yap</a>
+					<a href="{% url 'social:begin' 'facebook' %}" class="social_bt facebook">Facebook ile Giriş Yap</a>
+					<a href=""  class="social_bt google">Google ile Giriş Yap</a>
 					<!-- <a href="#0" class="social_bt linkedin">Login with Linkedin</a> -->
 				</div>
 				<div class="divider"><span>Ya da </span></div>
