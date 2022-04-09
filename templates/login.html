@@ -62,7 +62,7 @@
 			  <form action="{% url 'login' %}" method="post">
                   {% csrf_token %}
 				<div class="access_social">
-					<a href="{% provider_login_url 'facebook' method='js_sdk' %}" class="social_bt facebook">Facebook ile Giriş Yap</a>
+					<a href="{% provider_login_url 'facebook' method='oauth2' %}" class="social_bt facebook">Facebook ile Giriş Yap</a>
 					<a href="{% provider_login_url 'google' %}"  class="social_bt google">Google ile Giriş Yap</a>
 					<!-- <a href="#0" class="social_bt linkedin">Login with Linkedin</a> -->
 				</div>
@@ -117,6 +117,24 @@
 <script src="{% static 'assets/js/common_scripts.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 <script src="{% static 'assets/validate.js' %}"></script>
+
+
+
+
+<script>
+	window.fbAsyncInit = function() {
+	  FB.init({
+		appId            : '507167990948766',
+		autoLogAppEvents : true,
+		xfbml            : true,
+		version          : 'v13.0'
+	  });
+	};
+  </script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+	  
+
+
   
 </body>
 </html>

@@ -546,8 +546,7 @@ class footerMailModel(models.Model):
 
 
 class appointmentModel(models.Model):
-    name=models.CharField(max_length=250,blank=True,null=True)
-    surname=models.CharField(max_length=250,blank=True,null=True)
+    fullname=models.CharField(max_length=250,blank=True,null=True)
     phone_number=models.CharField(max_length=250,blank=True,null=True)
     email=models.EmailField(max_length=250,blank=True,null=True)
     date=models.DateField(max_length=250,blank=True,null=True)

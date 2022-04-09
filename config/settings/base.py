@@ -184,3 +184,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 SOCIALACCOUNT_ADAPTER = "psikolog.adapter.MySocialAccountAdapter"
+
+
+

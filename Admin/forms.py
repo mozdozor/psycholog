@@ -369,19 +369,17 @@ class appointmentModelForm(forms.ModelForm):
         model = appointmentModel
         exclude=("created_date",)
         widgets = {
-            "name" : TextInput(attrs={"class":"input_field","type":"text","name":"name","required":"required"}),
-            "surname" : TextInput(attrs={"class":"input_field","type":"text","name":"surname","required":"required"}),
+            "fullname" : TextInput(attrs={"class":"input_field","type":"text","name":"fullname","required":"required"}),
             "phone_number" : TextInput(attrs={"class":"input_field","type":"text","name":"phone_number","required":"required"}),
             "email" : TextInput(attrs={"class":"input_field","type":"email","name":"email","required":"required"}),
-            "date" : DateInput(attrs={"class":"input_field","name":"date","required":"required"}),
-            "starting_time" : TimeInput(attrs={"class":"input_field","name":"starting_time","required":"required"}),
-            "finishing_time" : TimeInput(attrs={"class":"input_field","name":"finishing_time","required":"required"}),
+            "date" : DateInput(attrs={"class":"input_field","name":"date","type":"date","required":"required"}),
+            "starting_time" : TimeInput(attrs={"class":"input_field","type":"time","name":"starting_time","required":"required"}),
+            "finishing_time" : TimeInput(attrs={"class":"input_field","type":"time","name":"finishing_time","required":"required"}),
             "message" : Textarea(attrs={"class":"input_field","type":"text","name":"message"}),
             
         }
         labels = {      
-            'name': "İsim",
-            'lastName': "Soyisim",
+            'fullname': "İsim Soyisim",
             'phone_number': "Telefon",
             'email': "Email",
             'date': "Tarih",

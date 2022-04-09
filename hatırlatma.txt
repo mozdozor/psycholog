@@ -13,8 +13,11 @@ sitemap
 tawkto
 google giriş
 video ilermeme durumu
-hakkımızda dşinamik yap
+hakkımızda dşinamik yap  
 randevu modeli yap
+blog css kaymalarını kontrol et
+404 sayfası   canlıda kontorl et yapıldı 
 
 
+canlıda randevu sayfasını oluştur gir
 

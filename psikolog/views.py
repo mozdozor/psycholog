@@ -2,7 +2,7 @@ from email import message
 import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
-from Admin.forms import CommentModelForm, IletisimModelForm, footerMailModelForm
+from Admin.forms import CommentModelForm, IletisimModelForm, appointmentModelForm, footerMailModelForm
 from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
@@ -23,6 +23,7 @@ import json
 import environ
 import secrets
 from django.views.decorators.csrf import csrf_exempt
+from sms import send_sms
 # Create your views here.
 
 
@@ -717,26 +718,26 @@ def footerMailSave(request):
 def appointment(request):
     user=CustomUserModel.objects.filter(is_staff=1).first()
     if request.method == "POST":
-        form = IletisimModelForm(request.POST)
+        form = appointmentModelForm(request.POST)
         if form.is_valid(): 
             form.save()
+            message=form.cleaned_data["fullname"]+" adlı kişiden "+str(form.cleaned_data["date"].strftime('%d/%m/%Y'))+" tarihinde "+str(form.cleaned_data["starting_time"])+"/"+str(form.cleaned_data["finishing_time"])+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
             try:
                 send_mail(
-                    form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"],
-                    "turkazepsikolog.com sitesinden yeni bir mailiniz var.\n\n"+form.cleaned_data["mesaj"]+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"],
+                    form.cleaned_data["fullname"],
+                    "turkazepsikolog.com sitesinden yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"]+"\n Telefon = "+form.cleaned_data["phone_number"]+"\n Mesaj = "+form.cleaned_data["message"],
                     form.cleaned_data["phone_number"],
                     ["turkazepsikolog@gmail.com",],
                 )
-                messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="contactMessages")
-                return redirect("contact")
+                messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
+                return redirect("appointment")
             except:
-                messages.error(request,"Mesajınız gönderilirken bir hata oldu.Lütfen yönetici ile iletişime geçiniz.",extra_tags="contactMessages")
-                return redirect("contact")
-
-            
-    form = IletisimModelForm()
+                messages.error(request,"Bir hata ile karşılaşıldı.",extra_tags="appointmentMessages")
+                return redirect("appointment")
+      
+    form = appointmentModelForm()
     context={
         "form":form,
         "address":user.address
     }
-    return render(request,"contacts.html",context)
+    return render(request,"appointment.html",context)

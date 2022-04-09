@@ -1,1 +1,71 @@
-404 hata sayfasıdır.
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+
+
+
+{% block divFeatures %} id="page" {% endblock divFeatures %}
+
+
+{% block cssFiles %}
+<!-- SPECIFIC CSS -->
+<link href="{% static 'assets/css/blog.css' %}" rel="stylesheet">
+
+{% endblock cssFiles %}
+
+
+
+{% block content %}
+<main>
+	<div id="error_page">
+			<div class="container">
+				<div class="row justify-content-center text-center">
+					<div class="col-xl-7 col-lg-9">
+						<h2>404 <i class="icon_error-triangle_alt"></i></h2>
+						<p>Üzgünüz aradığınız sayfayı bulamadık.</p>
+					
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /error_page -->
+	</main>
+{% endblock content %}
+    
+
+
+
+
+{% block jsFiles %}
+
+
+
+<!-- COMMON SCRIPTS -->
+<script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'assets/js/common_scripts.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/validate.js' %}"></script>
+
+
+{% endblock jsFiles %}
+
+
+
+
+
+
+
+
+
+
+
+	
+	<!--/main-->
+	
+
+	

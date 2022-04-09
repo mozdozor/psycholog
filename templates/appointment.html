@@ -55,7 +55,7 @@
 			<div class="container margin_120_95">
 				<div class="row justify-content-between">
 					<div class="col-lg-5">
-						<lottie-player src="https://assets4.lottiefiles.com/packages/lf20_ukyEZh.json"  background="transparent"  speed="1"  style="width:100%;"  loop autoplay></lottie-player>
+						<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_eIXuIz.json"  background="transparent"  speed="1"  style="width:100%;"  loop autoplay></lottie-player>
 
 					</div>
 					<div class="col-lg-6">
@@ -70,7 +70,7 @@
                     {% for message in messages %}
 
 					
-					{% if 'contactMessages' in message.extra_tags  %}
+					{% if 'appointmentMessages' in message.extra_tags  %}
 						
 					
 						
@@ -99,7 +99,7 @@
                 {% endif %}
 
 						<div id="message-contact"></div>
-						<form method="post" action="{% url 'contact' %}">
+						<form method="post" action="{% url 'appointment' %}">
 							{% csrf_token %}
 							<div class="row">
 

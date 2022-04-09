@@ -11,7 +11,7 @@ from .views import (
     listBillingsAdmin,listSlidersAdmin,createSliderModelAdmin,deleteSliderAdmin,listLogoAdmin,updateLogoAdmin,
     aydinlatmaMetniAdmin,kvkkMetniAdmin,gizlilikMetniAdmin,blogListAdmin,createBlogModelAdmin,deleteBlogAdmin,
     blogCategoryListAdmin,addBlogCategoryAdmin,deleteCategoryBlogAdmin,socialMediaAdmin,mesafeliSatisAdmin,
-    listFooterMailAdmin,deleteFooterMail,hakkimizdaAdmin
+    listFooterMailAdmin,deleteFooterMail,hakkimizdaAdmin,listAppointmentsAdmin
     
 )
 
@@ -72,6 +72,7 @@ urlpatterns = [
     path('admin-footer-mail-listele',listFooterMailAdmin,name="listFooterMailAdmin"),
     path('admin-footer-mail-sil/<int:pk>',deleteFooterMail,name="deleteFooterMail"),
     path('admin-hakkimizda-guncelle',hakkimizdaAdmin,name="hakkimizdaAdmin"),
+    path('admin-randevu-istekleri',listAppointmentsAdmin,name="listAppointmentsAdmin"),
     
     
 

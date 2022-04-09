@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required
 from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
 
@@ -1200,3 +1200,16 @@ def hakkimizdaAdmin(request):
         "metin":"Hakkımızda"
     }
     return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def listAppointmentsAdmin(request):
+    appointments=appointmentModel.objects.all().order_by("created_date")
+    context={
+        "appointments":appointments,
+    }
+    return render(request,"AdminTemplates/listAppointmentsAdmin.html",context)
