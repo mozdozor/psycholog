@@ -331,10 +331,10 @@ def contact(request):
             form.save()
             try:
                 send_mail(
-                    form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"]+" )",
-                    "turkazepsikolog.com sitesinden yeni bir mailiniz var.\n\n"+form.cleaned_data["mesaj"]+"\n\n\n ( "+form.cleaned_data["email"]+" )",
+                    form.cleaned_data["name"]+" "+ form.cleaned_data["lastName"],
+                    "turkazepsikolog.com sitesinden yeni bir mailiniz var.\n\n"+form.cleaned_data["mesaj"]+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"],
                     form.cleaned_data["phone_number"],
-                    ["muhammetay651@gmail.com","muhammet19071340@gmail.com"],
+                    ["turkazepsikolog@gmail.com",],
                 )
                 messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.")
                 return redirect("contact")
