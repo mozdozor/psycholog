@@ -511,8 +511,18 @@ currentUser=""
 @login_required(login_url="login")
 def paymentPage(request,slug):
     course=get_object_or_404(CourseModel,slug=slug)
-    currentCourse=course
-    currentUser=request.user
+
+
+    has_created_order=orderModel.objects.filter(course=course,user=request.user,status="no")
+    if has_created_order:
+        orderOfUser=has_created_order.first()
+    else:
+        merchant_oid = "SPR"+secrets.token_hex(10)
+        orderOfUser=orderModel.objects.create(course=course,user=request.user,status="no",merchant_oid=merchant_oid)
+
+
+
+    
     env = environ.Env()
     environ.Env.read_env("../config/.env")
     merchant_id = env("merchant_id")
@@ -520,7 +530,7 @@ def paymentPage(request,slug):
     merchant_salt = env("merchant_salt").encode('UTF-8')
     email = request.user.email
     payment_amount = (course.price)* 100 
-    merchant_oid = "SPR"+secrets.token_hex(10)
+    
     user_name = request.user.get_full_name()
     user_address = request.user.address
     user_phone = request.user.phone_number
@@ -530,18 +540,18 @@ def paymentPage(request,slug):
     user_ip = get_client_ip(request)  #canlıda test yap
     timeout_limit = '30'
     debug_on = '0'   #canlıda 0 yap
-    test_mode = '0' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
+    test_mode = '1' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
     no_installment = '0' # Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
     max_installment = '0'
     currency = 'TL'
 
         # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
-    hash_str = str(merchant_id) + str(user_ip) + str(merchant_oid) + str(email) + str(payment_amount) + user_basket.decode() + no_installment + max_installment + currency + test_mode
+    hash_str = str(merchant_id) + str(user_ip) + str(orderOfUser.merchant_oid) + str(email) + str(payment_amount) + user_basket.decode() + no_installment + max_installment + currency + test_mode
     paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8') + merchant_salt, hashlib.sha256).digest())
     params = {
         'merchant_id': merchant_id,
         'user_ip': user_ip,
-        'merchant_oid': merchant_oid,
+        'merchant_oid': orderOfUser.merchant_oid,
         'email': email,
         'payment_amount': payment_amount,
         'paytr_token': paytr_token,
@@ -597,10 +607,12 @@ def callback(request):
     # BURADA YAPILMASI GEREKENLER
     # 1) Siparişin durumunu post['merchant_oid'] değerini kullanarak veri tabanınızdan sorgulayın.
     # 2) Eğer sipariş zaten daha önceden onaylandıysa veya iptal edildiyse "OK" yaparak sonlandırın.
+    order=orderModel.objects.get(merchant_oid=post['merchant_oid'])
 
     if post['status'] == 'success':  # Ödeme Onaylandı
 
-        #orderModel.objects.create(course=currentCourse,user=currentUser,merchant_oid=post['merchant_oid'],status="yes")
+        order.status="yes"
+        order.save()
         """
         BURADA YAPILMASI GEREKENLER
         1) Siparişi onaylayın.
