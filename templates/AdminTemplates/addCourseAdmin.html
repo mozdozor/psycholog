@@ -38,9 +38,18 @@ method="post"
                 
                 {% for field in form.visible_fields  %}
 				{{ field.label_tag }}
+
+				
                 
 				<div class="col-md-12">
 					<div class="form-group">
+						{% if field.name == "image" %}
+					{% if show == "true" %}
+					<br>
+						<img src="{{course.image.url}}" width="160px" height="80px" alt="">
+						<br><br>
+					{% endif %}
+				{% endif %}
 						
                         {{ field }}
 						

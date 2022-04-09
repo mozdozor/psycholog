@@ -5,7 +5,9 @@ from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput
 from psikolog.models import CommentModel, CustomUserModel
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
 
-
+from string import Template
+from django.utils.safestring import mark_safe
+from django.forms import ImageField
 
 
 
@@ -45,7 +47,7 @@ class CourseModelForm(forms.ModelForm):
         }
         labels = {      
             'author':"Yazar",
-            'image':"Kurs Fotoğrafı",
+            'image':"Kurs Fotoğrafı (800x533)",
             'title': "Kurs Başlığı",
             'description': "Açıklama Yazısı",
             'bottomDescription': "Alt Açıklama",
@@ -223,6 +225,12 @@ class gizlilikMetniModelForm(forms.ModelForm):
             'description': "Metin",
             
         }
+
+
+
+
+
+
 
     
 

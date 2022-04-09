@@ -18,6 +18,7 @@ class sliderModelForm(forms.ModelForm):
             "sira" : forms.NumberInput(attrs={"class":"form-control","name":"sira","required":"required"}),
         }
         labels = {      
+            "image":"Foto (1600x750)",
             'top_title': "Üst Başlık",
             'bottom_title': "Alt Başlık",
             'sira': "Sıra",

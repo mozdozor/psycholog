@@ -102,7 +102,7 @@
                             <a href="{% url 'courseDetail' course.course.slug %}"><img src="{{course.course.image.url}}" class="img-fluid"
                                     alt=""></a>
                             <div class="price">{{course.course.price}} ₺</div>
-                            <div class="preview"><span>Kursu Görüntüle</span></div>
+                            <div class="preview"><span><a href="">Kursu Görüntüle</a></span></div>
                         </figure>
                         <div class="wrapper">
                             <small>{{course.course.category.name}}</small>
@@ -120,8 +120,8 @@
                             </div>
                         </div>
                         <ul>
-                            <li><i class="icon_clock_alt"></i> 1h 30min</li>
-                            <li><i class="icon_like"></i> 890</li>
+                            <li><i class="icon_clock_alt"></i> {{course.course.getTotalVideoDuration}}</li>
+                            <li><i class="fa-solid fa-comment"></i> {{course.course.countOfAllComments}}</li>
                             <li><a href="{% url 'courseDetail' course.course.slug %}">İncele</a></li>
                         </ul>
                     </div>

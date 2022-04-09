@@ -169,6 +169,30 @@ class CourseModel(models.Model):
     def getCategoryName(self):
         return self.category.name
 
+
+    def getTotalVideoDuration(self):
+        hour=0
+        minute=0
+        seconds=0
+        sessions=courseSessionModel.objects.filter(course=self).all()
+        for i in sessions:
+            for video in i.videos.all():
+                minute+=video.minute
+                seconds+=video.seconds
+        add=int(seconds/60)
+        minute+=add
+        if minute>=60:
+            hour=int(minute/60)
+            minute=minute%60
+        if len(str(hour))==1:
+            hour="0"+str(hour)
+        if len(str(minute))==1:
+            minute="0"+str(minute)
+        seconds=seconds%60
+        if len(str(seconds))==1:
+            seconds="0"+str(seconds)
+        return str(hour)+":"+str(minute)+":"+str(seconds)
+
     
     def save(self, *args, **kwargs):
         self.slug = f'{self.title}'
@@ -250,6 +274,22 @@ class courseSessionVideoModel(models.Model):
 
     def __str__(self):
         return self.title
+
+
+    
+    def getMinute(self):
+        if len(str(self.minute))<2:
+            return "0"+str(self.minute)
+        else:
+            return str(self.minute)
+
+
+    def getSeconds(self):
+        if len(str(self.seconds))<2:
+            return "0"+str(self.seconds)
+        else:
+            return str(self.seconds)
+            
 
 
 

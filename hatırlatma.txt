@@ -9,4 +9,7 @@ pip install req.. yap proddta
 migrate yap prodda tekrardan yap google giirişten sonra django admin panelindende social accounts kısmıdnana yarları yap
 
 
-
+sitemap
+tawkto
+google giriş
+video ilermeme durumu

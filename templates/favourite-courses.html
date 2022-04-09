@@ -107,21 +107,20 @@
                         <div class="wrapper">
                             <small>{{course.course.category.name}}</small>
                             <h3>{{course.course.title}}</h3>
-                            <p>{{course.course.description|truncatechars:85}}</p>
+                            <p>{{course.course.description|safe|truncatechars:85}}</p>
                             <div class="rating">
-                                {% for star in course.course.getStar %}
                                 <i class="icon_star voted"></i>
-                                {% endfor %}
-                                {% for star in course.course.getNoneStar %}
-                                <i class="icon_star"></i>
-                                {% endfor %}
+                                <i class="icon_star voted"></i>
+                                <i class="icon_star voted"></i>
+                                <i class="icon_star voted"></i>
+                                <i class="icon_star voted"></i>
     
                                 <small>({{course.course.getStarsWithCommentCount}})</small>
                             </div>
                         </div>
                         <ul>
-                            <li><i class="icon_clock_alt"></i> 1h 30min</li>
-                            <li><i class="icon_like"></i> 890</li>
+                            <li><i class="icon_clock_alt"></i> {{course.course.getTotalVideoDuration}}</li>
+                            <li><i class="fa-solid fa-comment"></i> {{course.course.countOfAllComments}}</li>
                             <li><a href="{% url 'courseDetail' course.course.slug %}">İncele</a></li>
                         </ul>
                     </div>

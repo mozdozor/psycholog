@@ -197,19 +197,18 @@
 											<p>{{course.description|safe|truncatechars:85}}</p>
 											<div class="rating">
 
-												{% for star in course.getStar %}
 												<i class="icon_star voted"></i>
-												{% endfor %}
-												{% for star in course.getNoneStar %}
-												<i class="icon_star"></i> 
-												{% endfor %}
+												<i class="icon_star voted"></i>
+												<i class="icon_star voted"></i>
+												<i class="icon_star voted"></i>
+												<i class="icon_star voted"></i>
 												
 												<small>({{course.getStarsWithCommentCount}})</small>
 											</div>
 										</div>
 										<ul>
-											<li><i class="icon_clock_alt"></i> 1 saat 30 dak</li>
-											<li><i class="icon_like"></i> 890</li>
+											<li><i class="icon_clock_alt"></i> {{course.getTotalVideoDuration}}</li>
+											<li><i class="fa-solid fa-comment"></i> {{course.countOfAllComments}}</li>
 											<li><a href="{% url 'courseDetail' course.slug %}">İncele</a></li>
 										</ul>
 									</div>

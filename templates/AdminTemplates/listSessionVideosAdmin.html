@@ -79,9 +79,9 @@
               {% if session.getVideos %}
                 {% for video in session.getVideos %}
                 <tr>
-                  <td>{{video.title}}</td>
-                  <td>{{video.courseSession.course.title}}</td>
-                  <td>{{video.url}}</td>
+                  <td>{{video.title|truncatechars:21}}</td>
+                  <td>{{video.courseSession.course.title|truncatechars:25}}</td>
+                  <td>{{video.url|truncatechars:41}}</td>
                   
                   {% if video.video_type == "herkes" %}
                   <td>Herkes</td>

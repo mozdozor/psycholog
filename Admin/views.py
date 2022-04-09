@@ -282,6 +282,7 @@ def courseListAdmin(request):
 @permission_required('is_staff',login_url="loginAdmin")
 def courseAddAdmin(request):
     course=""
+    show="false"
     courseId=request.GET.get("courseId",None)
     if request.method == "POST":   
         if courseId:
@@ -297,13 +298,15 @@ def courseAddAdmin(request):
             messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
             return redirect("courseListAdmin")
     if courseId:
+        show="true"
         course=get_object_or_404(CourseModel,pk=courseId)
         form = CourseModelForm(instance=course)
     else:
         form = CourseModelForm()
     context={
         "form":form,
-        "course":course
+        "course":course,
+        "show":show
         
     }
     return render(request,"AdminTemplates/addCourseAdmin.html",context)
@@ -976,6 +979,7 @@ def blogListAdmin(request):
 @permission_required('is_staff',login_url="loginAdmin")
 def createBlogModelAdmin(request):
     blog=""
+    show="false"
     blogId=request.GET.get("blogId",None)
     if request.method == "POST":   
         if blogId:
@@ -994,13 +998,15 @@ def createBlogModelAdmin(request):
             messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
             return redirect("blogListAdmin")
     if blogId:
+        show="true"
         blog=get_object_or_404(blogModel,pk=blogId)
         form = blogModelForm(instance=blog)
     else:
         form = blogModelForm()
     context={
         "form":form,
-        "blog":blog
+        "blog":blog,
+        "show":show
     }
     return render(request,"AdminTemplates/addBlogAdmin.html",context)
 
