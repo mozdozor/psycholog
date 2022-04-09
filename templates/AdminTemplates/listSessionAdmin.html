@@ -75,8 +75,8 @@
             <tbody>
               {% for ses in sessions %}
               <tr>
-                <td>{{ses.title}}</td>
-                <td>{{ses.course.title}}</td>
+                <td>{{ses.title|truncatechars:25}}</td>
+                <td>{{ses.course.title|truncatechars:25}}</td>
                 <td>{{ses.videos.all.count}}</td>
                
                 <td>

@@ -75,7 +75,7 @@
               {% for cat in categories %}
               <tr>
                 <td><center><img style="width: 140px; height: 100px;" src="{{cat.image.url}}" alt=""></center></td>
-                <td>{{cat.name}}</td>
+                <td>{{cat.name|truncatechars:25}}</td>
                 <td>{{cat.countCourseOfCategory}}</td>
                
                 <td>

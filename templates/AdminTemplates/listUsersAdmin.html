@@ -78,8 +78,8 @@
               {% for user in users %}
               <tr>
                 <td><center><img style="width: 140px; height: 100px;" src="{{user.image.url}}" alt=""></center></td>
-                <td>{{user.get_full_name}}</td>
-                <td>{{user.email}}</td>
+                <td>{{user.get_full_name|truncatechars:25}}</td>
+                <td>{{user.email|truncatechars:25}}</td>
                 <td>{{user.phone_number}}</td>
                 <td></td>
                 <td>{{user.created_date}}</td>
