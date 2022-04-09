@@ -24,8 +24,8 @@ def indexAdmin(request):
     a = tod - d
     totalMoneyThisMonth=0
     totalMoneyAllTime=0
-    billsLastMonth=billingCourseModel.objects.filter(created_date__date__gte=a.date()).all()
-    billAll=billingCourseModel.objects.all()
+    billsLastMonth=orderModel.objects.filter(created_date__date__gte=a.date(),status="yes").all()
+    billAll=orderModel.objects.filter(status="yes").all()
     for i in billsLastMonth:
         totalMoneyThisMonth+=i.price
     for i in billAll:
@@ -45,10 +45,10 @@ def indexAdmin(request):
         tod = datetime.datetime.now()
         d = datetime.timedelta(days = (12-i))
         a = tod - d
-        counts=billingCourseModel.objects.filter(created_date__date=a.date()).count()
+        counts=orderModel.objects.filter(created_date__date=a.date(),status="yes").count()
         mylistraw.append(counts)
     tod = datetime.datetime.now()
-    counts=billingCourseModel.objects.filter(created_date__date=tod.date()).count()
+    counts=orderModel.objects.filter(created_date__date=tod.date(),status="yes").count()
     mylistraw.append(counts)
   #  mylistraw=[0,0,0,0,2,0,0,1,0,0,1,0,0]
 
@@ -57,7 +57,7 @@ def indexAdmin(request):
         "messageCount":newMessages,
         "commentCount":CommentModel.objects.all().count(),
         "courseCount":CourseModel.objects.all().count(),
-        "billingCount":billingCourseModel.objects.all().count,
+        "billingCount":orderModel.objects.filter(status="yes").count,
         'mylistjson': mylistraw,
         "totalMoneyThisMonth":totalMoneyThisMonth,
         "totalMoneyAllTime":totalMoneyAllTime,

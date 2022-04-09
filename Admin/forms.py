@@ -95,15 +95,20 @@ class courseSessionVideoModelForm(forms.ModelForm):
     video_type=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"video_type","required":"required"}), choices=CHOICES)
     class Meta:
         model = courseSessionVideoModel
-        fields=("title","url","video_type")
+        fields=("title","url","video_type","minute","seconds")
         widgets = {
             "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title","required":"required"}),
             "url" : TextInput(attrs={"class":"form-control","type":"text","name":"url","required":"required"}),
+            "minute" : forms.NumberInput(attrs={"class":"form-control","name":"minute","required":"required"}),
+            "seconds" : forms.NumberInput(attrs={"class":"form-control","name":"seconds","required":"required"}),
+            
         }
         labels = {      
             'title': "Video Başlığı",
             'url': "URL Adresi",
-            'video_type': "Video Tipi"
+            'video_type': "Video Tipi",
+            'minute': "Dakika",
+            'seconds': "Saniye",
         }
 
 

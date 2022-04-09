@@ -236,6 +236,8 @@ class courseSessionVideoModel(models.Model):
     courseSession=models.ForeignKey(courseSessionModel,on_delete=models.CASCADE,related_name="videos")  
     title=models.CharField(max_length=300)
     url=models.CharField(max_length=300)
+    minute=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
+    seconds=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
     video_type=models.CharField(max_length=300,default="everybody",blank=True,null=True)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
