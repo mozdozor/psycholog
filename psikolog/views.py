@@ -166,6 +166,7 @@ def coursesGridList(request):
     selectedStars=[]
     courses=CourseModel.objects.all()
     categories=CategoryModel.objects.all()
+    secondCourses=list()
     if request.method == "POST":
         if 'categoryName' in request.POST.keys():
             selectedCategories=request.POST.getlist("categoryName")
@@ -189,8 +190,9 @@ def coursesGridList(request):
             q= q.translate(lower_map).lower()
             for co in courses:
                 title= co.title.translate(lower_map).lower()
-                if q not in title:
-                    courses.pop(co)
+                if q in title:
+                    secondCourses.append(co)
+            courses=secondCourses
     else:
         categoryName=request.GET.get("kategori-adi",None)
         if categoryName:
