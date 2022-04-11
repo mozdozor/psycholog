@@ -11,7 +11,8 @@ from .views import (
     listBillingsAdmin,listSlidersAdmin,createSliderModelAdmin,deleteSliderAdmin,listLogoAdmin,updateLogoAdmin,
     aydinlatmaMetniAdmin,kvkkMetniAdmin,gizlilikMetniAdmin,blogListAdmin,createBlogModelAdmin,deleteBlogAdmin,
     blogCategoryListAdmin,addBlogCategoryAdmin,deleteCategoryBlogAdmin,socialMediaAdmin,mesafeliSatisAdmin,
-    listFooterMailAdmin,deleteFooterMail,hakkimizdaAdmin,listAppointmentsAdmin
+    listFooterMailAdmin,deleteFooterMail,hakkimizdaAdmin,listAppointmentsAdmin,listUsersAndVideosStat,
+    listCoursesStat,showVideoStatusDetail
     
 )
 
@@ -73,6 +74,9 @@ urlpatterns = [
     path('admin-footer-mail-sil/<int:pk>',deleteFooterMail,name="deleteFooterMail"),
     path('admin-hakkimizda-guncelle',hakkimizdaAdmin,name="hakkimizdaAdmin"),
     path('admin-randevu-istekleri',listAppointmentsAdmin,name="listAppointmentsAdmin"),
+    path('admin-kullanici-video-durumu/<int:pk>',listUsersAndVideosStat,name="listUsersAndVideosStat"),
+    path('admin-kurs-durumu',listCoursesStat,name="listCoursesStat"),
+    path('admin-kullanici-video-durum-detay/<slug:slug>',showVideoStatusDetail,name="showVideoStatusDetail"),
     
     
 

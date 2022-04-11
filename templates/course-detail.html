@@ -22,6 +22,8 @@
 {% block content %}
 
 
+
+
 <main>
 	<section id="hero_in" class="courses">
 		<div class="wrapper">
@@ -95,9 +97,7 @@
 
 					<section id="lessons">
 	
-						
-			
-
+					
 
 						<div class="intro_title">
 							<h2>Videolar</h2>
@@ -154,12 +154,12 @@
 												{% for video in session.getVideos %}
 												
 												{% if video.video_type == "herkes" %}
-												<li ><a style="color: green; font-weight: bold;" href="{{video.url}}"
+												<li ><a id="{{video.pk}}" style="color: green; font-weight: bold;" href="{{video.url}}"
 													class="video">{{video.title}}</a><span>{{video.getMinute}}:{{video.getSeconds}}</span></li>
 												{% else %}
 													
 													{% if has_bougth == "true" %}
-													<li ><a style="color: green; font-weight: bold;" href="{{video.url}}"
+													<li ><a id="{{video.pk}}" onclick="runPLayerApi('{{video.pk}}')" style="color: green; font-weight: bold;" href="{{video.url}}"
 														class="video">{{video.title}}</a><span>{{video.getMinute}}:{{video.getSeconds}}</span></li>
 													 {% else %}
 													 <li><a href="#" style="pointer-events: none; cursor: default;"
@@ -198,9 +198,8 @@
 
 
 
-
 					
-				
+					
 					
 
 
@@ -278,8 +277,8 @@
 
 						<hr>
 
-
-
+					
+						
 
 
 
@@ -484,6 +483,123 @@
 <script src="{% static 'assets/js/common_scripts.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 <script src="{% static 'assets/validate.js' %}"></script>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+
+
+var mylist1 = JSON.parse("{{videoIds}}");
+// var mylistUrl = JSON.parse(document.getElementById('videoInfo').textContent);
+var mylistId=[];
+for (let i = 0; i < mylist1.length; i++){
+	mylistId.push(mylist1[i]);
+}
+// for (let i = 0; i < mylistUrl.length; i++){
+// 	console.log(mylistUrl[i]);
+// }
+
+
+var currentIndex=0;
+
+function runPLayerApi(id){
+
+	currentIndex=mylistId.indexOf(parseInt(id));
+
+	consolelog();
+		setTimeout(function() {
+			getElement();
+		}, 500);
+
+	
+	//youtubeDiv.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+
+	function consolelog(){
+		console.log(id);
+	}
+	function getElement(){
+
+		$(document).ready(function(){
+
+			var iframe = $('#ourplayer');
+			var player = new Vimeo.Player(iframe);
+			player.on('play', function() {
+				console.log('Played the video');
+			});
+
+			player.on('ended', function() {
+			//	 alert("finished");
+				callAjax(String(mylistId[currentIndex]));
+				var btn=document.getElementsByClassName("mfp-close")[0];
+				btn.click();
+				currentIndex++;
+				document.getElementById(String(mylistId[currentIndex])).click();
+				
+			});
+
+
+			var timeWatched = 0;
+
+
+			player.on("timeupdate", function(data) {
+				if (data.seconds - 1 < timeWatched && data.seconds > timeWatched) {
+					timeWatched = data.seconds;
+							/*This prevents seeking. The reason this is needed
+						is because when the user tries to seek, a time update is called which results in the
+						watchedTime becoming the same as the seeked time before it goes into the function 'seeked' (below) resulting
+						in both values being the same. We need to get the most recent time update before the seek.
+						(data.seconds - 1 < currentTime) basically if you seek, this will return false and the current time wont get updated
+						(data.seconds > currentTime) if they seek backwards then dont update current time so they can seek back to where they were before*/
+
+				}
+			});
+
+			player.on("seeked", function(data) {
+			if (timeWatched < data.seconds) {
+				player.setCurrentTime(timeWatched);
+			}
+			});
+
+
+
+
+
+
+
+
+		});
+			
+
+
+
+
+}
+
+
+
+}
+
+
+function callAjax(videoId){
+	$.ajax({
+		type: "POST",
+		url: "/izlenenlere-ekle",
+		data: {
+			'videoId': videoId,
+		},
+		success: function () {
+			console.log("success");
+		}
+	});
+}
+
+
+
+
+
+
+
+
+</script>
 
 
 

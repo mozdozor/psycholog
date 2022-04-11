@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
-from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, orderModel, sliderModel
+from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, orderModel, sliderModel
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
@@ -1213,3 +1213,59 @@ def listAppointmentsAdmin(request):
         "appointments":appointments,
     }
     return render(request,"AdminTemplates/listAppointmentsAdmin.html",context)
+
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def listUsersAndVideosStat(request,pk):
+    course=get_object_or_404(CourseModel,pk=pk)
+    users=CustomUserModel.objects.all()
+    lastUsers=list()
+    for user in users:
+        isExist=orderModel.objects.filter(user=user,course=course,status="yes").all()
+        if isExist:
+            lastUsers.append(user)
+            
+    context={
+        "users":lastUsers,
+        "course":course
+    }
+    return render(request,"AdminTemplates/listUsersAndVideosStat.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def listCoursesStat(request):
+    courses=CourseModel.objects.all()
+    context={
+        "courses":courses,
+    }
+    return render(request,"AdminTemplates/listCoursesStat.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def showVideoStatusDetail(request,slug):
+    user=get_object_or_404(CustomUserModel,slug=slug)
+    courseId=request.GET.get("courseId",None)
+    course=get_object_or_404(CourseModel,pk=courseId)
+    videos=list()
+    for watched in hasWatchedModel.objects.filter(user=user).all():
+        if watched.video.courseSession.course == course:
+            videos.append(watched)
+    context={
+        "user":user,
+        "videos":videos,
+    }
+    return render(request,"AdminTemplates/showVideoStatusDetail.html",context)

@@ -10,19 +10,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Anasayfa">
           <a class="nav-link" href="{% url 'indexAdmin' %}">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Anasayfa</span>
           </a>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Mesajlar">
           <a class="nav-link" href="{% url 'showAllMessages' %}">
             <i class="fa fa-fw fa-envelope-open"></i>
             <span class="nav-link-text">Mesajlar</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bildirimler">
           <a class="nav-link" href="{% url 'listNotificationsAdmin' %}">
             <i class="fa fa-solid fa-bell"></i>
             <span class="nav-link-text">Bildirimler</span>
@@ -36,7 +36,7 @@
         </li> -->
 
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Yorumlar">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#comments" data-parent="#exampleAccordion">
             <i class="fa fa-solid fa-comments"></i>
             <span class="nav-link-text">Yorumlar</span>
@@ -60,35 +60,41 @@
        
 
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Satın Alımlar">
           <a class="nav-link" href="{% url 'listBillingsAdmin' %}">
             <i class="fa fa-solid fa-credit-card"></i>
             <span class="nav-link-text">Satın Alımlar</span>
           </a>
         </li>
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Randevu İstekleri">
           <a class="nav-link" href="{% url 'listAppointmentsAdmin' %}">
             <i class="fa fa-solid fa-credit-card"></i>
             <span class="nav-link-text">Randevu İstekleri</span>
           </a>
         </li>
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Kullanıcılar">
           <a class="nav-link" href="{% url 'userListAdmin' %}">
             <i class="fa fa-fw fa-users"></i>
             <span class="nav-link-text">Kullanıcılar</span>
           </a>
         </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Video İzlenmeleri">
+          <a class="nav-link" href="{% url 'listCoursesStat' %}">
+            <i class="fa-solid fa-video"></i>
+            <span class="nav-link-text">Video İzlenmeleri</span>
+          </a>
+        </li>
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Blog Ayarları">
           <a class="nav-link" href="{% url 'blogListAdmin' %}">
             <i class="fa-solid fa-bookmark"></i>
             <span class="nav-link-text"> Blog Ayarları</span>
           </a>
         </li>
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Footer Kayıtlı Mailler">
           <a class="nav-link" href="{% url 'listFooterMailAdmin' %}">
             <i class="fa-solid fa-envelope"></i>
             <span class="nav-link-text"> Footer Kayıtlı Mailler</span>
@@ -110,7 +116,7 @@
 
 
 
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Kurs İşlemleri">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfiles" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-archive"></i>
             <span class="nav-link-text">Kurs İşlemleri</span>
@@ -131,7 +137,7 @@
 
 
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Site Ayarları">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfile" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Site Ayarları</span>
@@ -177,7 +183,7 @@
             </li> -->
           </ul>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Kullanıcı Ayarları">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-gear"></i>
             <span class="nav-link-text">Kullanıcı Ayarları</span>

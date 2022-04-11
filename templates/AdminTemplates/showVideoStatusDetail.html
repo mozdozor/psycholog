@@ -1,0 +1,164 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+
+
+
+
+{% block contentAdmin %}
+  
+  
+
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Anasayfa</a>
+        </li>
+        <li class="breadcrumb-item active">Video İlerme Durum Detay</li>
+      </ol>
+		<div class="box_general padding_bottom">
+			<div class="header_box version_2">
+				<h2><i class="fa fa-user"></i>Kullanıcı Profil Bilgileri</h2>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+					<label for="">&emsp;&emsp;</label>
+					<img src="{{user.image.url}}" width="50%" alt="">
+				    </div>
+				</div>
+				<div class="col-md-8 add_top_30">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Name</label>
+								<input type="text" disabled value="{{user.first_name}}" class="form-control" >
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Last name</label>
+								<input type="text" class="form-control" disabled value="{{user.last_name}}">
+							</div>
+						</div>
+					</div>
+					<!-- /row-->
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Telephone</label>
+								<input type="text" class="form-control" disabled value="{{user.phone_number}}">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Email</label>
+								<input type="email" class="form-control" disabled value="{{user.email}}">
+							</div>
+						</div>
+					</div>
+					<!-- /row-->
+		
+			
+				</div>
+			</div>
+		</div>
+		<!-- /box_general-->
+	
+
+
+
+    <div class="box_general padding_bottom">
+			<div class="header_box version_2">
+				<h2><i class="fa-solid fa-video"></i>İzlenen Videolar</h2>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h6>Kurs Videoları</h6>
+					<table id="pricing-list-container" style="width:100%;">
+						<tr class="pricing-list-item">
+							<td>
+
+
+
+
+								
+                {% for video in videos %}
+                  <div class="row">
+                  									<div class="col-md-4">
+                  										<div class="form-group">
+                  											<input style="color: black; font-weight: bold;" type="text" class="form-control" disabled value="{{video.video.title}}">
+                  										</div>
+                  									</div>
+                  									<div class="col-md-4">
+                  										<div class="form-group">
+                  											<input style="color: black; font-weight: bold;" type="text" class="form-control"  disabled value="{{video.video.courseSession.course.title}}">
+                  										</div>
+                  									</div>
+                  									<div class="col-md-3">
+                  										<div class="form-group">
+                  											<input style="color: black; font-weight: bold;" type="text" class="form-control" disabled value="{{video.video.courseSession.course.category.name}}">
+                  										</div>
+                  									</div>
+                  								</div>
+                {% endfor %}
+                  
+
+
+
+
+							</td>
+						</tr>
+					</table>
+					</div>
+			</div>
+			<!-- /row-->
+		</div>
+
+
+
+
+
+
+
+
+
+		<!-- /row-->
+		<p><a href="#0" class="btn_1 medium">Sertifika Ver</a></p>
+	  </div>
+	  <!-- /.container-fluid-->
+   	</div>
+    <!-- /.container-wrapper-->
+
+
+
+
+    {% endblock contentAdmin %}
+
+
+
+
+    {% block scriptsAdmin %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+    <script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+    <script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+    <script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+    <script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+    
+    {% endblock scriptsAdmin %}
+
+

@@ -3,10 +3,10 @@ import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm, appointmentModelForm, footerMailModelForm
-from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
-from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, orderModel, sliderModel
+from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, hasWatchedModel, orderModel, sliderModel
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate,update_session_auth_hash,logout
@@ -23,7 +23,7 @@ import json
 import environ
 import secrets
 from django.views.decorators.csrf import csrf_exempt
-from sms import send_sms
+
 # Create your views here.
 
 
@@ -240,12 +240,17 @@ def AddFavouritesCoursesGridList(request,pk):
 
 def courseDetail(request,slug):
     commentStatus=""
+    videoIds=list()
     form=CommentModelStarsForm()
     course=get_object_or_404(CourseModel,slug=slug)
     learns=whatWillYouLearnModel.objects.filter(course=course).order_by("created_date")
     sessions=courseSessionModel.objects.filter(course=course).order_by("created_date")
     comments=CommentModel.objects.filter(course=course,parent=None).order_by("created_date")
     has_bougth="false"
+    for session in sessions:
+        for video in session.getVideos():
+            videoIds.append(video.pk)
+    videoIds = json.dumps(videoIds)
     if request.user.is_authenticated:
         billings=orderModel.objects.filter(user=request.user,course=course).all()
         if billings:
@@ -262,7 +267,8 @@ def courseDetail(request,slug):
         "sessions":sessions,
         "comments":comments,
         "commentStatus":commentStatus,
-        "has_bougth":has_bougth
+        "has_bougth":has_bougth,
+        "videoIds":videoIds,
     }
     if request.method == "POST":
         form=CommentModelStarsForm(data=request.POST)
@@ -741,3 +747,33 @@ def appointment(request):
         "address":user.address
     }
     return render(request,"appointment.html",context)
+
+
+
+
+
+
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
+
+
+
+@csrf_exempt
+def addWatchedList(request):
+    if request.user.is_authenticated:
+        if is_ajax(request=request):
+            videoId=request.POST["videoId"]
+            video=courseSessionVideoModel.objects.get(id=videoId)
+            listOfAllWatched=hasWatchedModel.objects.filter(user=request.user,video=video)
+            if listOfAllWatched:
+                pass
+            else:
+                hasWatchedModel.objects.create(user=request.user,video=video)
+            message = "This is ajax"
+        else:
+            message = "Not ajax"
+        print(message)
+        return HttpResponse(message)

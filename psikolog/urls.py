@@ -5,7 +5,7 @@ from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
     kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback,mesafeliSatis,footerMailSave,
-    appointment
+    appointment,addWatchedList
 )
 
 urlpatterns = [
@@ -38,5 +38,6 @@ urlpatterns = [
     path('mesafeli-satis-sozlesmesi',mesafeliSatis,name="mesafeliSatis"),
     path('footer-mail-kaydet',footerMailSave,name="footerMailSave"),
     path('randevu-talebi',appointment,name="appointment"),
+    path('izlenenlere-ekle',addWatchedList,name="addWatchedList"),
 
 ]   

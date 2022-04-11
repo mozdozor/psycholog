@@ -1,0 +1,151 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+{% block cssFiles %}
+<link href="{% static 'assetsAdmin/vendor/dropzone.css' %}" rel="stylesheet">
+<link href="{% static 'assetsAdmin/css/date_picker.css' %}" rel="stylesheet">
+{% endblock cssFiles %}
+
+
+{% block contentAdmin %}
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'indexAdmin' %}">Anasayfa</a>
+      </li>
+      <li class="breadcrumb-item active">Kullanıcıların Kurs İlerme Durumu</li>
+    </ol>
+
+
+   
+
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+  
+      {% if message.tags == "error" %}
+      <div class="alert alert-danger" role="alert">
+  
+        <center><strong>{{message}}</strong></center>
+      </div>
+      {% else %}
+      <div class="alert alert-success" role="alert">
+  
+        <center><strong>{{message}}</strong></center>
+      </div>
+      {% endif %}
+  
+  
+  
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+
+
+    <!-- Example DataTables Card-->
+    <div  class="card mb-3">
+      <div style="font-weight: bold; color: red;" class="card-header">
+        <i class="fa fa-table"></i> Kullanıcıların Kurs İlerme Durumu
+        <div style="float: right;">
+          
+          <a  href="{% url 'courseAddAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kurs Ekle</a>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr style="font-weight: bold; color: black;">
+                <!-- <th>Oluşturan</th> -->
+                <th>Kurs Adı</th>
+                <th>Kategori</th>
+                <!-- <th>Kurs Açıklama</th>
+                <th>Kurs Alt Açıklama</th> -->
+                <th>Fiyat</th>
+                <!-- <th>Bölüm Sayısı</th> -->
+                <th>Video Sayısı</th>
+                <th>Görüntüle</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% if courses %}
+                  {% for course in courses %}
+                  <tr>
+                    <!-- <td>{{course.author}}</td> -->
+                    <td>{{course.title|truncatechars:30}}</td>
+                    <td>{{course.category.name}}</td>
+                    <!-- <td>{{course.description|truncatechars:9}}</td>
+                    <td>{{course.bottomDescription|truncatechars:9}}</td> -->
+                    <td>{{course.price}}</td>
+                    <!-- <td>{{course.countOfSession}}</td> -->
+                    <td>{{course.countOfVideos}}</td>
+    
+    
+                    <td>
+                      <center>
+                        <div>
+                          <a href="{% url 'listUsersAndVideosStat' course.pk %}" type="button" title="İlerleme Durumunu Göster" class="btn btn-info btn-sm"><i class="fa-solid fa-eye"></i></a>
+                            
+                        </div>
+                      </center>
+                    </td>
+    
+                  </tr>
+    
+                  {% endfor %}
+              {% endif %}
+                  
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+    </div>
+    <!-- /tables-->
+
+
+
+
+  </div>
+  <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+
+{% endblock contentAdmin %}
+
+
+
+{% block scriptsAdmin %}
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+<script src="{% static 'assetsAdmin/js/admin-datatables.js' %}"></script>
+
+
+
+
+{% endblock scriptsAdmin %}
