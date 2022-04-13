@@ -41,9 +41,9 @@ class CourseModelForm(forms.ModelForm):
             "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),
             "bottomDescription" : Textarea(attrs={"class":"form-control","name":"bottomDescription","required":"required"}),
             "price" : forms.NumberInput(attrs={"class":"form-control","name":"price","required":"required"}),
-            "meta_title" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_title"}),
-            "meta_description" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_description"}),
-            "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords"}),
+            "meta_title" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_title","maxlength":"65"}),
+            "meta_description" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_description","maxlength":"170"}),
+            "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords","data-max-words":"5"}),
         }
         labels = {      
             'author':"Yazar",
@@ -244,12 +244,18 @@ class blogModelForm(forms.ModelForm):
             "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title"}), 
             "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),   
             "categories" : SelectMultiple(attrs={"class":"form-control"}), 
+            "meta_title" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_title","maxlength":"65"}), 
+            "meta_description" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_description","maxlength":"170"}), 
+            "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords","data-max-words":"5"}), 
         }
         labels = {      
             'title': "Başlık",
             'description': "Blog Metni",
             'image': "Fotoğraf (500x333)",
             'categories': "Kategoriler (Birden fazla kategori seçimi için CTRL tuşunu kullanabilirsiniz)",
+            'meta_title': "Meta Başlık",
+            'meta_description': "Meta Açıklama",
+            'meta_keywords': "Meta Anahtar Kelimeler",
             
             
         }

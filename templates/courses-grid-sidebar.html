@@ -12,6 +12,27 @@
 <link href="{% static 'assets/css/skins/square/grey.css' %}" rel="stylesheet">
 {% endblock cssFiles %}
 	
+{% if page %}
+	
+	{% block title %}
+	<title>{{page.meta_title}}</title>
+	{% endblock title %}
+	
+	
+	{% block description %}
+	<meta name="description" content="{{page.meta_description}}">
+	{% endblock description %}
+	
+	
+	{% block keywords %}
+	<meta name="keywords" content="{{page.meta_keywords}}">
+	{% endblock keywords %}
+	
+{% endif %}
+
+
+
+
 
 {% block divFeatures %} id="page" class="theia-exception" {% endblock divFeatures %}
 	

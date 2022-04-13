@@ -5,7 +5,7 @@ import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm, appointmentAdminModelForm, appointmentModelForm, footerMailModelForm
-from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, hasWatchedModel, orderModel, sliderModel
@@ -31,6 +31,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
+    page=topMenuModel.objects.filter(url="/").all()
     sliders=sliderModel.objects.all().order_by("sira")
     courses=CourseModel.objects.all().order_by("created_date")
     categories=CategoryModel.objects.all().order_by("created_date")
@@ -40,6 +41,7 @@ def index(request):
         "courses":courses,
         "categories":categories,
         "blogs":blogs,
+        "page":page.first()
     }
     return render(request,"index.html",context)
 
@@ -164,6 +166,7 @@ def profileSettings(request):
 
 
 def coursesGridList(request):
+    page=topMenuModel.objects.filter(url="/tum-kurslar").all()
     selectedCategories=[]
     selectedStars=[]
     courses=CourseModel.objects.all()
@@ -206,7 +209,8 @@ def coursesGridList(request):
         "categories":categories,
         "allCoursesCount":CourseModel.objects.all().count(),
         "selectedCategories":selectedCategories,
-        "selectedStars":selectedStars
+        "selectedStars":selectedStars,
+        "page":page.first()
     }
     return render(request,"courses-grid-sidebar.html",context)
 
@@ -215,9 +219,11 @@ def coursesGridList(request):
 
 @login_required(login_url="login")
 def favouritesCoursesGridList(request):
+    page=topMenuModel.objects.filter(url="/favori-kurslar").all()
     courses=request.user.favouriteCourses.all()
     context={
         "courses":courses,
+        "page":page.first()
     }
     return render(request,"favourite-courses.html",context)
 
@@ -316,9 +322,11 @@ def courseDetail(request,slug):
 
 @login_required(login_url="login")
 def learningContentList(request):
+    page=topMenuModel.objects.filter(url="/ogrenim-icerigim").all()
     courses=orderModel.objects.filter(user=request.user,status="yes")
     context={
         "courses":courses,
+        "page":page.first()
     }
     return render(request,"learning-content.html",context)
 
@@ -328,6 +336,7 @@ def learningContentList(request):
 
 def aboutUs(request):
     metinler=hakkimizdaModel.objects.all()
+    page=topMenuModel.objects.filter(url="/hakkimizda").all()
     metin=""
     if metinler:
         metin=metinler.first()
@@ -335,6 +344,7 @@ def aboutUs(request):
         "metin":metin,
         "metinType":"hakkimizda",
         "printMetin":"Hakkımızda",
+        "page":page.first()
     }
    
     return render(request,"about.html",context)
@@ -344,6 +354,7 @@ def aboutUs(request):
 
 def contact(request):
     user=CustomUserModel.objects.filter(is_staff=1).first()
+    page=topMenuModel.objects.filter(url="/iletisim").all()
     if request.method == "POST":
         form = IletisimModelForm(request.POST)
         if form.is_valid(): 
@@ -356,7 +367,7 @@ def contact(request):
                     ["turkazepsikolog@gmail.com",],
                 )
                 messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="contactMessages")
-                return redirect("contact")
+                return redirect("contact")  
             except:
                 messages.error(request,"Mesajınız gönderilirken bir hata oldu.Lütfen yönetici ile iletişime geçiniz.",extra_tags="contactMessages")
                 return redirect("contact")
@@ -365,7 +376,8 @@ def contact(request):
     form = IletisimModelForm()
     context={
         "form":form,
-        "address":user.address
+        "address":user.address,
+        "page":page.first()
     }
     return render(request,"contacts.html",context)
 
@@ -436,7 +448,7 @@ def blogDetail(request,slug):
         "comments":comments,
         "hasAuthUserMadeComment":hasAuthUserMadeComment,
         "lastThreeBlogs":lastThreeBlogs,
-        "categories":categories
+        "categories":categories,
     }
     if request.method == "POST":
         form=CommentModelStarsForm(data=request.POST)
@@ -855,6 +867,7 @@ def times(request):
 
 def appointment(request):
     engdays=get_days_from_today()
+    page=topMenuModel.objects.filter(url="/randevu-talebi").all()
     #dates=get_dates()
     days=[]
     for i in engdays:
@@ -915,6 +928,7 @@ def appointment(request):
         "schedules5":schedules5,
         "schedules6":schedules6,
         "schedules7":schedules7,
+        "page":page.first()
     }
     return render(request,"appointment.html",context)
 

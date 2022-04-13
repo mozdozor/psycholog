@@ -177,15 +177,21 @@ def addMenu(request):
             url=request.POST.get("menuUrl",None)
             userType=request.POST.get("userType",None)
             menuSira=request.POST.get("menuSira",None)
+            meta_title=request.POST.get("meta_title",None)
+            meta_description=request.POST.get("meta_description",None)
+            meta_keywords=request.POST.get("meta_keywords",None)
             if menuId:
                 MenuObje.name=name
                 MenuObje.url=url
                 MenuObje.menuSira=menuSira
                 MenuObje.userType=userType
+                MenuObje.meta_title=meta_title
+                MenuObje.meta_description=meta_description
+                MenuObje.meta_keywords=meta_keywords
                 MenuObje.save()
                 messages.success(request,"Üst menü modeli başarıyla güncellendi")
             else:
-                topMenuModel.objects.create(name=name,url=url,userType=userType,menuSira=menuSira)
+                topMenuModel.objects.create(name=name,url=url,userType=userType,menuSira=menuSira,meta_title=meta_title,meta_description=meta_description,meta_keywords=meta_keywords)
                 messages.success(request,"Üst menü modeli başarıyla oluşturuldu")
             return redirect("listMenu",sayfa="ust-menu")
         elif type=="alt-menu-ekle":
@@ -196,16 +202,22 @@ def addMenu(request):
                 url=request.POST.get("menuUrl",None)
                 userType=request.POST.get("userType",None)
                 menuSira=request.POST.get("menuSira",None)
+                meta_title=request.POST.get("meta_title",None)
+                meta_description=request.POST.get("meta_description",None)
+                meta_keywords=request.POST.get("meta_keywords",None)
                 if menuId:
                     MenuObje.topMenu=topMenu
                     MenuObje.name=name
                     MenuObje.url=url
                     MenuObje.menuSira=menuSira
                     MenuObje.userType=userType
+                    MenuObje.meta_title=meta_title
+                    MenuObje.meta_description=meta_description
+                    MenuObje.meta_keywords=meta_keywords
                     MenuObje.save()
                     messages.success(request,"Alt menü modeli başarıyla güncellendi")
                 else:
-                    bottomMenuModel.objects.create(topMenu=topMenu,name=name,url=url,userType=userType,menuSira=menuSira)
+                    bottomMenuModel.objects.create(topMenu=topMenu,name=name,url=url,userType=userType,menuSira=menuSira,meta_title=meta_title,meta_description=meta_description,meta_keywords=meta_keywords)
                     messages.success(request,"Alt menü modeli başarıyla oluşturuldu")
                 return redirect("listMenu",sayfa="alt-menu")
             else:
@@ -1004,7 +1016,8 @@ def createBlogModelAdmin(request):
             blog=get_object_or_404(blogModel,pk=blogId)
             form = blogModelForm(request.POST or None,request.FILES or None,instance=blog)	
         else:
-            form = blogModelForm(request.POST or None,request.FILES or None)	
+            form = blogModelForm(request.POST or None,request.FILES or None)
+
         if form.is_valid(): 
             data=form.save(commit=False)            
             data.author=request.user

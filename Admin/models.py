@@ -19,6 +19,9 @@ class topMenuModel(models.Model):
     userType=models.CharField(max_length=100,blank=True,null=True)   
     menuType=models.CharField(max_length=100,blank=True,null=True,default="Üst Menü")   
     menuSira=models.SmallIntegerField(default=0)
+    meta_title=models.CharField(max_length=65,blank=True,null=True) 
+    meta_description=models.CharField(max_length=170,blank=True,null=True)   
+    meta_keywords=models.CharField(max_length=100,blank=True,null=True)    
 
 
     class Meta:
@@ -50,6 +53,9 @@ class bottomMenuModel(models.Model):
     userType=models.CharField(max_length=100,blank=True,null=True)   
     menuType=models.CharField(max_length=100,blank=True,null=True,default="Alt Menü") 
     menuSira=models.SmallIntegerField(default=0)
+    meta_title=models.CharField(max_length=65,blank=True,null=True) 
+    meta_description=models.CharField(max_length=170,blank=True,null=True)   
+    meta_keywords=models.CharField(max_length=100,blank=True,null=True)    
 
 
     class Meta:
@@ -122,9 +128,9 @@ class CourseModel(models.Model):
     price=models.PositiveSmallIntegerField(default=0)
     average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=0)
     none_average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=5)
-    meta_title=models.CharField(max_length=500,blank=True,null=True) 
-    meta_description=models.CharField(max_length=500,blank=True,null=True)   
-    meta_keywords=models.CharField(max_length=500,blank=True,null=True)    
+    meta_title=models.CharField(max_length=65,blank=True,null=True) 
+    meta_description=models.CharField(max_length=170,blank=True,null=True)   
+    meta_keywords=models.CharField(max_length=100,blank=True,null=True)    
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
 
@@ -295,10 +301,9 @@ class courseSessionVideoModel(models.Model):
 
 
 class PageModel(models.Model):
-    meta_title=models.CharField(max_length=500,blank=True,null=True) 
-    meta_description=models.CharField(max_length=500,blank=True,null=True)   
-    meta_keywords=models.CharField(max_length=500,blank=True,null=True)    
-    view_name=models.CharField(max_length=100,blank=True,null=True)    
+    meta_title=models.CharField(max_length=65,blank=True,null=True) 
+    meta_description=models.CharField(max_length=170,blank=True,null=True)   
+    meta_keywords=models.CharField(max_length=100,blank=True,null=True)    
     
     class Meta:
         db_table="pageModel"
@@ -444,6 +449,9 @@ class blogModel(models.Model):
     categories=models.ManyToManyField(blogCategoryModel,related_name="posts")
     image=models.ImageField(upload_to="blogImages")    
     description=RichTextUploadingField(blank=True,null=True) 
+    meta_title=models.CharField(max_length=65,blank=True,null=True) 
+    meta_description=models.CharField(max_length=170,blank=True,null=True)   
+    meta_keywords=models.CharField(max_length=100,blank=True,null=True)    
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
     

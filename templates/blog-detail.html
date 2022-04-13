@@ -17,6 +17,27 @@
 
 
 
+{% block title %}
+<title>{{blog.meta_title}}</title>
+{% endblock title %}
+
+
+
+{% block description %}
+<meta name="description" content="{{blog.meta_description}}">
+{% endblock description %}
+
+
+{% block keywords %}
+<meta name="keywords" content="{{blog.meta_keywords}}">
+{% endblock keywords %}
+
+
+
+
+
+
+
 
 {% block content %}
 
