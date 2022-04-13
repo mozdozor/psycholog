@@ -24,6 +24,7 @@
     </ol>
 
 
+
    
 
 
@@ -50,17 +51,18 @@
   {% endif %}
 
 
-
+    
+    {% if sayfa == "ust-menu" %}
+      
     <!-- Example DataTables Card-->
     <div  class="card mb-3">
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> ÜST MENÜLER
         <div style="float: right;">
-          <a  href="{% url 'addMenu' %}?tip=ust-menu-ekle" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Üst
-            Menü Ekle</a>&emsp;&emsp;
-          <a href="{% url 'addMenu' %}?tip=alt-menu-ekle" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Alt Menü Ekle</a>
-
-
+          
+            <a  href="{% url 'addMenu' %}?tip=ust-menu-ekle" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Üst
+              Menü Ekle</a>
+         
         </div>
       </div>
 
@@ -101,11 +103,21 @@
       <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
     </div>
     <!-- /tables-->
+    {% endif %}
 
 
+
+
+    
+    {% if sayfa == "alt-menu" %}
+      
+      
     <div class="card mb-3">
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> ALT MENÜLER
+        <div style="float: right;">
+            <a href="{% url 'addMenu' %}?tip=alt-menu-ekle" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Alt Menü Ekle</a>
+    </div>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -152,6 +164,7 @@
       <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
     </div>
 
+    {% endif %}
 
 
   </div>

@@ -139,12 +139,13 @@ def deleteMessagesAdmin(request,pk):
 
 
 @permission_required('is_staff',login_url="loginAdmin")
-def listMenu(request):
+def listMenu(request,sayfa):
     topMenuler=topMenuModel.objects.all()
     bottomMenuler=bottomMenuModel.objects.all()
     context={
         "topMenuler":topMenuler,
         "bottomMenuler":bottomMenuler,
+        "sayfa":sayfa
     }
     return render(request,"AdminTemplates/listMenuAdmin.html",context)
 
@@ -186,7 +187,7 @@ def addMenu(request):
             else:
                 topMenuModel.objects.create(name=name,url=url,userType=userType,menuSira=menuSira)
                 messages.success(request,"Üst menü modeli başarıyla oluşturuldu")
-            return redirect("listMenu")
+            return redirect("listMenu",sayfa="ust-menu")
         elif type=="alt-menu-ekle":
             pk=request.POST.get("baglıMenu",None)
             if pk:
@@ -206,10 +207,10 @@ def addMenu(request):
                 else:
                     bottomMenuModel.objects.create(topMenu=topMenu,name=name,url=url,userType=userType,menuSira=menuSira)
                     messages.success(request,"Alt menü modeli başarıyla oluşturuldu")
-                return redirect("listMenu")
+                return redirect("listMenu",sayfa="alt-menu")
             else:
                 messages.error(request,"Lütfen önce bir üst menü seçimi yapınız eğer yoksa önce üst menü modeli oluşturunuz.")
-                return redirect("listMenu")
+                return redirect("listMenu",sayfa="alt-menu")
     return render(request,"AdminTemplates/addMenuAdmin.html",context)
 
 

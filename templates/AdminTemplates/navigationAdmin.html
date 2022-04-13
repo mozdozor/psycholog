@@ -182,9 +182,7 @@
             <li>
               <a href="{% url 'listSlidersAdmin' %}">Slider Ayarları</a>
             </li>
-            <li>
-              <a href="{% url 'listMenu' %}">Menü Ayarları</a>
-            </li>
+        
             <li>
               <a href="{% url 'showPagesAdmin' %}">Seo Ayarları</a>
             </li>
@@ -219,6 +217,35 @@
             </li> -->
           </ul>
         </li>
+
+
+   
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menü İşlemleri">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfilesa" data-parent="#exampleAccordion">
+            <i class="fa-solid fa-bars"></i>
+            <span class="nav-link-text">Menü İşlemleri</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseProfilesa">
+            <li>
+              <a href="{% url 'listMenu' sayfa='ust-menu' %}">Üst Menü</a>
+            </li>
+            <li>
+              <a href="{% url 'listMenu' sayfa='alt-menu' %}">Alt Menü</a>
+            </li>
+            <!-- <li>
+              <a href="user-profile.html">User profile</a>
+            </li> -->
+			      
+          </ul>
+        </li>
+
+
+
+
+
+
+
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Kullanıcı Ayarları">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-gear"></i>
