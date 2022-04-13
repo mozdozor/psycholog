@@ -1,12 +1,32 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.contrib.sitemaps.views import sitemap
+
 
 from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
     kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback,mesafeliSatis,footerMailSave,
-    appointment,addWatchedList
+    appointment,addWatchedList,times
 )
+
+
+
+from .sitemaps import StaticViewSitemap,courseSiteMap,blogSiteMap,paymentPageSiteMap,successPaymentPageSiteMap,failPaymentPageSiteMap,addFavouriteSiteMap
+
+
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    "course": courseSiteMap,
+    "blog": blogSiteMap,
+    "payment": paymentPageSiteMap,
+    "successPayment": successPaymentPageSiteMap,
+    "failPayment": failPaymentPageSiteMap,
+    "favourites":addFavouriteSiteMap
+}
+
+
 
 urlpatterns = [
     path('',index,name="index"),
@@ -39,5 +59,8 @@ urlpatterns = [
     path('footer-mail-kaydet',footerMailSave,name="footerMailSave"),
     path('randevu-talebi',appointment,name="appointment"),
     path('izlenenlere-ekle',addWatchedList,name="addWatchedList"),
+    path('uygun-zamanlar',times,name="times"),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap')
 
 ]   

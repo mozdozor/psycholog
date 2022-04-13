@@ -12,7 +12,9 @@ from .views import (
     aydinlatmaMetniAdmin,kvkkMetniAdmin,gizlilikMetniAdmin,blogListAdmin,createBlogModelAdmin,deleteBlogAdmin,
     blogCategoryListAdmin,addBlogCategoryAdmin,deleteCategoryBlogAdmin,socialMediaAdmin,mesafeliSatisAdmin,
     listFooterMailAdmin,deleteFooterMail,hakkimizdaAdmin,listAppointmentsAdmin,listUsersAndVideosStat,
-    listCoursesStat,showVideoStatusDetail
+    listCoursesStat,showVideoStatusDetail,appointmentsAdmin,addAppointmentsAdmin,acceptAppointmentsAdmin,
+    deleteAppointmentRequestAdmin,nextAppointmentsAdmin,pastAppointmentsAdmin,deleteAppointmentOfAdmin,
+    showAppointmentsScheduleAdmin,showDetailOrderAdmin
     
 )
 
@@ -77,6 +79,15 @@ urlpatterns = [
     path('admin-kullanici-video-durumu/<int:pk>',listUsersAndVideosStat,name="listUsersAndVideosStat"),
     path('admin-kurs-durumu',listCoursesStat,name="listCoursesStat"),
     path('admin-kullanici-video-durum-detay/<slug:slug>',showVideoStatusDetail,name="showVideoStatusDetail"),
+    path('admin-randevu-ayarlari',appointmentsAdmin,name="appointmentsAdmin"),
+    path('admin-randevu-ekle',addAppointmentsAdmin,name="addAppointmentsAdmin"),
+    path('admin-randevu-onayla/<int:pk>',acceptAppointmentsAdmin,name="acceptAppointmentsAdmin"),
+    path('admin-randevu-sil/<int:pk>',deleteAppointmentRequestAdmin,name="deleteAppointmentRequestAdmin"),
+    path('admin-gelecek-randevular',nextAppointmentsAdmin,name="nextAppointmentsAdmin"),
+    path('admin-geçmiş-randevular',pastAppointmentsAdmin,name="pastAppointmentsAdmin"),
+    path('admin-gun-randevu-sil/<int:pk>',deleteAppointmentOfAdmin,name="deleteAppointmentOfAdmin"),
+    path('admin-randevu-zamanlari/<int:pk>',showAppointmentsScheduleAdmin,name="showAppointmentsScheduleAdmin"),
+    path('admin-siparis-detayi/<int:pk>',showDetailOrderAdmin,name="showDetailOrderAdmin"),
     
     
 

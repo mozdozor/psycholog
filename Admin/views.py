@@ -5,10 +5,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
+from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, appointmentAdminModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 
 
 
@@ -636,6 +636,8 @@ def acceptCommentsRequestAdmin(request,pk):
 
 
 
+
+
 @permission_required('is_staff',login_url="loginAdmin")
 def deleteComingRequestAdmin(request,pk):
     obj=get_object_or_404(CommentModel,pk=pk)
@@ -1205,17 +1207,87 @@ def hakkimizdaAdmin(request):
 
 
 
-
 @permission_required('is_staff',login_url="loginAdmin")
-def listAppointmentsAdmin(request):
-    appointments=appointmentModel.objects.all().order_by("created_date")
+def pastAppointmentsAdmin(request):
+    appointments1=appointmentModel.objects.filter(status="yes",date__lte=datetime.datetime.today().date()).order_by("-date")
+    appointments=list()
+    for i in appointments1:
+        if i.date==datetime.datetime.today().date():
+            if i.finishing_time>datetime.datetime.now().time():
+                pass
+            else:
+                appointments.append(i)
+        else:
+            appointments.append(i)
+   
     context={
         "appointments":appointments,
+        "type":"past",
     }
     return render(request,"AdminTemplates/listAppointmentsAdmin.html",context)
 
 
 
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def nextAppointmentsAdmin(request):
+    appointments1=appointmentModel.objects.filter(status="yes",date__gte=datetime.datetime.today().date()).order_by("-date")
+    appointments=list()
+    for i in appointments1:
+        if i.date==datetime.datetime.today().date():
+            if i.finishing_time<datetime.datetime.now().time():
+                pass
+            else:
+                appointments.append(i)
+        else:
+            appointments.append(i)
+   
+    context={
+        "appointments":appointments,
+        "type":"next",
+    }
+    return render(request,"AdminTemplates/listAppointmentsAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def listAppointmentsAdmin(request):
+    appointments=appointmentModel.objects.filter(status="pending").order_by("-date")
+    context={
+        "appointments":appointments,
+        "type":"requests",
+    }
+    return render(request,"AdminTemplates/listAppointmentsAdmin.html",context)
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def acceptAppointmentsAdmin(request,pk):
+    appointment=get_object_or_404(appointmentModel,pk=pk)
+    appointment.status="yes"
+    appointment.save()
+    messages.success(request,"Randevunuz başarıyla oluşturuldu.Kullanının iletişimin bilgilerinde iletişime geçebilirsiniz.")
+    return redirect("listAppointmentsAdmin")
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteAppointmentRequestAdmin(request,pk):
+    appointment=get_object_or_404(appointmentModel,pk=pk)
+    appointment.status="no"
+    appointment.save()
+    messages.success(request,"Randevunuz başarıyla reddedildi.")
+    return redirect("listAppointmentsAdmin")
 
 
 
@@ -1269,3 +1341,97 @@ def showVideoStatusDetail(request,slug):
         "videos":videos,
     }
     return render(request,"AdminTemplates/showVideoStatusDetail.html",context)
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def appointmentsAdmin(request):
+    appointments=appointmentAdminModel.objects.all().order_by("date")
+    context={
+        "appointments":appointments,
+    }
+    return render(request,"AdminTemplates/appointmentsAdmin.html",context)
+    
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def addAppointmentsAdmin(request):
+    if request.method == "POST":   
+        form = appointmentAdminModelForm(request.POST, request.FILES or None)		
+        if form.is_valid(): 
+            data=form.save(commit=False)         
+            finish=form.cleaned_data.get('finishing_time')
+            start=form.cleaned_data.get('starting_time')
+            date=form.cleaned_data.get('date')
+            today=datetime.date.today()
+            if today > date:
+                messages.error(request,"Girilen tarih bilgisi bugünden önce olamaz.")
+                return redirect("addAppointmentsAdmin")
+            if start >= finish:
+                messages.error(request,"Bitiş zamanı başlangıç zamanından önce  veya eşit olamaz.")
+                return redirect("addAppointmentsAdmin")
+            start = datetime.datetime.strptime(start, '%H:%M')
+            finish = datetime.datetime.strptime(finish, '%H:%M')
+            difference=datetime.datetime.combine(date.today(), finish.time()) - datetime.datetime.combine(date.today(), start.time())
+            dd=str(difference).split(":")
+            x=0
+            data.save()
+            for i in range(int(dd[0])):
+                appointmentModel.objects.create(top=data,date=date,starting_time=(start+datetime.timedelta(hours=x)).time(),finishing_time=(start+datetime.timedelta(hours=x+1)).time())
+                x+=1
+        
+           
+            messages.success(request,"Randevularınız başarıyla kaydedildi.")
+            return redirect("appointmentsAdmin")
+        else:
+            messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            return redirect("appointmentsAdmin")
+    form = appointmentAdminModelForm()
+    context={
+        "form":form,
+    }
+    return render(request,"AdminTemplates/addAppointmentAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteAppointmentOfAdmin(request,pk):
+    obj=get_object_or_404(appointmentAdminModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Randevu tarihi ve o tarihli randevular başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER']) 
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def showAppointmentsScheduleAdmin(request,pk):
+    add=get_object_or_404(appointmentAdminModel,pk=pk)
+    schedules=appointmentModel.objects.filter(date=add.date).order_by("starting_time")
+    context={
+        "schedules":schedules,
+    }
+    return render(request,"AdminTemplates/detailOfAppointmentsAdminModel.html",context)
+    
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def showDetailOrderAdmin(request,pk):
+    order=get_object_or_404(orderModel,pk=pk)
+    context={
+        "order":order,
+    }
+    return render(request,"AdminTemplates/billingDetailAdmin.html",context)
+    

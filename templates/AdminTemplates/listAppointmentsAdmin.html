@@ -20,7 +20,7 @@
       <li class="breadcrumb-item">
         <a href="{% url 'indexAdmin' %}">Anasayfa</a>
       </li>
-      <li class="breadcrumb-item active">Randevu İstekleri</li>
+      <li class="breadcrumb-item active">Randevu</li>
     </ol>
 
 
@@ -54,7 +54,15 @@
     <!-- Example DataTables Card-->
     <div  class="card mb-3">
       <div style="font-weight: bold; color: red;" class="card-header">
-        <i class="fa fa-table"></i> Randevu İstekleri
+        <i class="fa fa-table"></i> 
+        {% if type == "requests" %}
+        Randevu İstekleri
+        {% elif type == "past" %}
+        Geçmiş Randevular
+        {% else %}
+        Gelecek Randevular
+        {% endif %}
+          
         <!-- <div style="float: right;">
           <a  href="" type="button" class="btn btn-warning">Ekle</a>
         </div> -->
@@ -72,6 +80,12 @@
                 <th>Randevu Tarihi</th>
                 <th>Randevu Saati</th>
                 
+                {% if type == "requests" %}
+                <th>İşlemler</th>
+                {% endif %}
+                  
+               
+                
               </tr>
             </thead>    
             <tbody>
@@ -83,6 +97,13 @@
                 <td>{{appo.message}}</td>
                 <td>{{appo.date}}</td>
                 <td>{{appo.starting_time}}/{{appo.finishing_time}}</td>
+                
+                {% if type == "requests" %}
+                <td><center><a href="{% url 'acceptAppointmentsAdmin' appo.pk %}" type="button" title="Kabul Et" class="btn btn-success btn-sm"><i class="fa-solid fa-check"></i></a>&emsp;
+                  <a href="{% url 'deleteAppointmentRequestAdmin' appo.pk %}" type="button"  title="Reddet" class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark"></i></a></center></td>
+                {% endif %}
+                  
+               
                
                 
               </tr>
@@ -126,6 +147,7 @@
 <!-- Custom scripts for all pages-->
 <script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
 <script src="{% static 'assetsAdmin/js/admin-datatables.js' %}"></script>
+
 
 
 

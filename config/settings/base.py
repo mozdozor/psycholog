@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+    'django.contrib.sitemaps',   #add Django sitemaps to installed apps
     'django_cleanup.apps.CleanupConfig', # should be placed after your apps
 ]
 

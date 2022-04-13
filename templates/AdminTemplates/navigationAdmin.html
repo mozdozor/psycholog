@@ -60,19 +60,55 @@
        
 
 
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Randevu">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#commentsba" data-parent="#exampleAccordion">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span class="nav-link-text">  Randevu</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="commentsba">
+            <li>
+              <a href="{% url 'pastAppointmentsAdmin' %}">Geçmiş Randevular</a>
+            </li>
+            <li>
+              <a href="{% url 'nextAppointmentsAdmin' %}">Gelecek Randevularınız</a>
+            </li>
+            <li>
+              <a href="{% url 'listAppointmentsAdmin' %}">Randevu İstekleri</a>
+            </li>
+            <li>
+              <a href="{% url 'appointmentsAdmin' %}">Randevu Ayarları</a>
+            </li>
+           
+          </ul>
+        </li>
+
+
+
+
+
+
+
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Satın Alımlar">
           <a class="nav-link" href="{% url 'listBillingsAdmin' %}">
             <i class="fa fa-solid fa-credit-card"></i>
             <span class="nav-link-text">Satın Alımlar</span>
           </a>
         </li>
-
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Randevu İstekleri">
+        
+        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Randevu İstekleri">
           <a class="nav-link" href="{% url 'listAppointmentsAdmin' %}">
             <i class="fa fa-solid fa-credit-card"></i>
             <span class="nav-link-text">Randevu İstekleri</span>
           </a>
         </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Randevu İstekleri">
+          <a class="nav-link" href="{% url 'appointmentsAdmin' %}">
+            <i class="fa fa-solid fa-credit-card"></i>
+            <span class="nav-link-text">Randevu Ayarları</span>
+          </a>
+        </li> -->
+
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Kullanıcılar">
           <a class="nav-link" href="{% url 'userListAdmin' %}">
@@ -281,6 +317,8 @@
                    <i class="fa fa-long-arrow-up fa-fw"></i>
                    {% if not.type == "billing" %} 
                      Yeni Satın Alım
+                    {% elif not.type == "appointment" %}
+                    Yeni Randevu Talebi
                     {% else %}
                     Yeni Yorum İsteği
                    {% endif %}

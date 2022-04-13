@@ -3,10 +3,24 @@
 
 {% load static %}
 
+
+
+
+
+
+
+
 {% block cssFiles %}
 <link href="{% static 'assetsAdmin/vendor/dropzone.css' %}" rel="stylesheet">
 <link href="{% static 'assetsAdmin/css/date_picker.css' %}" rel="stylesheet">
+
+
 {% endblock cssFiles %}
+
+
+
+
+
 
 
 {% block contentAdmin %}
@@ -21,7 +35,7 @@
       <li class="breadcrumb-item">
         <a href="{% url 'indexAdmin' %}">Anasayfa</a>
       </li>
-      <li class="breadcrumb-item active">Satılan Kurslar</li>
+      <li class="breadcrumb-item active">Randevu Tarihleri</li>
     </ol>
 
 
@@ -54,57 +68,60 @@
 
 
 
-
-    <!-- Example DataTables Card-->
-    <div  class="card mb-3">
-      <div style="font-weight: bold; color: red;" class="card-header">
-        <i class="fa fa-table"></i> Satılan Kurslar
-        <!-- <div style="float: right;">
-          <a  href="" type="button" class="btn btn-warning">Ekle</a>
-        </div> -->
+   <!-- Example DataTables Card-->
+   <div  class="card mb-3">
+    <div style="font-weight: bold; color: red;" class="card-header">
+      <i class="fa fa-table"></i> Randevu Tarihleri
+      <div style="float: right;">
+        <a  href="{% url 'addAppointmentsAdmin' %}" type="button" class="btn btn-warning">Ekle</a>
       </div>
-
-
-
-
-
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-              <tr style="font-weight: bold; color: black;">
-                <th>Kurs Adı</th>
-                <th>Alan Kişi</th>
-                <th>Fiyat</th>
-                <th>Tarih</th>
-                <th>İşlemler</th>
-           
-              </tr>
-            </thead>    
-            <tbody>
-              {% for bill in billings %}
-              <tr>
-                <td>{{bill.course.title}}</td>
-                <td>{{bill.user.get_full_name}}</td>
-                <td>{{bill.price}} ₺</td>
-                <td>{{bill.created_date.date}}</td>
-                <td>
-                  
-                  <center><a href="{% url 'showDetailOrderAdmin' bill.pk %}" type="button" title="Detay" class="btn btn-info btn-sm"><i class="fa-solid fa-eye"></i></a>
-                   </center>
-                </td>
-                
-              </tr>
-
-              {% endfor %}
-
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
     </div>
-    <!-- /tables-->
+
+
+
+
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr style="font-weight: bold; color: black;">
+              <th>Tarih</th>
+              <th>Başlangıç</th>
+              <th>Bitiş</th>
+              <th>İşlemler</th>
+         
+            </tr>
+          </thead>    
+          <tbody>
+            {% for appo in appointments %}
+            <tr>
+              <td>{{appo.date}}</td>
+              <td>{{appo.starting_time}}</td>
+              <td>{{appo.finishing_time}}</td>
+              <td>
+                  
+                <center><a href="{% url 'showAppointmentsScheduleAdmin' appo.pk %}" type="button" title="Detay" class="btn btn-primary btn-sm"><i class="fa-solid fa-eye"></i></a>&emsp;
+                  <a href="#" type="button" onclick="deleteObject('{{appo.pk}}')" title="Sil" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a></center>
+              </td>
+              
+            </tr>
+
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+  </div>
+  <!-- /tables-->
+
+
+
+
+
+
 
 
 
@@ -146,6 +163,18 @@
 <!-- Custom scripts for all pages-->
 <script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
 <script src="{% static 'assetsAdmin/js/admin-datatables.js' %}"></script>
+
+
+
+
+<script>
+  function deleteObject(pk,str){
+      var result= confirm("Bu randevu taihini ve alt randevuları silmek istediğinize emin misiniz?");
+      if (result){
+          document.location.href = "/psyc-admin/admin-gun-randevu-sil/" + pk;
+      }
+  }
+</script>
 
 
 <!-- Custom scripts for this page-->

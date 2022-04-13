@@ -60,10 +60,22 @@
                         <figure><img src="{{not.blogObject.image.url}}" alt=""></figure>
                         <!-- <small>{{not.blogObject.title}}</small> -->
                         <h4>{{not.blogObject.title}}</h4>
+                        {% elif not.type == "appointment" %}
+                        <!-- <figure><img src="{{not.blogObject.image.url}}" alt=""></figure> -->
+                        <small>{{not.appointmentObject.fullname}}</small>
+                        <h4>{{not.title}}</h4>
                         {% endif %}
                             
                         
                         <p>{{not.message}}</p>
+                     
+                        
+                        {% if not.type == "appointment" %}
+                            <p>Email: {{not.appointmentObject.email}}</p>
+                            <p>Telefon: {{not.appointmentObject.phone_number}}</p>
+                            <p>Özel Mesaj: {{not.appointmentObject.message}}</p>
+                        {% endif %}
+                            
                         <!-- <p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-eye"></i> View course</a></p> -->
                         <ul class="buttons">
                             <li><a onclick="ConfirmDelete()" href="{% url 'deleteNotificationsAdmin' not.pk %}"  class="btn_1 gray delete" >

@@ -315,12 +315,13 @@ class PageModel(models.Model):
 
 
 class notificationModel(models.Model):
-    title=models.CharField(max_length=200)
+    title=models.CharField(max_length=200,blank=True,null=True)
     message=models.CharField(max_length=400,blank=True,null=True)
     type=models.CharField(max_length=200)
-    noti_user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="allNotifications")  
+    noti_user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="allNotifications",blank=True,null=True)  
     object=models.ForeignKey(CourseModel,on_delete=models.CASCADE,related_name="notificationsOfCourse",blank=True,null=True)  
     blogObject=models.ForeignKey("Admin.blogModel",on_delete=models.CASCADE,related_name="notificationsOfBlogs",blank=True,null=True)  
+    appointmentObject=models.ForeignKey("Admin.appointmentModel",on_delete=models.CASCADE,related_name="notificationsOfAppo",blank=True,null=True)  
     has_readen=models.CharField(max_length=200,default="no")
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
@@ -546,10 +547,12 @@ class footerMailModel(models.Model):
 
 
 class appointmentModel(models.Model):
+    top=models.ForeignKey("Admin.appointmentAdminModel",on_delete=models.CASCADE,related_name="bottomsAppo",blank=True,null=True) 
     fullname=models.CharField(max_length=250,blank=True,null=True)
     phone_number=models.CharField(max_length=250,blank=True,null=True)
     email=models.EmailField(max_length=250,blank=True,null=True)
     date=models.DateField(max_length=250,blank=True,null=True)
+    status=models.CharField(max_length=200,blank=True,null=True,default="no")
     starting_time=models.TimeField(max_length=250,blank=True,null=True)
     finishing_time=models.TimeField(max_length=250,blank=True,null=True)
     message=models.TextField(blank=True,null=True)
@@ -561,7 +564,7 @@ class appointmentModel(models.Model):
         verbose_name_plural = "Randevular"
 
     def __str__(self):
-        return self.name+" "+self.surname
+        return self.fullname
 
 
 
@@ -587,3 +590,23 @@ class hakkimizdaModel(models.Model):
 
     def __str__(self):
         return self.description
+
+
+
+
+
+
+
+class appointmentAdminModel(models.Model):
+    date=models.DateField(max_length=250,blank=True,null=True)
+    starting_time=models.TimeField(max_length=250,blank=True,null=True)
+    finishing_time=models.TimeField(max_length=250,blank=True,null=True)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+   
+    class Meta:
+        db_table="appointmentAdmin"
+        verbose_name = "RandevuAdmin"
+        verbose_name_plural = "RandevularAdmin" 
+
+    def __str__(self):
+        return self.date

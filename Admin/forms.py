@@ -3,7 +3,7 @@ from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
 
 from string import Template
 from django.utils.safestring import mark_safe
@@ -367,7 +367,7 @@ class footerMailModelForm(forms.ModelForm):
 class appointmentModelForm(forms.ModelForm):
     class Meta:
         model = appointmentModel
-        exclude=("created_date",)
+        exclude=("created_date","status","starting_time","finishing_time","date","top")
         widgets = {
             "fullname" : TextInput(attrs={"class":"input_field","type":"text","name":"fullname","required":"required"}),
             "phone_number" : TextInput(attrs={"class":"input_field","type":"text","name":"phone_number","required":"required"}),
@@ -406,5 +406,42 @@ class hakkimizdaModelForm(forms.ModelForm):
         labels = {     
             'image': "Fotoğraf", 
             'description': "Metin",
+            
+        }
+
+
+
+
+
+
+
+
+class appointmentAdminModelForm(forms.ModelForm):
+    CHOICES= (
+        ('09:00','09:00'),
+        ('10:00','10:00'),
+        ('11:00','11:00'),
+        ('12:00','12:00'),
+        ('13:00','13:00'),
+        ('14:00','14:00'),
+        ('15:00','15:00'),
+        ('16:00','16:00'),
+        ('17:00','17:00'),
+        ('18:00','18:00'),
+        
+    )
+    starting_time=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"starting_time","required":"required"}), choices=CHOICES,label="Gün Başlangıç Saati")
+    finishing_time=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"finishing_time","required":"required"}), choices=CHOICES,label="Gün Bitiş Saati")
+    class Meta:
+        model = appointmentAdminModel
+        exclude=("created_date",)
+        widgets = {
+            "date" : DateInput(attrs={"class":"form-control","name":"date","type":"date","required":"required"}),
+            
+        }
+        labels = {      
+            'date': "Tarih",
+            'starting_time': "Başlangıç Saati",
+            'finishing_time': "Bitiş Saati",
             
         }

@@ -1,0 +1,185 @@
+{% extends 'AdminTemplates/baseAdmin.html' %}
+
+
+{% load static %}
+
+
+
+
+
+
+
+
+{% block cssFiles %}
+<link href="{% static 'assetsAdmin/vendor/dropzone.css' %}" rel="stylesheet">
+<link href="{% static 'assetsAdmin/css/date_picker.css' %}" rel="stylesheet">
+
+
+{% endblock cssFiles %}
+
+
+
+
+
+
+
+{% block contentAdmin %}
+
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'indexAdmin' %}">Anasayfa</a>
+      </li>
+      <li class="breadcrumb-item active">Randevu Gün Detayı</li>
+    </ol>
+
+
+    
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+  
+      {% if message.tags == "error" %}
+      <div class="alert alert-danger" role="alert">
+  
+        <center><strong>{{message}}</strong></center>
+      </div>
+      {% else %}
+      <div class="alert alert-success" role="alert">
+  
+        <center><strong>{{message}}</strong></center>
+      </div>
+      {% endif %}
+  
+  
+  
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+
+  <div class="box_general padding_bottom">
+    <div class="header_box version_2">
+        <h2><i class="fa-solid fa-video"></i>Randevular</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h6>Randevu Bilgileri</h6>
+            <table id="pricing-list-container" style="width:100%;">
+                <tr class="pricing-list-item">
+                    <td>
+
+
+
+
+                        
+        {% for schedule in schedules %}
+          <div class="row">
+                                              <div class="col-md-4">
+                                                  <div class="form-group">
+                                                      <input style="color: black; font-weight: bold;" type="text" class="form-control" disabled value="{{schedule.date}}">
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                  <div class="form-group">
+                                                      <input style="color: black; font-weight: bold;" type="text" class="form-control"  disabled value="{{schedule.starting_time}}/{{schedule.finishing_time}}">
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                  <div class="form-group">
+                                                      <input style="color: black; font-weight: bold;" type="text" class="form-control" disabled 
+                                                      {% if schedule.status == "yes" %}
+                                                           value="Onaylandı"
+                                                        {% elif schedule.status == "pending" %}
+                                                        value="Beklemede"
+                                                        {% else %}
+                                                        value="Randevusuz"
+                                                      {% endif %}
+                                                          >
+                                                  </div>
+                                              </div>
+                                          </div>
+        {% endfor %}
+          
+
+
+
+
+                    </td>
+                </tr>
+            </table>
+            </div>
+    </div>
+    <!-- /row-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+
+{% endblock contentAdmin %}
+
+
+
+
+  
+{% block scriptsAdmin %}
+
+
+
+
+
+
+
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'assetsAdmin/vendor/chart.js/Chart.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.selectbox-0.2.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/retina-replace.min.js' %}"></script>
+<script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+<script src="{% static 'assetsAdmin/js/admin-datatables.js' %}"></script>
+
+
+
+
+<script>
+  function deleteObject(pk,str){
+      var result= confirm("Bu randevu taihini ve alt randevuları silmek istediğinize emin misiniz?");
+      if (result){
+          document.location.href = "/psyc-admin/admin-gun-randevu-sil/" + pk;
+      }
+  }
+</script>
+
+
+<!-- Custom scripts for this page-->
+{% endblock scriptsAdmin %}

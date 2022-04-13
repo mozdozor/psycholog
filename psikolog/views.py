@@ -1,9 +1,11 @@
+import calendar
+import datetime
 from email import message
 import math
 from unicodedata import category
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
-from Admin.forms import CommentModelForm, IletisimModelForm, appointmentModelForm, footerMailModelForm
-from Admin.models import CategoryModel, CourseModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
+from Admin.forms import CommentModelForm, IletisimModelForm, appointmentAdminModelForm, appointmentModelForm, footerMailModelForm
+from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, hasWatchedModel, orderModel, sliderModel
@@ -722,14 +724,163 @@ def footerMailSave(request):
 
 
 
+def get_days_from_today():
+    days=[]
+    my_date = datetime.date.today()
+    a = calendar.day_name[my_date.weekday()]  
+    if(a!="Monday" and a!="Tuesday" and a!="Wednesday" and a!="Thursday" and a!="Friday" and a!="Saturday" and a!="Sunday"):
+        a=getDayEnglish(a)
+    days.append(a)
+    weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    index=weekdays.index(a)
+    for i in range(6-index):
+        days.append(weekdays[i+index+1])
+    for i in range(index):
+        days.append(weekdays[i])
+    return days
+
+
+
+
+
+def getDayEnglish(day):
+    if day == "Pazartesi":
+        day="Monday"
+    elif day == "Salı":
+        day="Tuesday"
+    elif day == "Çarşamba":
+        day="Wednesday"
+    elif day == "Perşembe":
+        day="Thursday"
+    elif day == "Cuma":
+        day="Friday"
+    elif day == "Cumartesi":
+        day="Saturday"
+    elif day == "Pazar":
+        day="Sunday"
+    return day
+
+
+
+
+def getDayTurkish(day):
+    if day == "Monday":
+        day="Pazartesi"
+    elif day == "Tuesday":
+        day="Salı"
+    elif day == "Wednesday":
+        day="Çarşamba"
+    elif day == "Thursday":
+        day="Perşembe"
+    elif day == "Friday":
+        day="Cuma"
+    elif day == "Saturday":
+        day="Cumartesi"
+    elif day == "Sunday":
+        day="Pazar"
+    return day
+
+
+
+
+
+def get_dates():
+    dates={
+        "Pazartesi":find_date("Pazartesi"),
+        "Salı":find_date("Salı"),
+        "Çarşamba":find_date("Çarşamba"),
+        "Perşembe":find_date("Perşembe"),
+        "Cuma":find_date("Cuma"),
+        "Cumartesi":find_date("Cumartesi"),
+        "Pazar":find_date("Pazar"),
+    }
+    return dates
+
+
+
+
+def find_date(week_day):
+    day=getDayEnglish(week_day)
+    my_date = datetime.date.today()
+    a = calendar.day_name[my_date.weekday()]  
+    if(a!="Monday" and a!="Tuesday" and a!="Wednesday" and a!="Thursday" and a!="Friday" and a!="Saturday" and a!="Sunday"):
+        a=getDayEnglish(a)
+    weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    now = weekdays.index(a)
+    coming_day_index = weekdays.index(day)
+    if coming_day_index<now:
+        date = my_date + datetime.timedelta(days= 7+coming_day_index-now)
+    else:
+        date=my_date + datetime.timedelta(days= coming_day_index-now)
+    # if coming_day_index>=now:
+    #     date = my_date - timedelta(days= now - coming_day_index)
+    # else:
+    #     date = my_date + timedelta(days= 6)
+    return date
+
+
+
+
+
+
+def times(request):
+    engdays=get_days_from_today()
+    days=[]
+    for i in engdays:
+        days.append(getDayTurkish(i))
+    schedules1=appointmentModel.objects.filter(date=find_date(days[0]))
+    schedules2=appointmentModel.objects.filter(date=find_date(days[1]))
+    schedules3=appointmentModel.objects.filter(date=find_date(days[2]))
+    schedules4=appointmentModel.objects.filter(date=find_date(days[3]))
+    schedules5=appointmentModel.objects.filter(date=find_date(days[4]))
+    schedules6=appointmentModel.objects.filter(date=find_date(days[5]))
+    schedules7=appointmentModel.objects.filter(date=find_date(days[6]))
+    context={
+        "days":days,
+        "schedules1":schedules1,
+        "schedules2":schedules2,
+        "schedules3":schedules3,
+        "schedules4":schedules4,
+        "schedules5":schedules5,
+        "schedules6":schedules6,
+        "schedules7":schedules7,
+    }
+    return render(request,"times.html",context)
+
+
+
+
+
+
 
 def appointment(request):
+    engdays=get_days_from_today()
+    #dates=get_dates()
+    days=[]
+    for i in engdays:
+        days.append(getDayTurkish(i))
     user=CustomUserModel.objects.filter(is_staff=1).first()
+    schedules1=appointmentModel.objects.filter(date=find_date(days[0])).order_by("starting_time")
+    schedules2=appointmentModel.objects.filter(date=find_date(days[1])).order_by("starting_time")
+    schedules3=appointmentModel.objects.filter(date=find_date(days[2])).order_by("starting_time")
+    schedules4=appointmentModel.objects.filter(date=find_date(days[3])).order_by("starting_time")
+    schedules5=appointmentModel.objects.filter(date=find_date(days[4])).order_by("starting_time")
+    schedules6=appointmentModel.objects.filter(date=find_date(days[5])).order_by("starting_time")
+    schedules7=appointmentModel.objects.filter(date=find_date(days[6])).order_by("starting_time")
     if request.method == "POST":
         form = appointmentModelForm(request.POST)
         if form.is_valid(): 
-            form.save()
-            message=form.cleaned_data["fullname"]+" adlı kişiden "+str(form.cleaned_data["date"].strftime('%d/%m/%Y'))+" tarihinde "+str(form.cleaned_data["starting_time"])+"/"+str(form.cleaned_data["finishing_time"])+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
+            data=form.save(commit=False)
+            ss=request.POST.get("schedule",None)
+            schedule=get_object_or_404(appointmentModel,pk=ss)
+            schedule.status="pending"
+            schedule.phone_number=form.cleaned_data["phone_number"]
+            schedule.email=form.cleaned_data["email"]
+            schedule.message=form.cleaned_data["message"]
+            schedule.fullname=form.cleaned_data["fullname"]
+            schedule.save()
+            message=form.cleaned_data["fullname"]+" adlı kişiden "+str((schedule.date).strftime('%d/%m/%Y'))+" tarihinde "+str(schedule.starting_time)+"/"+str((schedule.finishing_time))+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
+            notificationModel.objects.create(title="Randevu Talebi",message=message,type="appointment",appointmentObject=schedule)
             try:
                 send_mail(
                     form.cleaned_data["fullname"],
@@ -738,15 +889,32 @@ def appointment(request):
                     ["turkazepsikolog@gmail.com",],
                 )
                 messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
+                data.save()
+                
                 return redirect("appointment")
             except:
                 messages.error(request,"Bir hata ile karşılaşıldı.",extra_tags="appointmentMessages")
                 return redirect("appointment")
       
     form = appointmentModelForm()
+
+    engdays=get_days_from_today()
+    days=[]
+    for i in engdays:
+        days.append(getDayTurkish(i))
+
+
     context={
         "form":form,
-        "address":user.address
+        "address":user.address,
+        "days":days,
+        "schedules1":schedules1,
+        "schedules2":schedules2,
+        "schedules3":schedules3,
+        "schedules4":schedules4,
+        "schedules5":schedules5,
+        "schedules6":schedules6,
+        "schedules7":schedules7,
     }
     return render(request,"appointment.html",context)
 

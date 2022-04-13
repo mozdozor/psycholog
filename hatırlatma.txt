@@ -1,9 +1,3 @@
-kullanıcıc yorum isteği yada yeni bir alım gerçekleştirdiğinde bildirim modeli oluştur vr özel mesaj ekle.
-linkler doğru verilsin footer
-kurs ve bölüm kısımlarına sıra ekle
-listelemelerin hepsinde order by yap
-admin panel butonları küçült
-aynı anda kategori ekle kısmına bak
 
 pip install req.. yap proddta
 migrate yap prodda tekrardan yap google giirişten sonra django admin panelindende social accounts kısmıdnana yarları yap
@@ -15,3 +9,4 @@ video ilermeme durumu
 
 
 
+analytics ve yandex kaydı

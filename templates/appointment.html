@@ -2,6 +2,351 @@
 
 
 {% load static %}
+{% load booking_dates %}
+
+
+{% block cssFiles %}
+<style>
+	.booking-doc-info {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+	}
+
+	.booking-doc-info .booking-doc-img {
+		width: 80px;
+		margin-right: 15px;
+	}
+
+	.booking-doc-info .booking-doc-img img {
+		border-radius: 4px;
+		height: 80px;
+		width: 80px;
+		object-fit: cover;
+	}
+
+
+
+	.schedule-widget {
+		border-radius: 4px;
+		min-height: 100px;
+	}
+
+	.schedule-header h4 {
+		font-size: 18px;
+		font-weight: 600;
+		margin: 3px 0 0;
+	}
+
+	.schedule-header {
+		border-bottom: 1px solid #f0f0f0;
+		border-radius: 4px 4px 0 0;
+		padding: 10px 20px;
+	}
+
+	.day-slot ul {
+		float: left;
+		list-style: none;
+		margin-bottom: 0;
+		margin-left: -5px;
+		margin-right: -5px;
+		padding: 0;
+		position: relative;
+		width: 100%;
+	}
+
+	.day-slot li {
+		float: left;
+		padding-left: 5px;
+		padding-right: 5px;
+		text-align: center;
+		width: 14.28%;
+	}
+
+	.day-slot li span {
+		display: block;
+		font-size: 18px;
+		text-transform: uppercase;
+	}
+
+	.day-slot li span.slot-date {
+		display: block;
+		color: #757575;
+		font-size: 14px;
+	}
+
+	.day-slot li small.slot-year {
+		color: #757575;
+		font-size: 14px;
+	}
+
+	.day-slot li.left-arrow {
+		left: 0;
+		padding: 0;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		width: 20px !important;
+		transform: translateY(-50%);
+	}
+
+	.day-slot li.right-arrow {
+		right: -11px;
+		padding: 0;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		width: 20px !important;
+		transform: translateY(-50%);
+	}
+
+	.schedule-cont {
+		padding: 20px;
+	}
+
+	.time-slot ul {
+		list-style: none;
+		margin-right: -5px;
+		margin-left: -5px;
+		margin-bottom: 0;
+		padding: 0;
+	}
+
+	.time-slot li {
+		float: left;
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 14.28%;
+	}
+
+	.time-slot li .timing {
+		background-color: #e9e9e9;
+		border: 1px solid #e9e9e9;
+		border-radius: 3px;
+		color: #757575;
+		display: block;
+		font-size: 14px;
+		margin-bottom: 10px;
+		padding: 5px 5px;
+		text-align: center;
+		position: relative;
+	}
+
+	.time-slot li .timing:hover {
+		background-color: #fff;
+	}
+
+	.time-slot li .timing:last-child {
+		margin-bottom: 0;
+	}
+
+	.time-slot li .timing.selected {
+		background-color: #42c0fb;
+		border: 1px solid #42c0fb;
+		color: #fff;
+	}
+
+	.time-slot li .timing.selected::before {
+		color: #fff;
+		content: "\f00c";
+		font-family: "Font Awesome 5 Free";
+		font-size: 12px;
+		font-weight: 900;
+		position: absolute;
+		right: 6px;
+		top: 6px;
+	}
+
+	.schedule-list {
+		border-bottom: 1px solid #cfcfcf;
+		margin-bottom: 50px;
+		padding-bottom: 50px;
+	}
+
+	.schedule-list:last-child {
+		border-bottom: 0;
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	.submit-section.proceed-btn {
+		margin: 0 0 30px;
+	}
+
+
+
+	.booking-doc-info {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+	}
+
+	.booking-doc-info .booking-doc-img {
+		width: 80px;
+		margin-right: 15px;
+	}
+
+	.booking-doc-info .booking-doc-img img {
+		border-radius: 4px;
+		height: 80px;
+		width: 80px;
+		object-fit: cover;
+	}
+
+	.schedule-widget {
+		border-radius: 4px;
+		min-height: 100px;
+	}
+
+	.schedule-header h4 {
+		font-size: 18px;
+		font-weight: 600;
+		margin: 3px 0 0;
+	}
+
+	.schedule-header {
+		border-bottom: 1px solid #f0f0f0;
+		border-radius: 4px 4px 0 0;
+		padding: 10px 20px;
+	}
+
+	.day-slot ul {
+		float: left;
+		list-style: none;
+		margin-bottom: 0;
+		margin-left: -5px;
+		margin-right: -5px;
+		padding: 0;
+		position: relative;
+		width: 100%;
+	}
+
+	.day-slot li {
+		float: left;
+		padding-left: 5px;
+		padding-right: 5px;
+		text-align: center;
+		width: 14.28%;
+	}
+
+	.day-slot li span {
+		display: block;
+		font-size: 18px;
+		text-transform: uppercase;
+	}
+
+	.day-slot li span.slot-date {
+		display: block;
+		color: #757575;
+		font-size: 14px;
+	}
+
+	.day-slot li small.slot-year {
+		color: #757575;
+		font-size: 14px;
+	}
+
+	.day-slot li.left-arrow {
+		left: 0;
+		padding: 0;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		width: 20px !important;
+		transform: translateY(-50%);
+	}
+
+	.day-slot li.right-arrow {
+		right: -11px;
+		padding: 0;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		width: 20px !important;
+		transform: translateY(-50%);
+	}
+
+	.schedule-cont {
+		padding: 20px;
+	}
+
+	.time-slot ul {
+		list-style: none;
+		margin-right: -5px;
+		margin-left: -5px;
+		margin-bottom: 0;
+		padding: 0;
+	}
+
+	.time-slot li {
+		float: left;
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 14.28%;
+	}
+
+	.time-slot li .timing {
+		background-color: #e9e9e9;
+		border: 1px solid #e9e9e9;
+		border-radius: 3px;
+		color: #757575;
+		display: block;
+		font-size: 14px;
+		margin-bottom: 10px;
+		padding: 5px 5px;
+		text-align: center;
+		position: relative;
+	}
+
+	.time-slot li .timing:hover {
+		background-color: #fff;
+	}
+
+	.time-slot li .timing:last-child {
+		margin-bottom: 0;
+	}
+
+	.time-slot li .timing.selected {
+		background-color: #42c0fb;
+		border: 1px solid #42c0fb;
+		color: #fff;
+	}
+
+	.time-slot li .timing.selected::before {
+		color: #fff;
+		content: "\f00c";
+		font-family: "Font Awesome 5 Free";
+		font-size: 12px;
+		font-weight: 900;
+		position: absolute;
+		/* right: 6px;
+		top: 6px; */
+	}
+
+	.schedule-list {
+		border-bottom: 1px solid #cfcfcf;
+		margin-bottom: 50px;
+		padding-bottom: 50px;
+	}
+
+	.schedule-list:last-child {
+		border-bottom: 0;
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	.submit-section.proceed-btn {
+		margin: 0 0 30px;
+	}
+</style>
+{% endblock cssFiles %}
+
+
+
+
+
+
+
 
 
 {% block divFeatures %}id=page{% endblock divFeatures %}
@@ -9,155 +354,333 @@
 
 
 
-	
+
 
 {% block content %}
-	
-	
 
-	
-	<main>
-		<section id="hero_in" class="contacts">
-			<div class="wrapper">
-				<div class="container">
-					<h1 class="fadeInUp"><span></span>Randevu Talebinde Bulunun</h1>
-				</div>
-			</div>
-		</section>
-		<!--/hero_in-->
 
-		<div class="contact_info">
+
+
+<main>
+	<section id="hero_in" class="contacts">
+		<div class="wrapper">
 			<div class="container">
-				<ul class="clearfix">
-					<li>
-						<i class="pe-7s-map-marker"></i>
-						<h4>Adres</h4>
-						<span>{{address}}</span>
-					</li>
-					<li>
-						<i class="pe-7s-mail-open-file"></i>
-						<h4>Email Adresi</h4>
-						<span>{{sm.email}}<br><small> </small></span>
-
-					</li>
-					<li>
-						<i class="pe-7s-phone"></i>
-						<h4>Telefon</h4>
-						<span>{{sm.phone_number}}<br><small></small></span>
-					</li>
-				</ul>
+				<h1 class="fadeInUp"><span></span>Randevu Talebinde Bulunun</h1>
 			</div>
 		</div>
-		<!--/contact_info-->
-	
+	</section>
+	<!--/hero_in-->
 
-		<div class="bg_color_1">
-			<div class="container margin_120_95">
-				<div class="row justify-content-between">
-					<div class="col-lg-5">
-						<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_eIXuIz.json"  background="transparent"  speed="1"  style="width:100%;"  loop autoplay></lottie-player>
+	<div class="contact_info">
+		<div class="container">
+			<ul class="clearfix">
+				<li>
+					<i class="pe-7s-map-marker"></i>
+					<h4>Adres</h4>
+					<span>{{address}}</span>
+				</li>
+				<li>
+					<i class="pe-7s-mail-open-file"></i>
+					<h4>Email Adresi</h4>
+					<span>{{sm.email}}<br><small> </small></span>
+
+				</li>
+				<li>
+					<i class="pe-7s-phone"></i>
+					<h4>Telefon</h4>
+					<span>{{sm.phone_number}}<br><small></small></span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!--/contact_info-->
+
+
+
+
+
+
+
+	<div class="bg_color_1">
+
+		<div class="container margin_120_95">
+
+
+			<center>
+				<div class="col-lg-10">
+
+
+					<!-- Schedule Widget -->
+					<div class="card booking-schedule schedule-widget">
+
+						<!-- Schedule Header -->
+						<div class="schedule-header">
+							<div class="row">
+								<div class="col-md-12">
+									<a href="{% url 'times' %}"></a>
+									<!-- Day Slot -->
+									<div class="day-slot">
+										<ul>
+
+											{% for day in days %}
+											{% dates day as dayName %}
+
+											<li>
+												<span>{{day}}</span>
+												<span class="slot-date">{{dayName}}</span>
+											</li>
+											{% endfor %}
+
+										</ul>
+									</div>
+									<!-- /Day Slot -->
+
+								</div>
+							</div>
+						</div>
+						<!-- /Schedule Header -->
+
+						<!-- Schedule Content -->
+						<div class="schedule-cont">
+							<div class="row">
+								<div class="col-md-12">
+
+									<!-- Time Slot -->
+									<div class="time-slot">
+										<ul class="clearfix">
+											<li>
+
+
+												{% if schedules1 %}
+												{% for schedule in schedules1 %}
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" {% else %}
+													style="text-decoration: line-through;" {% endif %} class="timing"
+													id="{{schedule.pk}}" href="#">
+													<span>{{schedule.starting_time}}
+														</span>
+												</a>
+												{% endfor %}
+												{% else %}
+												<center>-</center>
+												{% endif %}
+
+
+
+											</li>
+											<li>
+												{% if schedules2 %}
+												{% for schedule in schedules2 %}
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" {% else %}
+													style="text-decoration: line-through;" {% endif %} class="timing"
+													id="{{schedule.pk}}" href="#">
+													<span>{{schedule.starting_time}}
+														</span>
+												</a>
+												{% endfor %}
+												{% else %}
+												<center>-</center>
+												{% endif %}
+											</li>
+											<li>
+												{% if schedules3 %}
+												{% for schedule in schedules3 %}
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" {% else %}
+													style="text-decoration: line-through;" {% endif %} class="timing"
+													id="{{schedule.pk}}" href="#">
+													<span>{{schedule.starting_time}}
+														</span>
+												</a>
+												{% endfor %}
+												{% else %}
+												<center>-</center>
+												{% endif %}
+											</li>
+											<li>
+												{% if schedules4 %}
+												{% for schedule in schedules4 %}
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" {% else %}
+													style="text-decoration: line-through;" {% endif %} class="timing"
+													id="{{schedule.pk}}" href="#">
+													<span>{{schedule.starting_time}}
+														</span>
+												</a>
+												{% endfor %}
+												{% else %}
+												<center>-</center>
+												{% endif %}
+											</li>
+											<li>
+												{% if schedules5 %}
+												{% for schedule in schedules5 %}
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" {% else %}
+													style="text-decoration: line-through;" {% endif %} class="timing"
+													id="{{schedule.pk}}" href="#">
+													<span>{{schedule.starting_time}}
+														</span>
+												</a>
+												{% endfor %}
+												{% else %}
+												<center>-</center>
+												{% endif %}
+											</li>
+											<li>
+												{% if schedules6 %}
+												{% for schedule in schedules6 %}
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" {% else %}
+													style="text-decoration: line-through;" {% endif %} class="timing"
+													id="{{schedule.pk}}" href="#">
+													<span>{{schedule.starting_time}}
+														</span>
+												</a>
+												{% endfor %}
+												{% else %}
+												<center>-</center>
+												{% endif %}
+											</li>
+											<li>
+												{% if schedules7 %}
+												{% for schedule in schedules7 %}
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" {% else %}
+													style="text-decoration: line-through;" {% endif %} class="timing"
+													id="{{schedule.pk}}" href="#">
+													<span>{{schedule.starting_time}}
+														</span>
+												</a>
+												{% endfor %}
+												{% else %}
+												<center>-</center>
+												{% endif %}
+											</li>
+										</ul>
+									</div>
+									<!-- /Time Slot -->
+
+								</div>
+							</div>
+						</div>
+						<!-- /Schedule Content -->
 
 					</div>
-					<div class="col-lg-6">
-						<h4>Randevu isteğinde bulunun</h4>
-						
-					
-						<p>Şimdi zamanı seçin ve randevu isteiğinde bulunun.</p>
+					<!-- /Schedule Widget -->
 
-						<br>
-						{% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
 
-					
-					{% if 'appointmentMessages' in message.extra_tags  %}
-						
-					
-						
+				</div>
+			</center>
+			<hr>
+			<br>
 
-                    {% if message.tags == "error"  %}
-					
-				
-					<div class="alert alert-danger" role="alert">
 
-                        <center><strong>{{message}}</strong></center>
-                    </div>
-				
-					
-                    {% else %}
-					
-					<div class="alert alert-success" role="alert">
+			<div class="row justify-content-between">
+				<div class="col-lg-5">
+					<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_eIXuIz.json"
+						background="transparent" speed="1" style="width:100%;" loop autoplay></lottie-player>
 
-                        <center><strong>{{message}}</strong></center>
-                    </div>
-			
-                    {% endif %}
+				</div>
+				<div class="col-lg-6">
+					<h4>Randevu isteğinde bulunun</h4>
 
+
+					<p>Şimdi zamanı seçin ve randevu isteiğinde bulunun.</p>
+
+					<br>
+					{% if messages %}
+					<ul class="messages">
+						{% for message in messages %}
+
+
+						{% if 'appointmentMessages' in message.extra_tags %}
+
+
+
+
+						{% if message.tags == "error" %}
+
+
+						<div class="alert alert-danger" role="alert">
+
+							<center><strong>{{message}}</strong></center>
+						</div>
+
+
+						{% else %}
+
+						<div class="alert alert-success" role="alert">
+
+							<center><strong>{{message}}</strong></center>
+						</div>
+
+						{% endif %}
+
+						{% endif %}
+						{% endfor %}
+					</ul>
 					{% endif %}
-                    {% endfor %}
-                </ul>
-                {% endif %}
 
-						<div id="message-contact"></div>
-						<form method="post" action="{% url 'appointment' %}">
-							{% csrf_token %}
-							<div class="row">
+					<div id="message-contact"></div>
+					<form method="post" action="{% url 'appointment' %}">
+						{% csrf_token %}
+						<div class="row">
 
-								
-								{% for field in form.visible_fields %}
-									
-								
-								{% if forloop.last %}
-								<div class="col-md-12">
-									<span class="input">
-										{{field}}
-										<label class="input_label">
-											<span class="input__label-content">{{field.label_tag}}</span>
-										</label>
-									</span>
-								</div>
-								{% else %}
-								<div class="col-md-6">
-									<span class="input">
-										{{field}}
-										<label class="input_label">
-											<span class="input__label-content">{{field.label_tag}}</span>
-										</label>
-									</span>
-								</div>
-								{% endif %}
-									
-							
 
-								{% endfor %}
-								
+							{% for field in form.visible_fields %}
+
+
+							{% if forloop.last %}
+							<div class="col-md-12">
+								<span class="input">
+									{{field}}
+									<label class="input_label">
+										<span class="input__label-content">{{field.label_tag}}</span>
+									</label>
+								</span>
 							</div>
-							<!-- /row -->
-						
-							<!-- <span class="input">
+							{% else %}
+							<div class="col-md-6">
+								<span class="input">
+									{{field}}
+									<label class="input_label">
+										<span class="input__label-content">{{field.label_tag}}</span>
+									</label>
+								</span>
+							</div>
+							{% endif %}
+
+
+
+							{% endfor %}
+
+						</div>
+						<!-- /row -->
+
+						<input type="hidden" value="" name="schedule"  id="currentIdClass">	
+
+						<!-- <span class="input">
 									<input class="input_field" type="text" id="verify_contact" name="verify_contact">
 									<label class="input_label">
 									<span class="input__label-content">Are you human? 3 + 1 =</span>
 									</label>
 							</span> -->
-							<p class="add_top_30"><input type="submit" value="Gönder" class="btn_1 rounded" id="submit-contact"></p>
-						</form>
-					</div>
+						<p class="add_top_30"><input type="submit" disabled value="Gönder" class="btn_1 rounded"
+								id="submit-contact"></p>
+					</form>
 				</div>
-				<!-- /row -->
 			</div>
-			<!-- /container -->
+			<!-- /row -->
 		</div>
-		<!-- /bg_color_1 -->
-	</main>
-	<!--/main-->
-	
-	{% endblock content %}
+		<!-- /container -->
+	</div>
+	<!-- /bg_color_1 -->
+</main>
+<!--/main-->
 
 
 
-	
-	{% block jsFiles %}
+{% endblock content %}
+
+
+
+
+{% block jsFiles %}
 
 
 <!-- COMMON SCRIPTS -->
@@ -167,13 +690,59 @@
 <script src="{% static 'assets/validate.js' %}"></script>
 
 
-	<!-- SPECIFIC SCRIPTS -->
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
-	<script type="text/javascript" src="{% static 'assets/js/mapmarker.jquery.js' %}"></script>
-	<script type="text/javascript" src="{% static 'assets/js/mapmarker_func.jquery.js' %}"></script>
+<!-- SPECIFIC SCRIPTS -->
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="{% static 'assets/js/mapmarker.jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/mapmarker_func.jquery.js' %}"></script>
 
 
-	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+
+
+<script>
+
+var hiddenInputId=document.getElementById("currentIdClass");
+var btn=document.getElementById("submit-contact")
+btn.style.backgroundColor="gray";
+
+
+function clicked(element){
+
+	$("html, body").animate({ scrollTop: "628px" });
+hiddenInputId.value=element.id;
+
+
+var items = document.getElementsByClassName('timing selected');
+for (var i = 0; i < items.length; i++) {
+	if(items[i]!=element){
+		items[i].className="timing";
+	}
+	
+}
+
+
+if(element.className=="timing"){
+	element.className="timing selected";
+	btn.disabled=false;
+	btn.style="";
+	
+}else{
+	element.className="timing";
+	btn.style.backgroundColor="gray";
+	btn.disabled=true;
+}
+
+}
+
+
+
+
+</script>
+
+
+
+
+
 
 {% endblock jsFiles %}
-
