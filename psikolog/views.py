@@ -910,13 +910,6 @@ def appointment(request):
                 return redirect("appointment")
       
     form = appointmentModelForm()
-
-    engdays=get_days_from_today()
-    days=[]
-    for i in engdays:
-        days.append(getDayTurkish(i))
-
-
     context={
         "form":form,
         "address":user.address,

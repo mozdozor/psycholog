@@ -10,3 +10,35 @@ video ilermeme durumu
 
 parola onayı
 analytics ve yandex kaydı
+
+6 ya böl isimleri kısalt
+randevu ekle bugünün tarihi otomatik gelecek
+13 saatleri kalkacak
+kurs adı ve fiyat yeterli detay sayfasında
+sayfayı pdfe çevir export olayı 2. plan
+messages image kaldır 
+mesajlar altına iletişim(mesajlar) bildirimler yorumlar
+satın alımlar (sipariş olacak)
+video izlenmeleri kurs ekle kaldır
+sertifika yolla bütün kurslar bitince aktif olsun
+kullanıcıya kurs biterse mesaj göster
+video izlenmeleri sertifika işlemleri olacak
+blog ayarları blog ekle olacak
+footer kayıtlı mailler bülten mailleri olacak
+
+kurs işlemleri randevunun üzerine gelecek
+
+kullanıcı (kullanıcılar,kullanıcı ayarları ve onun kırılımları olacak)
+siter ayarlarının üzerine kullanıcı gelecek yukkarıdakinin 
+menü işlemleri menü ayarları oalacak
+
+
+
+randevu doldur 2 koy 1 koy 3 koy pazarı kaldır oradan
+kısaltmalar yap
+09/10 yaz çift sıfırlar kalksın
+
+
+
+giderlerini paytr a göre ekle
+
