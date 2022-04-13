@@ -123,6 +123,21 @@ def showAllMessages(request):
 
 
 
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteMessagesAdmin(request,pk):
+    obj=get_object_or_404(IletisimModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Mesaj başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER']) 
+
+
+
+
+
+
+
 @permission_required('is_staff',login_url="loginAdmin")
 def listMenu(request):
     topMenuler=topMenuModel.objects.all()

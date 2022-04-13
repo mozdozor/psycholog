@@ -14,7 +14,7 @@ from .views import (
     listFooterMailAdmin,deleteFooterMail,hakkimizdaAdmin,listAppointmentsAdmin,listUsersAndVideosStat,
     listCoursesStat,showVideoStatusDetail,appointmentsAdmin,addAppointmentsAdmin,acceptAppointmentsAdmin,
     deleteAppointmentRequestAdmin,nextAppointmentsAdmin,pastAppointmentsAdmin,deleteAppointmentOfAdmin,
-    showAppointmentsScheduleAdmin,showDetailOrderAdmin
+    showAppointmentsScheduleAdmin,showDetailOrderAdmin,deleteMessagesAdmin
     
 )
 
@@ -88,6 +88,7 @@ urlpatterns = [
     path('admin-gun-randevu-sil/<int:pk>',deleteAppointmentOfAdmin,name="deleteAppointmentOfAdmin"),
     path('admin-randevu-zamanlari/<int:pk>',showAppointmentsScheduleAdmin,name="showAppointmentsScheduleAdmin"),
     path('admin-siparis-detayi/<int:pk>',showDetailOrderAdmin,name="showDetailOrderAdmin"),
+    path('admin-mesaj-sil/<int:pk>',deleteMessagesAdmin,name="deleteMessagesAdmin"),
     
     
 
