@@ -1489,8 +1489,12 @@ def showAppointmentsScheduleAdmin(request,pk):
 @permission_required('is_staff',login_url="loginAdmin")
 def showDetailOrderAdmin(request,pk):
     order=get_object_or_404(orderModel,pk=pk)
+    user=CustomUserModel.objects.filter(is_staff=True).all().first()
+    logo=LogoModel.objects.all().first()
     context={
         "order":order,
+        "logo":logo,
+        "user":user
     }
     return render(request,"AdminTemplates/billingDetailAdmin.html",context)
     

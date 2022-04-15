@@ -1,0 +1,66 @@
+
+
+/*-----------------
+	15. Invoice
+-----------------------*/
+
+.add-btn {
+    border: 1px solid transparent;
+    border-radius: 20px;
+    color: #666;
+    display: inline-block;
+    padding: .375rem .75rem;
+}
+.add-btn:hover,
+.add-btn:active,
+.add-btn:focus {
+	background-color: #fff;
+	border-color: #ddd;
+	color: #666;
+}
+.add-btn span {
+    align-items: center;
+    background-color: #ffc107;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-flex;
+    font-size: 14px;
+    height: 22px;
+    justify-content: center;
+    margin-right: 3px;
+    width: 22px;
+}
+.invoice-details h4 {
+	color: #666;
+	font-size: 16px;
+	font-weight: 400;
+	margin-bottom: 1.875rem;
+	text-transform: uppercase;
+}
+.inv-badge {
+	color: #fff;
+	display: inline-flex;
+	font-size: 11px;
+	justify-content: center;
+	min-width: 80px;
+}
+.inv-logo {
+    max-height: 80px;
+}
+.invoice-container {
+    background-color: #fff;
+	border: 1px solid #f0f0f0;
+    margin: 0 auto 1.875rem;
+    max-width: 900px;
+    padding: 1.5rem;
+}
+.invoice-details,
+.invoice-payment-details > li span {
+	float: right;
+	text-align: right;
+}
+.inv-logo {
+	height: auto;
+	max-height: 100px;
+	width: auto;
+}

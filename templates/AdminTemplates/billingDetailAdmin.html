@@ -5,6 +5,11 @@
 
 
 
+{% block cssFiles %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+<link href="{% static 'assetsAdmin/css/billing.css' %}" rel="stylesheet">
+{% endblock cssFiles %}
+	
 
 
 {% block contentAdmin %}
@@ -13,14 +18,128 @@
 
 
   <div class="content-wrapper">
-    <div class="container-fluid">
+    <div  class="container-fluid">
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Anasayfa</a>
         </li>
         <li class="breadcrumb-item active">Sipariş Detay</li>
+
       </ol>
+	
+
+	  <!-- Page Wrapper -->
+	  <div id="invoice" class="page-wrapper">
+		<div class="content container-fluid">
+		
+			<!-- Invoice Container -->
+			<div class="invoice-container">
+				
+				<div class="row">
+					<div class="col-sm-6 m-b-20">
+						<img alt="Logo" style="background-color: purple;" class="inv-logo img-fluid" src="{{logo.image.url}}">
+					</div>
+					<div class="col-sm-6 m-b-20">
+						<div class="invoice-details">
+							<h3 class="text-uppercase">Fatura #{{order.merchant_oid}}</h3>
+							<ul class="list-unstyled mb-0">
+								<li>Tarih: <span>{{order.updated_date.date}}</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 m-b-20">
+						<ul class="list-unstyled mb-0">
+							<li>Turkaze Psikolog</li>
+							<li>{{user.address}}</li>
+						</ul>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-6 col-lg-7 col-xl-8 m-b-20">
+						<h6>Satın Alan Kişinin Bilgileri</h6>
+						<ul class="list-unstyled mb-0">
+							<li><h5 class="mb-0"><strong>{{order.user.get_full_name}}</strong></h5></li>
+							<li>{{order.user.address}}</li>
+							
+							<li>{{order.user.phone_number}}</li>
+							<li><a href="#">{{order.user.email}}</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-6 col-lg-5 col-xl-4 m-b-20">
+						<h6>Ödeme Detayları</h6>
+						<ul class="list-unstyled invoice-payment-details mb-0">
+							<li><h5>Toplam Tutar: <span class="text-right">{{order.price}} ₺</span></h5></li>
+							
+						</ul>
+					</div>
+				</div>
+				<br><br>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Ürün</th>
+								<th class="text-nowrap">Birim Fiyat</th>
+								<th>Adet</th>
+								<th>Toplam</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>{{order.course.title}}</td>
+								<td>{{order.price}} ₺</td>
+								<td>1</td>
+								<td>{{order.price}} ₺</td>
+							</tr>
+						
+					
+						</tbody>
+					</table>
+				</div>
+				
+				<div>
+					<div class="row invoice-payment">
+						<div class="col-sm-7">
+						</div>
+						<div class="col-sm-5">
+							<div class="m-b-20">
+								<h6>Toplam</h6>
+								<div class="table-responsive no-border">
+									<table class="table mb-0">
+										<tbody>
+										
+										
+											<tr>
+												<th>Toplam:</th>
+												<td class="text-right text-primary"><h5>{{order.price}} ₺</h5></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="invoice-info">
+						<h5>Bİlgilendirme</h5>
+						<p class="text-muted mb-0">Bu fatura; yukarıda adı geçmekte olan şahısın turkazepsikolog.com sitesine ait olan {{order.course.title}} adlı kursu {{order.updated_date.date}} tarihinde satın aldığına dair bir faturalandırmadır .</p>
+					</div>
+				</div>
+				
+			</div>
+			<!-- /Invoice Container -->
+			
+		</div>			
+	</div>
+	<!-- /Page Wrapper -->
+	<a href="#" style="float: right;" onclick="getPDF();"  class="btn btn-success btn-sm">Pdf İndir</a>
+	<br><br>
+
 		<div class="box_general padding_bottom">
 			<div class="header_box version_2">
 				<h2><i class="fa fa-user"></i>Kullanıcı Profil Bilgileri</h2>
@@ -68,7 +187,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- /box_general-->
+	
 	
     
 
@@ -107,6 +226,7 @@
 			</div>
 		</div>
 
+		
 
 
 
@@ -145,6 +265,24 @@
     <script src="{% static 'assetsAdmin/vendor/jquery.magnific-popup.min.js' %}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{% static 'assetsAdmin/js/admin.js' %}"></script>
+
+
+
+
+<script>
+	function getPDF() {
+		const invoice = this.document.getElementById("invoice");
+		var opt = {
+			margin: 1,
+			filename: 'fatura.pdf',
+			image: { type: 'jpeg', quality: 0.98 },
+			html2canvas: { scale: 2 },
+			jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+		};
+		html2pdf().from(invoice).set(opt).save();
+}
+</script>
+
     
     {% endblock scriptsAdmin %}
 

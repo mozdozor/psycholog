@@ -34,13 +34,13 @@ menü işlemleri menü ayarları oalacak                            +
 
 
 
-randevu doldur 2 koy 1 koy 3 koy pazarı kaldır oradan
+randevu doldur 2 koy 1 koy 3 koy pazarı kaldır oradan           +
 
 
 
 
 giderlerini paytr a göre ekle                                   +
-sitemap https olacak
+sitemap https olacak                                            +
 
 hakkımızda anasayfaya da gelecek kısalt devamı                  +
 
