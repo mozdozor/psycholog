@@ -142,9 +142,9 @@
 												{% if schedules1 %}
 												{% for schedule in schedules1 %}
 												<a {% if schedule.status == "no" %} 
-												onclick="clicked(this)" style="color: green;"
+												onclick="clicked(this)" style="color: green; width: 60px; " 
 												 {% else %}
-													style="text-decoration: line-through; color: red;"
+													style="text-decoration: line-through; color: red; width: 60px;"
 													 {% endif %}
 													  class="timing"
 													id="{{schedule.pk}}" href="#">
@@ -163,9 +163,9 @@
 											<li>
 												{% if schedules2 %}
 												{% for schedule in schedules2 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green;"
+												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
 												{% else %}
-													style="text-decoration: line-through; color: red;"
+													style="text-decoration: line-through; color: red; width: 60px;"
 													 {% endif %} 
 													 class="timing"
 													id="{{schedule.pk}}" href="#">
@@ -180,9 +180,9 @@
 											<li>
 												{% if schedules3 %}
 												{% for schedule in schedules3 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green;"
+												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
 												{% else %}
-													style="text-decoration: line-through; color: red;" 
+													style="text-decoration: line-through; color: red; width: 60px;" 
 													{% endif %}
 													 class="timing"
 													id="{{schedule.pk}}" href="#">
@@ -197,9 +197,9 @@
 											<li>
 												{% if schedules4 %}
 												{% for schedule in schedules4 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)" style="color: green;"
+												<a {% if schedule.status == "no" %} onclick="clicked(this)" style="color: green; width: 60px;"
 												 {% else %}
-													style="text-decoration: line-through; color: red;" 
+													style="text-decoration: line-through; color: red; width: 60px;" 
 													{% endif %} 
 													class="timing"
 													id="{{schedule.pk}}" href="#">
@@ -214,9 +214,9 @@
 											<li>
 												{% if schedules5 %}
 												{% for schedule in schedules5 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green;"
+												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
 												{% else %}
-													style="text-decoration: line-through; color: red;" 
+													style="text-decoration: line-through; color: red; width: 60px;" 
 													{% endif %} 
 													class="timing"
 													id="{{schedule.pk}}" href="#">
@@ -231,9 +231,9 @@
 											<li>
 												{% if schedules6 %}
 												{% for schedule in schedules6 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green;"
+												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
 												{% else %}
-													style="text-decoration: line-through; color: red;"
+													style="text-decoration: line-through; color: red; width: 60px;"
 													 {% endif %} 
 													 class="timing"
 													id="{{schedule.pk}}" href="#">

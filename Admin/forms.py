@@ -251,7 +251,7 @@ class blogModelForm(forms.ModelForm):
         labels = {      
             'title': "Başlık",
             'description': "Blog Metni",
-            'image': "Fotoğraf (500x333)",
+            'image': "Fotoğraf (800x400)",
             'categories': "Kategoriler (Birden fazla kategori seçimi için CTRL tuşunu kullanabilirsiniz)",
             'meta_title': "Meta Başlık",
             'meta_description': "Meta Açıklama",
