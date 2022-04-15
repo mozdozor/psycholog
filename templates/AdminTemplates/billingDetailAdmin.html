@@ -8,6 +8,7 @@
 {% block cssFiles %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link href="{% static 'assetsAdmin/css/billing.css' %}" rel="stylesheet">
+
 {% endblock cssFiles %}
 	
 
@@ -38,7 +39,7 @@
 				
 				<div class="row">
 					<div class="col-sm-6 m-b-20">
-						<img alt="Logo" style="background-color: purple;" class="inv-logo img-fluid" src="{{logo.image.url}}">
+						<img alt="Logo" style="background-color: purple;" class="inv-logo img-fluid" src="/home/ubuntu/psycholog/psikolog/logoTurkaze/turkaze-logo.png">
 					</div>
 					<div class="col-sm-6 m-b-20">
 						<div class="invoice-details">
@@ -272,14 +273,16 @@
 <script>
 	function getPDF() {
 		const invoice = this.document.getElementById("invoice");
+		html2pdf().from(invoice).save();
 		var opt = {
 			margin: 1,
 			filename: 'fatura.pdf',
-			image: { type: 'png', quality: 0.98 },
+			image: { type: 'jpeg', quality: 0.98 },
 			html2canvas: { scale: 2 },
 			jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
 		};
-		html2pdf().from(invoice).set(opt).save();
+	//	html2pdf().from(invoice).set(opt).save();
+	
 }
 </script>
 
