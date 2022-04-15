@@ -16,7 +16,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
-from django.core.mail import send_mail
+from django.core.mail import send_mail,EmailMessage
 from django.db.models import Avg
 from django.db.models import Q
 import base64
@@ -27,6 +27,12 @@ import json
 import environ
 import secrets
 from django.views.decorators.csrf import csrf_exempt
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.contrib.auth import get_user_model
+UserModel = get_user_model()
 
 # Create your views here.
 
@@ -94,6 +100,31 @@ def getList(dict):
 
 
 
+
+
+
+def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = UserModel._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, CustomUserModel.DoesNotExist):
+        user = None
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth_login(request,user, backend='django.contrib.auth.backends.ModelBackend')
+        return redirect("index")
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+
+
+
+
+
+
+
+
 def registerUser(request):
     if request.method == "POST":
         form = registerUserForm(request.POST or None)
@@ -101,12 +132,30 @@ def registerUser(request):
             data=form.save(commit=False)
             data.username= form.cleaned_data.get("email")
             data.image="avatar/no-avatar.png"
+            data.is_active = False
             data.save()
-            email = form.cleaned_data.get("email")
-            password = form.cleaned_data.get("password1")
-            user = authenticate(username=email,password=password)
-            auth_login(request,user)
-            return redirect("index")
+
+            current_site = request.META['HTTP_HOST']   
+            mail_subject = 'Hesabını aktif et.'
+            message = render_to_string('acc_active_email.html', {
+                'user': data,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(data.pk)),
+                'token': default_token_generator.make_token(data),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return render(request, "email_not.html",{"note":"Mail adresinizden linke tıklayarak kaydınızı tamamlayınız","class_name":"fas fa-envelope"})
+
+
+            # email = form.cleaned_data.get("email")
+            # password = form.cleaned_data.get("password1")
+            # user = authenticate(username=email,password=password)
+            # auth_login(request,user)
+            # return redirect("index")
         else:
             messages.error(request,form.errors,extra_tags="registerError")
             return render(request, "register.html",{"form":form,})
