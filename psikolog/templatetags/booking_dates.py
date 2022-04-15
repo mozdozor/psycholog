@@ -11,6 +11,14 @@ register=template.Library()
 
 @register.simple_tag
 def dates(day):
+    if day=="Ptesi":
+        day = "Pazartesi"
+    elif day == "Çrş":
+        day = "Çarşamba"
+    elif day == "Prş":
+        day = "Perşembe"
+    elif day == "Ctesi":
+        day="Cumartesi"
     day=getDayEnglish(day)
     my_date = datetime.date.today()
     a = calendar.day_name[my_date.weekday()]  

@@ -82,7 +82,13 @@
                 <td>{{user.email|truncatechars:20}}</td>
                 <td style="color: green; font-weight: bold;">{{watchedCount}}</td>
                 <td style="color: red; font-weight: bold;">{{noneWatchedCount}}</td>
-                <td><a class="btn btn-success btn-sm" href="">Sertifika Yolla</a>&emsp;<a type="button" class="btn btn-info btn-sm" href="{% url 'showVideoStatusDetail' user.slug %}?courseId={{course.pk}}"><i class="fa-solid fa-eye"></i></a></td>
+                <td><a class="btn btn-success btn-sm" 
+                {% if noneWatchedCount == 0 %}
+                href="" 
+                {% else %}
+                  disabled href="#" style="background-color: gray;"
+                {% endif %}
+                   >Sertifika Yolla</a>&emsp;<a type="button" class="btn btn-info btn-sm" href="{% url 'showVideoStatusDetail' user.slug %}?courseId={{course.pk}}"><i class="fa-solid fa-eye"></i></a></td>
                
                 
               </tr>

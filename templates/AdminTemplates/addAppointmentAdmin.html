@@ -88,6 +88,12 @@ method="post" enctype="multipart/form-data"
 {% endblock contentAdmin %}
 
        {% block scriptsAdmin %}
+
+	<script>
+		document.getElementById('id_date').valueAsDate = new Date();
+	</script>
+
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="{% static 'assetsAdmin/vendor/jquery/jquery.min.js' %}"></script>
 	<script src="{% static 'assetsAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

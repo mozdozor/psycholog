@@ -1,3 +1,5 @@
+import datetime
+from email.policy import default
 from unicodedata import category
 from urllib import request
 from autoslug import AutoSlugField
@@ -573,6 +575,8 @@ class appointmentModel(models.Model):
 
     def __str__(self):
         return self.fullname
+    
+
 
 
 

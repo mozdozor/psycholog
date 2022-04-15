@@ -93,6 +93,17 @@
 					<!-- /section -->
 
 
+				
+					
+					{% if completed %}
+						<div class="alert alert-success" hidden id="completeMessage" role="alert">
+							Tebrikler.Bu kursu başarıyla tamamladınız.Sertifikamız yöneticimiz tarafından size mail yoluyla gönderilecektir.
+						  </div>
+						  <br>
+					{% endif %}
+						
+
+
 					
 
 					<section id="lessons">
@@ -154,7 +165,7 @@
 												{% for video in session.getVideos %}
 												
 												{% if video.video_type == "herkes" %}
-												<li ><a id="{{video.pk}}" style="color: green; font-weight: bold;" href="{{video.url}}"
+												<li ><a id="{{video.pk}}" onclick="runPLayerApi('{{video.pk}}')" style="color: green; font-weight: bold;" href="{{video.url}}"
 													class="video">{{video.title}}</a><span>{{video.getMinute}}:{{video.getSeconds}}</span></li>
 												{% else %}
 													
@@ -488,6 +499,13 @@
 <script>
 
 
+var completed="{{completed}}";
+if (completed=="true"){
+	document.getElementById("completeMessage").hidden=false;
+}
+
+
+
 var mylist1 = JSON.parse("{{videoIds}}");
 // var mylistUrl = JSON.parse(document.getElementById('videoInfo').textContent);
 var mylistId=[];
@@ -528,7 +546,7 @@ function runPLayerApi(id){
 
 			player.on('ended', function() {
 			//	 alert("finished");
-				callAjax(String(mylistId[currentIndex]));
+				callAjax(String(mylistId[currentIndex]),"{{course.pk}}");
 				var btn=document.getElementsByClassName("mfp-close")[0];
 				btn.click();
 				currentIndex++;
@@ -579,15 +597,19 @@ function runPLayerApi(id){
 }
 
 
-function callAjax(videoId){
+function callAjax(videoId,courseId){
 	$.ajax({
 		type: "POST",
 		url: "/izlenenlere-ekle",
 		data: {
 			'videoId': videoId,
+			'courseId': courseId,
 		},
-		success: function () {
+		success: function (data) {
 			console.log("success");
+			if(data["complete"]=="success"){
+				document.getElementById("completeMessage").hidden=false;
+			}
 		}
 	});
 }

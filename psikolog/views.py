@@ -3,10 +3,12 @@ import datetime
 from email import message
 import math
 from unicodedata import category
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm, appointmentAdminModelForm, appointmentModelForm, footerMailModelForm
 from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
 from django.contrib.auth import logout
+from Admin.templatetags.coutOfNoneWatched import getCountOfNoneWatchedVideo
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, hasWatchedModel, orderModel, sliderModel
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
@@ -36,12 +38,17 @@ def index(request):
     courses=CourseModel.objects.all().order_by("created_date")
     categories=CategoryModel.objects.all().order_by("created_date")
     blogs=blogModel.objects.all().order_by("created_date")
+    metinler=hakkimizdaModel.objects.all()
+    metin=""
+    if metinler:
+        metin=metinler.first()
     context={
         "sliders":sliders,
         "courses":courses,
         "categories":categories,
         "blogs":blogs,
-        "page":page.first()
+        "page":page.first(),
+        "metin":metin
     }
     return render(request,"index.html",context)
 
@@ -250,6 +257,7 @@ def AddFavouritesCoursesGridList(request,pk):
 
 def courseDetail(request,slug):
     commentStatus=""
+    completed=""
     videoIds=list()
     form=CommentModelStarsForm()
     course=get_object_or_404(CourseModel,slug=slug)
@@ -262,6 +270,9 @@ def courseDetail(request,slug):
             videoIds.append(video.pk)
     videoIds = json.dumps(videoIds)
     if request.user.is_authenticated:
+        NoneWatched=getCountOfNoneWatchedVideo(request.user.pk,course.pk)
+        if NoneWatched==0:
+            completed="true"
         billings=orderModel.objects.filter(user=request.user,course=course).all()
         if billings:
             has_bougth="true"
@@ -279,6 +290,7 @@ def courseDetail(request,slug):
         "commentStatus":commentStatus,
         "has_bougth":has_bougth,
         "videoIds":videoIds,
+        "completed":completed
     }
     if request.method == "POST":
         form=CommentModelStarsForm(data=request.POST)
@@ -742,13 +754,16 @@ def get_days_from_today():
     a = calendar.day_name[my_date.weekday()]  
     if(a!="Monday" and a!="Tuesday" and a!="Wednesday" and a!="Thursday" and a!="Friday" and a!="Saturday" and a!="Sunday"):
         a=getDayEnglish(a)
-    days.append(a)
+    if a!="Sunday":
+        days.append(a)
     weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     index=weekdays.index(a)
     for i in range(6-index):
-        days.append(weekdays[i+index+1])
+        if (weekdays[i+index+1] != "Sunday"):
+            days.append(weekdays[i+index+1])
     for i in range(index):
-        days.append(weekdays[i])
+        if(weekdays[i]!="Sunday"):
+            days.append(weekdays[i])
     return days
 
 
@@ -834,6 +849,22 @@ def find_date(week_day):
 
 
 
+def getShorNameOfDays(days):
+    for i in days:
+        if i=="Pazartesi":
+            i="Ptesi"
+        elif i == "Çarşamba":
+            i="Çrş"
+        elif i == "Perşembe":
+            i="Prş"
+        elif i == "Cumartesi":
+            i="Ctesi"
+    return days
+
+
+
+
+
 
 def times(request):
     engdays=get_days_from_today()
@@ -846,7 +877,7 @@ def times(request):
     schedules4=appointmentModel.objects.filter(date=find_date(days[3]))
     schedules5=appointmentModel.objects.filter(date=find_date(days[4]))
     schedules6=appointmentModel.objects.filter(date=find_date(days[5]))
-    schedules7=appointmentModel.objects.filter(date=find_date(days[6]))
+    # schedules7=appointmentModel.objects.filter(date=find_date(days[6]))
     context={
         "days":days,
         "schedules1":schedules1,
@@ -855,7 +886,7 @@ def times(request):
         "schedules4":schedules4,
         "schedules5":schedules5,
         "schedules6":schedules6,
-        "schedules7":schedules7,
+        # "schedules7":schedules7,
     }
     return render(request,"times.html",context)
 
@@ -879,7 +910,7 @@ def appointment(request):
     schedules4=appointmentModel.objects.filter(date=find_date(days[3])).order_by("starting_time")
     schedules5=appointmentModel.objects.filter(date=find_date(days[4])).order_by("starting_time")
     schedules6=appointmentModel.objects.filter(date=find_date(days[5])).order_by("starting_time")
-    schedules7=appointmentModel.objects.filter(date=find_date(days[6])).order_by("starting_time")
+   # schedules7=appointmentModel.objects.filter(date=find_date(days[6])).order_by("starting_time")
     if request.method == "POST":
         form = appointmentModelForm(request.POST)
         if form.is_valid(): 
@@ -910,6 +941,18 @@ def appointment(request):
                 return redirect("appointment")
       
     form = appointmentModelForm()
+    for dd, item in enumerate(days):
+        if days[dd]=="Pazartesi":
+            item = "Ptesi"
+        elif days[dd] == "Çarşamba":
+            item = "Çrş"
+        elif days[dd] == "Perşembe":
+            item = "Prş"
+        elif days[dd] == "Cumartesi":
+            item="Ctesi"
+        days[dd]=item
+   # print(days[0])
+    
     context={
         "form":form,
         "address":user.address,
@@ -920,7 +963,7 @@ def appointment(request):
         "schedules4":schedules4,
         "schedules5":schedules5,
         "schedules6":schedules6,
-        "schedules7":schedules7,
+       # "schedules7":schedules7,
         "page":page.first()
     }
     return render(request,"appointment.html",context)
@@ -943,14 +986,19 @@ def addWatchedList(request):
     if request.user.is_authenticated:
         if is_ajax(request=request):
             videoId=request.POST["videoId"]
+            courseId=request.POST["courseId"]
             video=courseSessionVideoModel.objects.get(id=videoId)
             listOfAllWatched=hasWatchedModel.objects.filter(user=request.user,video=video)
             if listOfAllWatched:
                 pass
             else:
                 hasWatchedModel.objects.create(user=request.user,video=video)
-            message = "This is ajax"
+            NoneWatched=getCountOfNoneWatchedVideo(request.user.pk,courseId)
+            if NoneWatched==0:
+                return JsonResponse({"complete":"success"}, status = 200)
+            else:
+                return JsonResponse({"complete":"fail"}, status = 200)
         else:
-            message = "Not ajax"
+            return JsonResponse({}, status = 400)
         print(message)
-        return HttpResponse(message)
+    return JsonResponse({}, status = 400)

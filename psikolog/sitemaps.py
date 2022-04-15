@@ -4,6 +4,7 @@ from django.urls import reverse
 from Admin.models import CourseModel, blogModel
 
 class StaticViewSitemap(sitemaps.Sitemap):
+    protocol = 'https'
 
     def items(self):
         return ['index', 'login', 'logoutIndex','registerUser','changePassword','password_reset','password_reset_done','password_reset_complete',
@@ -13,6 +14,8 @@ class StaticViewSitemap(sitemaps.Sitemap):
 
     def location(self, item):
         return reverse(item)
+    
+ 
 
 
 
@@ -20,6 +23,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
 
 
 class courseSiteMap(sitemaps.Sitemap):
+    protocol = 'https'
 
     def items(self):
         return CourseModel.objects.all()
@@ -34,6 +38,7 @@ class courseSiteMap(sitemaps.Sitemap):
 
 
 class blogSiteMap(sitemaps.Sitemap):
+    protocol = 'https'
 
     def items(self):
         return blogModel.objects.all()
@@ -46,6 +51,7 @@ class blogSiteMap(sitemaps.Sitemap):
 
 
 class paymentPageSiteMap(sitemaps.Sitemap):
+    protocol = 'https'
 
     def items(self):
         return CourseModel.objects.all()
@@ -58,6 +64,7 @@ class paymentPageSiteMap(sitemaps.Sitemap):
 
 
 class successPaymentPageSiteMap(sitemaps.Sitemap):
+    protocol = 'https'
 
     def items(self):
         return CourseModel.objects.all()
@@ -70,6 +77,7 @@ class successPaymentPageSiteMap(sitemaps.Sitemap):
 
 
 class failPaymentPageSiteMap(sitemaps.Sitemap):
+    protocol = 'https'
 
     def items(self):
         return CourseModel.objects.all()
@@ -85,6 +93,7 @@ class failPaymentPageSiteMap(sitemaps.Sitemap):
 
 
 class addFavouriteSiteMap(sitemaps.Sitemap):
+    protocol = 'https'
 
     def items(self):
         return CourseModel.objects.all()

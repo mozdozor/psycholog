@@ -1,7 +1,7 @@
 from dataclasses import fields
 from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
-
+import datetime
 from psikolog.models import CommentModel, CustomUserModel
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
 
@@ -410,7 +410,7 @@ class hakkimizdaModelForm(forms.ModelForm):
             "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    
         }
         labels = {     
-            'image': "Fotoğraf", 
+            'image': "Fotoğraf (800x533)", 
             'description': "Metin",
             
         }
@@ -436,8 +436,8 @@ class appointmentAdminModelForm(forms.ModelForm):
         ('18:00','18:00'),
         
     )
-    starting_time=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"starting_time","required":"required"}), choices=CHOICES,label="Gün Başlangıç Saati")
-    finishing_time=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"finishing_time","required":"required"}), choices=CHOICES,label="Gün Bitiş Saati")
+    starting_time=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"starting_time","required":"required"}), choices=CHOICES,label="Başlangıç Saati")
+    finishing_time=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"finishing_time","required":"required"}), choices=CHOICES,label="Bitiş Saati")
     class Meta:
         model = appointmentAdminModel
         exclude=("created_date",)
@@ -447,7 +447,6 @@ class appointmentAdminModelForm(forms.ModelForm):
         }
         labels = {      
             'date': "Tarih",
-            'starting_time': "Başlangıç Saati",
-            'finishing_time': "Bitiş Saati",
-            
         }
+    
+   

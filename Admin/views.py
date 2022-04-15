@@ -9,7 +9,7 @@ from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminS
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, orderModel, sliderModel
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
-
+from django.core.mail import send_mail
 
 
 
@@ -30,11 +30,10 @@ def indexAdmin(request):
         totalMoneyThisMonth+=i.price
     for i in billAll:
         totalMoneyAllTime+=i.price
-    incomingThisMonth=totalMoneyThisMonth*0.8
-    outgoingThisMonth=totalMoneyThisMonth*0.2
-    incomingAll=totalMoneyAllTime*0.8
-    outgoingAll=totalMoneyAllTime*0.2
-
+    outgoingThisMonth=(totalMoneyThisMonth*235)/10000
+    incomingThisMonth=totalMoneyThisMonth-outgoingThisMonth
+    outgoingAll=(totalMoneyAllTime*235)/10000
+    incomingAll=totalMoneyAllTime-outgoingAll
     liste=[]
     liste.append(("%0.2f" % (incomingAll,)))
     liste.append(("%0.2f" % (outgoingAll,)))
@@ -1304,8 +1303,18 @@ def acceptAppointmentsAdmin(request,pk):
     appointment=get_object_or_404(appointmentModel,pk=pk)
     appointment.status="yes"
     appointment.save()
-    messages.success(request,"Randevunuz başarıyla oluşturuldu.Kullanının iletişimin bilgilerinde iletişime geçebilirsiniz.")
+    try:
+        send_mail(
+            "Merhaba, "+appointment.fullname,
+            "turkazepsikolog.com sitesine göndermiş olduğunuz "+str(appointment.date)+" tarihli "+str(appointment.starting_time)+" / "+str(appointment.finishing_time)+" saatine gönderilmiş randevu talebiniz onaylanmıştır.Bilginize sunarız..\n\n",
+             appointment.phone_number,
+            [appointment.email,]
+        )
+        messages.success(request,"Randevunuz başarıyla oluşturuldu.Kullanıcının iletişimin bilgileriyle iletişime geçebilirsiniz.")
+    except:
+        messages.success(request,"Randevu başarıyla oluşturuldu fakat kullanıcının mail hesabına bilgilendirme maili iletilemedi.")
     return redirect("listAppointmentsAdmin")
+
 
 
 
@@ -1315,7 +1324,16 @@ def deleteAppointmentRequestAdmin(request,pk):
     appointment=get_object_or_404(appointmentModel,pk=pk)
     appointment.status="no"
     appointment.save()
-    messages.success(request,"Randevunuz başarıyla reddedildi.")
+    try:
+        send_mail(
+            "Merhaba, "+appointment.fullname,
+            "turkazepsikolog.com sitesine göndermiş olduğunuz "+str(appointment.date)+" tarihli "+str(appointment.starting_time)+" / "+str(appointment.finishing_time)+" saatine gönderilmiş randevu talebiniz reddedilmiştir.Bilginize sunarız..\n\n",
+             appointment.phone_number,
+            [appointment.email,]
+        )
+        messages.success(request,"Randevunuz başarıyla reddedildi ve kullanıcıya mail gönderildi.")
+    except:
+        messages.success(request,"Randevu başarıyla oluşturuldu fakat kullanıcının mail hesabına bilgilendirme maili iletilemedi.")
     return redirect("listAppointmentsAdmin")
 
 
@@ -1409,9 +1427,21 @@ def addAppointmentsAdmin(request):
             difference=datetime.datetime.combine(date.today(), finish.time()) - datetime.datetime.combine(date.today(), start.time())
             dd=str(difference).split(":")
             x=0
-            data.save()
+            oldAppointments=appointmentAdminModel.objects.filter(date=date)
+            oldAppointmentListTimes=list()
+            if oldAppointments:
+                oldAppoinment=oldAppointments.first()
+                data=oldAppoinment
+                oldAppointmentList=appointmentModel.objects.filter(top=oldAppoinment)
+                for old in oldAppointmentList:
+                    oldAppointmentListTimes.append(old.starting_time)
+            else:
+                data.save()
             for i in range(int(dd[0])):
-                appointmentModel.objects.create(top=data,date=date,starting_time=(start+datetime.timedelta(hours=x)).time(),finishing_time=(start+datetime.timedelta(hours=x+1)).time())
+                ss=start+datetime.timedelta(hours=x)
+                isBreak=str(ss.time()).split(":")[0]
+                if isBreak!="13" and ss.time() not in oldAppointmentListTimes :
+                    appointmentModel.objects.create(top=data,date=date,starting_time=ss.time(),finishing_time=(start+datetime.timedelta(hours=x+1)).time())
                 x+=1
         
            

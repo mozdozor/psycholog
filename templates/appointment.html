@@ -148,9 +148,10 @@
 													 {% endif %}
 													  class="timing"
 													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time}}
+													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
 														</span>
 												</a>
+												
 												{% endfor %}
 												{% else %}
 												<center>-</center>
@@ -168,7 +169,7 @@
 													 {% endif %} 
 													 class="timing"
 													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time}}
+													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
 														</span>
 												</a>
 												{% endfor %}
@@ -185,7 +186,7 @@
 													{% endif %}
 													 class="timing"
 													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time}}
+													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
 														</span>
 												</a>
 												{% endfor %}
@@ -202,7 +203,7 @@
 													{% endif %} 
 													class="timing"
 													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time}}
+													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
 														</span>
 												</a>
 												{% endfor %}
@@ -219,7 +220,7 @@
 													{% endif %} 
 													class="timing"
 													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time}}
+													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
 														</span>
 												</a>
 												{% endfor %}
@@ -236,7 +237,7 @@
 													 {% endif %} 
 													 class="timing"
 													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time}}
+													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
 														</span>
 												</a>
 												{% endfor %}
@@ -244,7 +245,7 @@
 												<center>-</center>
 												{% endif %}
 											</li>
-											<li>
+											<!-- <li>
 												{% if schedules7 %}
 												{% for schedule in schedules7 %}
 												<a {% if schedule.status == "no" %} onclick="clicked(this)" style="color: green;"
@@ -260,7 +261,7 @@
 												{% else %}
 												<center>-</center>
 												{% endif %}
-											</li>
+											</li> -->
 										</ul>
 									</div>
 									<!-- /Time Slot -->
