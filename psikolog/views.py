@@ -541,6 +541,7 @@ def blogDetail(request,slug):
 
 
 def allBlogs(request):
+    page=topMenuModel.objects.filter(url="/tum-blog-yazilari").all()
     blogs=blogModel.objects.all()
     queryCategory=request.GET.get("kategori",None)
     if queryCategory:
@@ -572,7 +573,8 @@ def allBlogs(request):
         "blogs":blogs,
         "lastThreeBlogs":lastThreeBlogs,
         "categories":categories,
-        "searchKey":searchKey
+        "searchKey":searchKey,
+        "page":page.first()
         
     }
     return render(request,"blog-lists.html",context)
