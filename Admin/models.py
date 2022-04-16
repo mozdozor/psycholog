@@ -558,6 +558,7 @@ class footerMailModel(models.Model):
 
 class appointmentModel(models.Model):
     top=models.ForeignKey("Admin.appointmentAdminModel",on_delete=models.CASCADE,related_name="bottomsAppo",blank=True,null=True) 
+    category=models.ForeignKey("Admin.appointmentCategoryModel",on_delete=models.CASCADE,related_name="modelssOfCategory",blank=True,null=True) 
     fullname=models.CharField(max_length=250,blank=True,null=True)
     phone_number=models.CharField(max_length=250,blank=True,null=True)
     email=models.EmailField(max_length=250,blank=True,null=True)
@@ -622,3 +623,21 @@ class appointmentAdminModel(models.Model):
 
     def __str__(self):
         return self.date
+
+
+
+
+
+
+class appointmentCategoryModel(models.Model):
+    name=models.CharField(max_length=500,blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True) 
+    
+    class Meta:
+        db_table="appointmentCategoryModel"
+        verbose_name ="Randevu Kategori"  
+        verbose_name_plural ="Randevu Kategori"
+
+    def __str__(self):
+        return self.name

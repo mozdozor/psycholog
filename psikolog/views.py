@@ -927,6 +927,16 @@ def times(request):
     schedules5=appointmentModel.objects.filter(date=find_date(days[4]))
     schedules6=appointmentModel.objects.filter(date=find_date(days[5]))
     # schedules7=appointmentModel.objects.filter(date=find_date(days[6]))
+    for dd, item in enumerate(days):
+        if days[dd]=="Pazartesi":
+            item = "Ptesi"
+        elif days[dd] == "Çarşamba":
+            item = "Çrş"
+        elif days[dd] == "Perşembe":
+            item = "Prş"
+        elif days[dd] == "Cumartesi":
+            item="Ctesi"
+        days[dd]=item
     context={
         "days":days,
         "schedules1":schedules1,
@@ -945,75 +955,50 @@ def times(request):
 
 
 
-def appointment(request):
-    engdays=get_days_from_today()
+def appointment(request,randevuId):
     page=topMenuModel.objects.filter(url="/randevu-talebi").all()
-    #dates=get_dates()
-    days=[]
-    for i in engdays:
-        days.append(getDayTurkish(i))
     user=CustomUserModel.objects.filter(is_staff=1).first()
-    schedules1=appointmentModel.objects.filter(date=find_date(days[0])).order_by("starting_time")
-    schedules2=appointmentModel.objects.filter(date=find_date(days[1])).order_by("starting_time")
-    schedules3=appointmentModel.objects.filter(date=find_date(days[2])).order_by("starting_time")
-    schedules4=appointmentModel.objects.filter(date=find_date(days[3])).order_by("starting_time")
-    schedules5=appointmentModel.objects.filter(date=find_date(days[4])).order_by("starting_time")
-    schedules6=appointmentModel.objects.filter(date=find_date(days[5])).order_by("starting_time")
-   # schedules7=appointmentModel.objects.filter(date=find_date(days[6])).order_by("starting_time")
+    schedule=get_object_or_404(appointmentModel,pk=randevuId)
+    isFree="yes"
+    if schedule.status!="no":
+        isFree="notNo"
+
     if request.method == "POST":
         form = appointmentModelForm(request.POST)
         if form.is_valid(): 
             data=form.save(commit=False)
-            ss=request.POST.get("schedule",None)
-            schedule=get_object_or_404(appointmentModel,pk=ss)
+            if schedule.status!="no":
+                return redirect("times")
             schedule.status="pending"
             schedule.phone_number=form.cleaned_data["phone_number"]
             schedule.email=form.cleaned_data["email"]
             schedule.message=form.cleaned_data["message"]
             schedule.fullname=form.cleaned_data["fullname"]
             schedule.save()
-            message=form.cleaned_data["fullname"]+" adlı kişiden "+str((schedule.date).strftime('%d/%m/%Y'))+" tarihinde "+str(schedule.starting_time)+"/"+str((schedule.finishing_time))+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
+            message=form.cleaned_data["fullname"]+" adlı kişiden "+form.cleaned_data["category"].name+" kategorisi ile ilgili " +str((schedule.date).strftime('%d/%m/%Y'))+" tarihinde "+str(schedule.starting_time)+"/"+str((schedule.finishing_time))+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
             notificationModel.objects.create(title="Randevu Talebi",message=message,type="appointment",appointmentObject=schedule)
             try:
                 send_mail(
                     form.cleaned_data["fullname"],
-                    "turkazepsikolog.com sitesinden yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"]+"\n Telefon = "+form.cleaned_data["phone_number"]+"\n Mesaj = "+form.cleaned_data["message"],
+                    "turkazepsikolog.com sitesinden "+ "yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"]+"\n Telefon = "+form.cleaned_data["phone_number"]+"\n Mesaj = "+form.cleaned_data["message"],
                     form.cleaned_data["phone_number"],
                     ["turkazepsikolog@gmail.com",],
                 )
                 messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
                 data.save()
                 
-                return redirect("appointment")
+                return redirect("appointment",randevuId=randevuId)
             except:
                 messages.error(request,"Bir hata ile karşılaşıldı.",extra_tags="appointmentMessages")
-                return redirect("appointment")
+                return redirect("appointment",randevuId=randevuId)
       
     form = appointmentModelForm()
-    for dd, item in enumerate(days):
-        if days[dd]=="Pazartesi":
-            item = "Ptesi"
-        elif days[dd] == "Çarşamba":
-            item = "Çrş"
-        elif days[dd] == "Perşembe":
-            item = "Prş"
-        elif days[dd] == "Cumartesi":
-            item="Ctesi"
-        days[dd]=item
-   # print(days[0])
-    
     context={
         "form":form,
         "address":user.address,
-        "days":days,
-        "schedules1":schedules1,
-        "schedules2":schedules2,
-        "schedules3":schedules3,
-        "schedules4":schedules4,
-        "schedules5":schedules5,
-        "schedules6":schedules6,
-       # "schedules7":schedules7,
-        "page":page.first()
+        "page":page.first(),
+        "isFree":isFree,
+        "randevuId":randevuId
     }
     return render(request,"appointment.html",context)
 

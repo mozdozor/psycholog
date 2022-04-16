@@ -3,7 +3,7 @@ from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 import datetime
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
 
 from string import Template
 from django.utils.safestring import mark_safe
@@ -375,6 +375,7 @@ class appointmentModelForm(forms.ModelForm):
         model = appointmentModel
         exclude=("created_date","status","starting_time","finishing_time","date","top")
         widgets = {
+            "category" : forms.Select(attrs={"class":"input_field","name":"category","required":"required"}),
             "fullname" : TextInput(attrs={"class":"input_field","type":"text","name":"fullname","required":"required"}),
             "phone_number" : TextInput(attrs={"class":"input_field","type":"text","name":"phone_number","required":"required"}),
             "email" : TextInput(attrs={"class":"input_field","type":"email","name":"email","required":"required"}),
@@ -384,7 +385,8 @@ class appointmentModelForm(forms.ModelForm):
             "message" : Textarea(attrs={"class":"input_field","type":"text","name":"message"}),
             
         }
-        labels = {      
+        labels = {     
+            'category': "Kategori Seçiniz", 
             'fullname': "İsim Soyisim",
             'phone_number': "Telefon",
             'email': "Email",
@@ -450,3 +452,20 @@ class appointmentAdminModelForm(forms.ModelForm):
         }
     
    
+
+
+
+
+
+
+
+class appointmentCategoryModelForm(forms.ModelForm):
+    class Meta:
+        model = appointmentCategoryModel
+        fields=("name",)
+        widgets = {
+            "name" : TextInput(attrs={"class":"form-control","type":"text","name":"name","required":"required"}),
+        }
+        labels = {      
+            'name': "Randevu Kategori İsmi",
+        }

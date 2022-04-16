@@ -5,10 +5,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, appointmentAdminModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
+from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, appointmentAdminModelForm, appointmentCategoryModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 from django.core.mail import send_mail
 
 
@@ -1498,3 +1498,65 @@ def showDetailOrderAdmin(request,pk):
     }
     return render(request,"AdminTemplates/billingDetailAdmin.html",context)
     
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def appointmentCategoryListAdmin(request):
+    categories=appointmentCategoryModel.objects.all().order_by("created_date")
+    context={
+        "categories":categories,
+    }
+    return render(request,"AdminTemplates/listAppointmentCategoryAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def addAppointmentCategoryAdmin(request):
+    category=""
+    categoryId=request.GET.get("categoryId",None)
+    if request.method == "POST":   
+        if categoryId:
+            category=get_object_or_404(appointmentCategoryModel,pk=categoryId)
+            form = appointmentCategoryModelForm(request.POST, request.FILES or None,instance=category)	
+        else:
+            form = appointmentCategoryModelForm(request.POST, request.FILES or None)	
+        if form.is_valid(): 
+            form.save()            
+            messages.success(request,"Randevu kategorisi başarıyla kaydedildi.")
+            return redirect("appointmentCategoryListAdmin")
+        else:
+            messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            return redirect("appointmentCategoryListAdmin")
+    if categoryId:
+        category=get_object_or_404(appointmentCategoryModel,pk=categoryId)
+        form = appointmentCategoryModelForm(instance=category)
+    else:
+        form = appointmentCategoryModelForm()
+    context={
+        "form":form,
+        "category":category
+        
+    }
+    
+    return render(request,"AdminTemplates/addAppoinmentCategoryAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteAppointmentCategoryAdmin(request,pk):
+    obj=get_object_or_404(appointmentCategoryModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Randevu kategorisi başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER'])

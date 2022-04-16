@@ -94,192 +94,6 @@
 		<div class="container margin_120_95">
 
 
-			<center>
-				<div class="col-lg-10">
-
-
-					<!-- Schedule Widget -->
-					<div class="card booking-schedule schedule-widget">
-
-						<!-- Schedule Header -->
-						<div class="schedule-header">
-							<div class="row">
-								<div class="col-md-12">
-									<a href="{% url 'times' %}"></a>
-									<!-- Day Slot -->
-									<div class="day-slot">
-										<ul>
-
-											{% for day in days %}
-											{% dates day as dayName %}
-
-											<li>
-												<span>{{day}}</span>
-												<span class="slot-date">{{dayName}}</span>
-											</li>
-											{% endfor %}
-
-										</ul>
-									</div>
-									<!-- /Day Slot -->
-
-								</div>
-							</div>
-						</div>
-						<!-- /Schedule Header -->
-
-						<!-- Schedule Content -->
-						<div class="schedule-cont">
-							<div class="row">
-								<div class="col-md-12">
-
-									<!-- Time Slot -->
-									<div class="time-slot">
-										<ul class="clearfix">
-											<li>
-
-
-												{% if schedules1 %}
-												{% for schedule in schedules1 %}
-												<a {% if schedule.status == "no" %} 
-												onclick="clicked(this)" style="color: green; width: 60px; " 
-												 {% else %}
-													style="text-decoration: line-through; color: red; width: 60px;"
-													 {% endif %}
-													  class="timing"
-													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
-														</span>
-												</a>
-												
-												{% endfor %}
-												{% else %}
-												<center>-</center>
-												{% endif %}
-
-
-
-											</li>
-											<li>
-												{% if schedules2 %}
-												{% for schedule in schedules2 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
-												{% else %}
-													style="text-decoration: line-through; color: red; width: 60px;"
-													 {% endif %} 
-													 class="timing"
-													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
-														</span>
-												</a>
-												{% endfor %}
-												{% else %}
-												<center>-</center>
-												{% endif %}
-											</li>
-											<li>
-												{% if schedules3 %}
-												{% for schedule in schedules3 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
-												{% else %}
-													style="text-decoration: line-through; color: red; width: 60px;" 
-													{% endif %}
-													 class="timing"
-													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
-														</span>
-												</a>
-												{% endfor %}
-												{% else %}
-												<center>-</center>
-												{% endif %}
-											</li>
-											<li>
-												{% if schedules4 %}
-												{% for schedule in schedules4 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)" style="color: green; width: 60px;"
-												 {% else %}
-													style="text-decoration: line-through; color: red; width: 60px;" 
-													{% endif %} 
-													class="timing"
-													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
-														</span>
-												</a>
-												{% endfor %}
-												{% else %}
-												<center>-</center>
-												{% endif %}
-											</li>
-											<li>
-												{% if schedules5 %}
-												{% for schedule in schedules5 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
-												{% else %}
-													style="text-decoration: line-through; color: red; width: 60px;" 
-													{% endif %} 
-													class="timing"
-													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
-														</span>
-												</a>
-												{% endfor %}
-												{% else %}
-												<center>-</center>
-												{% endif %}
-											</li>
-											<li>
-												{% if schedules6 %}
-												{% for schedule in schedules6 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)"  style="color: green; width: 60px;"
-												{% else %}
-													style="text-decoration: line-through; color: red; width: 60px;"
-													 {% endif %} 
-													 class="timing"
-													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
-														</span>
-												</a>
-												{% endfor %}
-												{% else %}
-												<center>-</center>
-												{% endif %}
-											</li>
-											<!-- <li>
-												{% if schedules7 %}
-												{% for schedule in schedules7 %}
-												<a {% if schedule.status == "no" %} onclick="clicked(this)" style="color: green;"
-												 {% else %}
-													style="text-decoration: line-through; color: red;" 
-													{% endif %} 
-													class="timing"
-													id="{{schedule.pk}}" href="#">
-													<span>{{schedule.starting_time}}
-														</span>
-												</a>
-												{% endfor %}
-												{% else %}
-												<center>-</center>
-												{% endif %}
-											</li> -->
-										</ul>
-									</div>
-									<!-- /Time Slot -->
-
-								</div>
-							</div>
-						</div>
-						<!-- /Schedule Content -->
-
-					</div>
-					<!-- /Schedule Widget -->
-
-
-				</div>
-			</center>
-			<hr>
-			<br>
-
 
 			<div class="row justify-content-between">
 				<div class="col-lg-5">
@@ -328,7 +142,7 @@
 					{% endif %}
 
 					<div id="message-contact"></div>
-					<form method="post" action="{% url 'appointment' %}">
+					<form method="post" action="{% url 'appointment' randevuId %}">
 						{% csrf_token %}
 						<div class="row">
 
@@ -336,7 +150,19 @@
 							{% for field in form.visible_fields %}
 
 
+
+
+
 							{% if forloop.last %}
+							<div class="col-md-12">
+								<span class="input">
+									{{field}}
+									<label class="input_label">
+										<span class="input__label-content">{{field.label_tag}}</span>
+									</label>
+								</span>
+							</div>
+							{% elif forloop.first %}
 							<div class="col-md-12">
 								<span class="input">
 									{{field}}
@@ -363,7 +189,6 @@
 						</div>
 						<!-- /row -->
 
-						<input type="hidden" value="" name="schedule"  id="currentIdClass">	
 
 						<!-- <span class="input">
 									<input class="input_field" type="text" id="verify_contact" name="verify_contact">
@@ -371,7 +196,11 @@
 									<span class="input__label-content">Are you human? 3 + 1 =</span>
 									</label>
 							</span> -->
-						<p class="add_top_30"><input type="submit" disabled value="Gönder" class="btn_1 rounded"
+						<p class="add_top_30"><input type="submit" 
+						{% if isFree == "notNo" %}
+							disabled style="background-color: gray;"
+						{% endif %}
+							 value="Gönder" class="btn_1 rounded"
 								id="submit-contact"></p>
 					</form>
 				</div>
@@ -410,46 +239,6 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 
-
-<script>
-
-var hiddenInputId=document.getElementById("currentIdClass");
-var btn=document.getElementById("submit-contact")
-btn.style.backgroundColor="gray";
-
-
-function clicked(element){
-
-	$("html, body").animate({ scrollTop: "628px" });
-hiddenInputId.value=element.id;
-
-
-var items = document.getElementsByClassName('timing selected');
-for (var i = 0; i < items.length; i++) {
-	if(items[i]!=element){
-		items[i].className="timing";
-	}
-	
-}
-
-
-if(element.className=="timing"){
-	element.className="timing selected";
-	btn.disabled=false;
-	btn.style="";
-	
-}else{
-	element.className="timing";
-	btn.style.backgroundColor="gray";
-	btn.disabled=true;
-}
-
-}
-
-
-
-
-</script>
 
 
 

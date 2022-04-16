@@ -14,7 +14,8 @@ from .views import (
     listFooterMailAdmin,deleteFooterMail,hakkimizdaAdmin,listAppointmentsAdmin,listUsersAndVideosStat,
     listCoursesStat,showVideoStatusDetail,appointmentsAdmin,addAppointmentsAdmin,acceptAppointmentsAdmin,
     deleteAppointmentRequestAdmin,nextAppointmentsAdmin,pastAppointmentsAdmin,deleteAppointmentOfAdmin,
-    showAppointmentsScheduleAdmin,showDetailOrderAdmin,deleteMessagesAdmin
+    showAppointmentsScheduleAdmin,showDetailOrderAdmin,deleteMessagesAdmin,appointmentCategoryListAdmin,
+    addAppointmentCategoryAdmin,deleteAppointmentCategoryAdmin
     
 )
 
@@ -89,6 +90,9 @@ urlpatterns = [
     path('admin-randevu-zamanlari/<int:pk>',showAppointmentsScheduleAdmin,name="showAppointmentsScheduleAdmin"),
     path('admin-siparis-detayi/<int:pk>',showDetailOrderAdmin,name="showDetailOrderAdmin"),
     path('admin-mesaj-sil/<int:pk>',deleteMessagesAdmin,name="deleteMessagesAdmin"),
+    path('admin-randevu-kategori-listele',appointmentCategoryListAdmin,name="appointmentCategoryListAdmin"),
+    path('admin-randevu-kategori-ekle',addAppointmentCategoryAdmin,name="addAppointmentCategoryAdmin"),
+    path('admin-randevu-kategori-sil/<int:pk>',deleteAppointmentCategoryAdmin,name="deleteAppointmentCategoryAdmin"),
     
     
 
