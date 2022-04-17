@@ -1,4 +1,5 @@
 import datetime
+from email import message
 import json
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
@@ -10,7 +11,7 @@ from psikolog.forms import sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, orderModel, sliderModel
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 from django.core.mail import send_mail
-
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -1396,6 +1397,10 @@ def showVideoStatusDetail(request,slug):
 @permission_required('is_staff',login_url="loginAdmin")
 def appointmentsAdmin(request):
     appointments=appointmentAdminModel.objects.all().order_by("date")
+    for i in appointments:
+        if i.date<datetime.datetime.today().date():
+            i.delete()
+    appointments=appointmentAdminModel.objects.all().order_by("date")
     context={
         "appointments":appointments,
     }
@@ -1486,6 +1491,72 @@ def showAppointmentsScheduleAdmin(request,pk):
 
 
 
+
+@csrf_exempt
+@permission_required('is_staff',login_url="loginAdmin")
+def editAppointmentsScheduleAdmin(request,pk):
+    apt=get_object_or_404(appointmentModel,pk=pk)
+    date=request.POST.get("dateForm",None)
+    time=request.POST.get("timeForm",None)
+    isSame="false"
+    if str(apt.date)==str(date):
+        bottoms=appointmentModel.objects.filter(date=apt.date)
+        for i in bottoms:
+            if str(i.starting_time)==str(time):
+                isSame="true"
+                if i.status=="yes":
+                    messages.error(request,"Girmiş olduğunuz tarih ve saatte onaylanmış bir randevunuz olduğundan güncelleme işlemi yapılamadı.")
+                    return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+                elif i.status=="pending":
+                    messages.error(request,"Girmiş olduğunuz tarih ve saatte bekleyen bir randevunuz olduğundan güncelleme işlemi yapılamadı.")
+                    return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+                else:
+                    messages.error(request,"Girmiş olduğunuz tarih ve saatte zaten bir randevunuz olduğundan güncelleme işlemi yapılamadı.")
+                    return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+        if isSame=="false":
+            t = datetime.datetime.strptime(time, '%H:%M:%S')
+            apt.starting_time=t.time()
+            apt.finishing_time=(t+datetime.timedelta(hours=1)).time()
+            apt.save()
+            messages.success(request,"Güncelleme işlemi başarıyla gerçekleşti.")
+            return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+    else:
+        t = datetime.datetime.strptime(time, '%H:%M:%S')
+        date=datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        bottoms=appointmentModel.objects.filter(date=date)
+        if bottoms:
+            for i in bottoms:
+                if str(i.starting_time)==str(time):
+                    isSame="true"
+                    if i.status=="yes":
+                        messages.error(request,"Girmiş olduğunuz tarih ve saatte onaylanmış bir randevunuz olduğundan güncelleme işlemi yapılamadı.")
+                        return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+                    elif i.status=="pending":
+                        messages.error(request,"Girmiş olduğunuz tarih ve saatte bekleyen bir randevunuz olduğundan güncelleme işlemi yapılamadı.")
+                        return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+                    else:
+                        messages.error(request,"Girmiş olduğunuz tarih ve saatte zaten bir randevunuz olduğundan güncelleme işlemi yapılamadı.")
+                        return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+        else:
+            if date<datetime.datetime.today().date():
+                messages.error(request,"Girmiş olduğunuz tarih bugünden önce olamaz")
+                return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+            appointmentAdminModel.objects.create(date=date,starting_time=t.time(),finishing_time=(t+datetime.timedelta(hours=1)).time())
+        if isSame=="false":
+            apt.starting_time=t.time()
+            apt.finishing_time=(t+datetime.timedelta(hours=1)).time()
+            apt.date=date
+            apt.top=appointmentAdminModel.objects.filter(date=date).first()
+            apt.save()
+            messages.success(request,"Güncelleme işlemi başarıyla gerçekleşti.")
+            return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
+
+    
+
+
+
+
+
 @permission_required('is_staff',login_url="loginAdmin")
 def showDetailOrderAdmin(request,pk):
     order=get_object_or_404(orderModel,pk=pk)
@@ -1559,4 +1630,16 @@ def deleteAppointmentCategoryAdmin(request,pk):
     obj=get_object_or_404(appointmentCategoryModel,pk=pk)
     obj.delete()
     messages.success(request,"Randevu kategorisi başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER'])
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteAppointmentDetailAdmin(request,pk):
+    obj=get_object_or_404(appointmentModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Randevu başarıyla silindi")
     return redirect(request.META['HTTP_REFERER'])

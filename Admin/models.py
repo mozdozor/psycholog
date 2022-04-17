@@ -574,8 +574,7 @@ class appointmentModel(models.Model):
         verbose_name = "Randevu"
         verbose_name_plural = "Randevular"
 
-    def __str__(self):
-        return self.fullname
+
     
 
 
@@ -622,7 +621,7 @@ class appointmentAdminModel(models.Model):
         verbose_name_plural = "RandevularAdmin" 
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 

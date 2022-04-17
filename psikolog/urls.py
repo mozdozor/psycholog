@@ -12,7 +12,7 @@ from .views import (
 
 
 
-from .sitemaps import StaticViewSitemap,courseSiteMap,blogSiteMap,paymentPageSiteMap,successPaymentPageSiteMap,failPaymentPageSiteMap,addFavouriteSiteMap
+from .sitemaps import StaticViewSitemap,courseSiteMap,blogSiteMap,paymentPageSiteMap,successPaymentPageSiteMap,failPaymentPageSiteMap,addFavouriteSiteMap,appointmentSiteMap
 
 
 
@@ -23,7 +23,8 @@ sitemaps = {
     "payment": paymentPageSiteMap,
     "successPayment": successPaymentPageSiteMap,
     "failPayment": failPaymentPageSiteMap,
-    "favourites":addFavouriteSiteMap
+    "favourites":addFavouriteSiteMap,
+    "appointmentSiteMap":appointmentSiteMap
 }
 
 

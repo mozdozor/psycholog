@@ -15,7 +15,8 @@ from .views import (
     listCoursesStat,showVideoStatusDetail,appointmentsAdmin,addAppointmentsAdmin,acceptAppointmentsAdmin,
     deleteAppointmentRequestAdmin,nextAppointmentsAdmin,pastAppointmentsAdmin,deleteAppointmentOfAdmin,
     showAppointmentsScheduleAdmin,showDetailOrderAdmin,deleteMessagesAdmin,appointmentCategoryListAdmin,
-    addAppointmentCategoryAdmin,deleteAppointmentCategoryAdmin
+    addAppointmentCategoryAdmin,deleteAppointmentCategoryAdmin,editAppointmentsScheduleAdmin,
+    deleteAppointmentDetailAdmin
     
 )
 
@@ -93,7 +94,8 @@ urlpatterns = [
     path('admin-randevu-kategori-listele',appointmentCategoryListAdmin,name="appointmentCategoryListAdmin"),
     path('admin-randevu-kategori-ekle',addAppointmentCategoryAdmin,name="addAppointmentCategoryAdmin"),
     path('admin-randevu-kategori-sil/<int:pk>',deleteAppointmentCategoryAdmin,name="deleteAppointmentCategoryAdmin"),
-    
+    path('admin-randevu-düzenle/<int:pk>',editAppointmentsScheduleAdmin,name="editAppointmentsScheduleAdmin"),
+    path('admin-randevu-detay-sil/<int:pk>',deleteAppointmentDetailAdmin,name="deleteAppointmentDetailAdmin"),
     
 
 ]

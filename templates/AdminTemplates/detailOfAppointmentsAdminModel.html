@@ -25,6 +25,12 @@
 
 {% block contentAdmin %}
 
+<form id="form" action="" hidden method="post">
+
+<input type="date" value="as" hidden name="dateForm" id="dateForm">
+<input type="time" value="as" hidden name="timeForm" id="timeForm">
+</form>
+
 
 
 <div class="content-wrapper">
@@ -81,29 +87,89 @@
                         
         {% for schedule in schedules %}
           <div class="row">
-                                              <div class="col-md-4">
-                                                  <div class="form-group">
-                                                      <input style="color: black; font-weight: bold;" type="text" class="form-control" disabled value="{{schedule.date}}">
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-4">
-                                                  <div class="form-group">
-                                                      <input style="color: black; font-weight: bold;" type="text" class="form-control"  disabled value="{{schedule.starting_time}}/{{schedule.finishing_time}}">
-                                                  </div>
-                                              </div>
                                               <div class="col-md-3">
                                                   <div class="form-group">
-                                                      <input style="color: black; font-weight: bold;" type="text" class="form-control" disabled 
-                                                      {% if schedule.status == "yes" %}
-                                                           value="Onaylandı"
-                                                        {% elif schedule.status == "pending" %}
-                                                        value="Beklemede"
-                                                        {% else %}
-                                                        value="Randevusuz"
-                                                      {% endif %}
-                                                          >
+                                                      <input id="date{{schedule.pk}}" style="color: black; font-weight: bold;" name="date" type="date" class="form-control" disabled value="{{schedule.date | date:'c'}}">
                                                   </div>
                                               </div>
+                                              <div class="col-md-2">
+                                                  <div class="form-group">
+                                                    <select disabled id="time{{schedule.pk}}" class="form-control" name="time">
+                                                      <option 
+                                                      {% if schedule.starting_time.hour == 9 %}
+                                                        selected
+                                                      {% endif %}
+                                                         value="09:00:00">09/10</option>
+                                                      <option  {% if schedule.starting_time.hour == 10 %}
+                                                      selected
+                                                    {% endif %}
+                                                     value="10:00:00">10/11</option>
+                                                      <option
+                                                      {% if schedule.starting_time.hour == 11  %}
+                                                      selected
+                                                    {% endif %}
+                                                      value="11:00:00">11/12</option>
+                                                      <option
+                                                      
+                                                      {% if schedule.starting_time.hour == 12 %}
+                                                      selected
+                                                    {% endif %}
+                                                      
+                                                      value="12:00:00">12/13</option>
+                                                      <option 
+                                                      {% if schedule.starting_time.hour == 14 %}
+                                                      selected
+                                                    {% endif %}
+                                                      
+                                                      value="14:00:00">14/15</option>
+                                                      <option
+                                                      
+                                                      {% if schedule.starting_time.hour == 15 %}
+                                                      selected
+                                                    {% endif %}
+                                                      value="15:00:00">15/16</option>
+                                                      <option
+                                                      {% if schedule.starting_time.hour == 16 %}
+                                                      selected
+                                                    {% endif %}
+                                                      value="16:00:00">16/17</option>
+                                                      <option
+                                                      
+                                                      {% if schedule.starting_time.hour == 17 %}
+                                                      selected
+                                                    {% endif %}
+                                                      value="17:00:00">17/18</option>
+
+                                                    </select>
+                                                      <!-- <input id="" style="color: black; font-weight: bold;" type="text" name="time" class="form-control"  disabled value="{{schedule.starting_time}}/{{schedule.finishing_time}}"> -->
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-2">
+                                                  <div class="form-group">
+                                                      <input type="text" class="form-control" disabled 
+                                                      {% if schedule.status == "yes" %}
+                                                           value="Onaylandı" style="color: green; font-weight: bold;"
+                                                        {% elif schedule.status == "pending" %}
+                                                        value="Beklemede" style="color: orange; font-weight: bold;"
+                                                        {% else %}
+                                                        value="Randevusuz"  style="color: red; font-weight: bold;"
+                                                      {% endif %}
+
+                                                          >
+                                                       
+                                                  </div>
+                                              </div>
+                                              
+                                              {% if schedule.status == "no" %}
+                                              <div class="col-md-2">
+                                                <div class="form-group">
+                                                 <a id="editBtn{{schedule.pk}}" href="#" onclick="editInput('{{schedule.pk}}')"> <i class="fa-solid fa-pen-to-square"></i></a>
+                                                  &emsp;
+                                                  <a href="{% url 'deleteAppointmentDetailAdmin' schedule.pk %}"><i class="fa fa-fw fa-remove"></i></a>
+                                                </div>
+                                              </div>
+                                              {% endif %}
+                                              
                                           </div>
         {% endfor %}
           
@@ -178,6 +244,45 @@
           document.location.href = "/psyc-admin/admin-gun-randevu-sil/" + pk;
       }
   }
+
+
+
+  function editInput(pk){
+
+    var idDate="date"+pk;
+    var idTime="time"+pk;
+    var btnEdit="editBtn"+pk;
+    var date=document.getElementById(idDate);
+    var time=document.getElementById(idTime);
+    var btn=document.getElementById(btnEdit);
+    var form=document.getElementById("form");
+    var dateForm=document.getElementById("dateForm");
+    var timeForm=document.getElementById("timeForm");
+    if (date.disabled==true){
+      date.disabled=false;
+      time.disabled=false;
+      dateForm.value=date.value;
+      timeForm.value=time.value;
+      btn.innerHTML="<i style='color:green; font-weight: bold;' class='fa-solid fa-check'></i>";
+
+    }else{
+      date.disabled=true;
+      time.disabled=true;
+      btn.innerHTML="<i class='fa-solid fa-pen-to-square'></i>";
+      dateForm.value=date.value;
+      timeForm.value=time.value;
+      form.action="/psyc-admin/admin-randevu-düzenle/"+pk;
+      form.submit();
+    }
+
+
+  }
+
+
+
+
+
+
 </script>
 
 
