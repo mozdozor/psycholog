@@ -1640,6 +1640,13 @@ def deleteAppointmentCategoryAdmin(request,pk):
 @permission_required('is_staff',login_url="loginAdmin")
 def deleteAppointmentDetailAdmin(request,pk):
     obj=get_object_or_404(appointmentModel,pk=pk)
-    obj.delete()
-    messages.success(request,"Randevu başarıyla silindi")
-    return redirect(request.META['HTTP_REFERER'])
+    countOf=appointmentModel.objects.filter(date=obj.date).count()
+    if countOf==1:
+        obj.top.delete()
+        obj.delete()
+        messages.success(request,"Randevu tarihi başarıyla silindi")
+        return redirect("appointmentsAdmin")
+    else:
+        obj.delete()
+        messages.success(request,"Randevu başarıyla silindi")
+        return redirect(request.META['HTTP_REFERER'])
