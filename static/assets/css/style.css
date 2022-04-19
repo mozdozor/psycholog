@@ -4335,7 +4335,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
   color: #fff;
 }
 #confirm p {
-  font-size: 16px!important;
+  font-size: 16px !important;
   font-size: 16px !important/16pxrem;
   margin-bottom: 0;
 }

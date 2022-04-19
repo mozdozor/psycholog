@@ -263,11 +263,11 @@
 							disabled style="background-color: gray;"
 						{% endif %}
 							 value="Gönder" class="btn_1 rounded"
-								id="submit-contact"><div class="loader">
+								id="submit-contact"></p>
+								<div class="loader">
 									<div class="loading">
 									</div>
-								  </div></p>
-							
+								  </div>
 						
 					</form>
 				</div>
@@ -557,6 +557,10 @@ window.onload = callAjax(today);
 
 
 	$('#calendar').fullCalendar({
+	monthNames: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+    monthNamesShort: ['Ocak','Şbt','Mrt','Nsn','Mys','Hzr','Tmz','Ağs','Eyl','Ekm','Ksm','Arl'],
+    dayNames: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+    dayNamesShort: ['Pzr','Pzt','Sal','Çrş','Prş','Cum','Cmt'],
     selectable: true,
     select: function(start, end, jsEvent, view) {
          // start contains the date you have selected
@@ -705,6 +709,7 @@ $('#submit-contact').click(function(event){
 				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:gray ' type='button'>İlerle</a>"
 			}
 			document.getElementById("sccMessage").style.display="block";
+			document.getElementsByClassName("loader")[0].style.display = "none";
 			
 		},
 		error: function(data) {

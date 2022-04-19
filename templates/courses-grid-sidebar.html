@@ -260,8 +260,8 @@
 					<div class="col-md-4">
 						<a href="#0" class="boxed_list">
 							<i class="pe-7s-help2"></i>
-							<h4>Yardıma mı ihtiyazcınız var? İletişime Geçin</h4>
-							<p>İletişim sayfanızdan yönetimizle iletişime geçebilirsiniz</p>
+							<h4>Yardıma mı ihtiyacınız var?</h4>
+							<p><strong onclick="contact()">İletişim</strong> sayfamızdan tüm sorularınızı bize iletebilirsiniz.</p>
 						</a>
 					</div>
 					<div class="col-md-4">
@@ -302,5 +302,20 @@
 <script src="{% static 'assets/js/common_scripts.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 <script src="{% static 'assets/validate.js' %}"></script>
+
+
+<script>
+
+	function contact(){
+
+		var anchor = document.createElement('a');
+		anchor.href = '/iletisim';
+		anchor.target="_blank";
+		anchor.click();
+
+	}
+
+
+</script>
 
 {% endblock jsFiles %}
