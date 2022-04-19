@@ -138,32 +138,34 @@
 						</div>
 						<div class="wrapper_indent">
 							<p>Sitemizdeki mevcut kurslar aşağıda sıralanmıştır.</p>
-								<table class="table table-responsive table-striped add_bottom_30">
-									<thead>
-										<tr>
-											<th>Kategori</th>
-											<th>Kurs Adı</th>
-											<th>Yıldız</th>
-										</tr>
-									</thead>
-									<tbody>
-
-
-										
-                                        {% for course in courses %}
-                                            <tr>
-                                                <td>{{course.category.name}}</td>
-                                                <td><a href="{% url 'courseDetail' course.slug %}">{{course.title}}</a></td>
-                                                <td class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i> <i class="icon-star voted"></i></td>
-                                            </tr>
-                                        {% endfor %}
-                                            
-
-
-
-										
-									</tbody>
-								</table>
+								<center>
+									<table class="table table-responsive table-striped add_bottom_30">
+										<thead>
+											<tr>
+												<th>Kategori</th>
+												<th>Kurs Adı</th>
+												<th>Yıldız</th>
+											</tr>
+										</thead>
+										<tbody>
+	
+	
+											
+											{% for course in courses %}
+												<tr>
+													<td>{{course.category.name}}</td>
+													<td><a href="{% url 'courseDetail' course.slug %}">{{course.title|truncatechars:30}}</a></td>
+													<td class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i> <i class="icon-star voted"></i></td>
+												</tr>
+											{% endfor %}
+												
+	
+	
+	
+											
+										</tbody>
+									</table>
+								</center>
 						</div>
 						<!--wrapper_indent -->
 					</div>
