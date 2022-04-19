@@ -64,7 +64,7 @@
 	<section id="hero_in" class="general">
 		<div class="wrapper">
 			<div class="container">
-				<h1 class="fadeInUp"><span></span>Takvim</h1>
+				<h1 class="fadeInUp"><span></span>Randevu Al</h1>
 			</div>
 		</div>
 	</section>
@@ -93,7 +93,7 @@
 			<div class="col-md-3">
 				<div id="external-events">
 					<h5>Randevu Saatleri</h5>
-					<!-- <div onclick='select();' style="background-color: gray !important;" class='external-event'><i class="icon_mug"></i> Coffe Break</div> -->
+					<!-- <div onclick='select();' style="background-color: turquoise !important;" class='external-event'><i class="icon_mug"></i> Coffe Break</div> -->
 					
 					
 					
@@ -114,7 +114,7 @@
 	<section id="hero_in" class="contacts">
 		<div class="wrapper">
 			<div class="container">
-				<h1 class="fadeInUp"><span></span>Randevu Talebinde Bulunun</h1>
+				<h1  class="fadeInUp"><span></span>Randevu Talebinde Bulunun</h1>
 			</div>
 		</div>
 	</section>
@@ -260,7 +260,7 @@
 
 						<p class="add_top_30"><input   onclick="spinner()"
 						{% if isFree == "notNo" %}
-							disabled style="background-color: gray;"
+							disabled style="background-color: turquoise;"
 						{% endif %}
 							 value="Gönder" class="btn_1 rounded"
 								id="submit-contact"></p>
@@ -596,16 +596,16 @@ function callAjax(date){
 				for (let i = 0; i < data["schedules"].length; i++) {
 					const start = data["schedules"][i]["starting_time"].split(":")[0];
 					const finish = data["schedules"][i]["finishing_time"].split(":")[0];
-					var addSchedule=`<div id='${data["schedules"][i]["id"]}' onclick='select(${data["schedules"][i]["id"]});' style='width: 40%; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>${start}-${finish}</div>`;
+					var addSchedule=`<div id='${data["schedules"][i]["id"]}' onclick='select(${data["schedules"][i]["id"]});' style='width: 40%; background-color: turquoise !important;' class='external-event'><i class='fa-solid fa-clock'></i>${start}-${finish}</div>`;
 						
 					if (data["schedules"][i]["status"]=="no"){
 						ourDiv.innerHTML=ourDiv.innerHTML +addSchedule;
 					}else{
-						ourDiv.innerHTML=ourDiv.innerHTML +"<div style='width: 40%; text-decoration: line-through; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>"+start+"-"+finish+"</div>"
+						ourDiv.innerHTML=ourDiv.innerHTML +"<div style='width: 40%; text-decoration: line-through; background-color: turquoise !important;' class='external-event'><i class='fa-solid fa-clock'></i>"+start+"-"+finish+"</div>"
 					}
 				
 				}
-				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:gray ' type='button'>İlerle</a>"
+				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:turquoise ' type='button'>İlerle</a>"
 			}
 			
 			
@@ -630,14 +630,14 @@ function select(id){
 		var items = document.getElementsByClassName('external-event');
 		for (var i = 0; i < items.length; i++) {
 			if(items[i]!=scheduleDiv){
-				items[i].style.setProperty("background-color", "gray", "important");
+				items[i].style.setProperty("background-color", "turquoise", "important");
 			}
 			
 		}
 		
 
 
-	if(scheduleDiv.style.backgroundColor=="gray"){
+	if(scheduleDiv.style.backgroundColor=="turquoise"){
 		scheduleDiv.style.backgroundColor="";
 		btn.disabled=false;
 		btn.style.backgroundColor="";
@@ -645,10 +645,10 @@ function select(id){
 	//	btn.href="/randevu-talebi/"+id;
 		
 	}else{
-		scheduleDiv.style.setProperty("background-color", "gray", "important");
+		scheduleDiv.style.setProperty("background-color", "turquoise", "important");
 		btn.disabled=true;
 		btn.href="#";
-		btn.style.backgroundColor="gray";
+		btn.style.backgroundColor="turquoise";
 		formm.action="#";
 
 	}
@@ -683,10 +683,10 @@ $('#submit-contact').click(function(event){
 			console.log("scs");
 			frm.trigger('reset');
 			backwardClicked();
-			document.getElementById(data["randevuId"]).style.setProperty("background-color", "gray", "important");
+			document.getElementById(data["randevuId"]).style.setProperty("background-color", "turquoise", "important");
 			document.getElementById(data["randevuId"]).style.setProperty("text-decoration", "line-through", "important");
 			document.getElementById("forwardBtn").href="#";
-			document.getElementById("forwardBtn").style.backgroundColor="gray";
+			document.getElementById("forwardBtn").style.backgroundColor="turquoise";
 			document.getElementById("forwardBtn").disabled=true;
 			frm.action="#";
 			var ourDiv=document.getElementById("external-events");
@@ -697,16 +697,16 @@ $('#submit-contact').click(function(event){
 				for (let i = 0; i < data["schedules"].length; i++) {
 					const start = data["schedules"][i]["starting_time"].split(":")[0];
 					const finish = data["schedules"][i]["finishing_time"].split(":")[0];
-					var addSchedule=`<div id='${data["schedules"][i]["id"]}' onclick='select(${data["schedules"][i]["id"]});' style='width: 40%; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>${start}-${finish}</div>`;
+					var addSchedule=`<div id='${data["schedules"][i]["id"]}' onclick='select(${data["schedules"][i]["id"]});' style='width: 40%; background-color: turquoise !important;' class='external-event'><i class='fa-solid fa-clock'></i>${start}-${finish}</div>`;
 						
 					if (data["schedules"][i]["status"]=="no"){
 						ourDiv.innerHTML=ourDiv.innerHTML +addSchedule;
 					}else{
-						ourDiv.innerHTML=ourDiv.innerHTML +"<div style='width: 40%; text-decoration: line-through; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>"+start+"-"+finish+"</div>"
+						ourDiv.innerHTML=ourDiv.innerHTML +"<div style='width: 40%; text-decoration: line-through; background-color: turquoise !important;' class='external-event'><i class='fa-solid fa-clock'></i>"+start+"-"+finish+"</div>"
 					}
 				
 				}
-				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:gray ' type='button'>İlerle</a>"
+				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:turquoise ' type='button'>İlerle</a>"
 			}
 			document.getElementById("sccMessage").style.display="block";
 			document.getElementsByClassName("loader")[0].style.display = "none";
@@ -732,7 +732,7 @@ $('#submit-contact').click(function(event){
 // $("html, body").animate({ scrollTop: "125px" });
 // var hiddenInputId=document.getElementById("currentIdClass");
 // var btn=document.getElementById("submit-button")
-// btn.style.backgroundColor="gray";
+// btn.style.backgroundColor="turquoise";
 
 
 // function clicked(element){
@@ -758,7 +758,7 @@ $('#submit-contact').click(function(event){
 	
 // }else{
 // 	element.className="timing";
-// 	btn.style.backgroundColor="gray";
+// 	btn.style.backgroundColor="turquoise";
 // 	btn.disabled=true;
 // 	btn.href="#";
 // }

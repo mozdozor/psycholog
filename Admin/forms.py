@@ -382,7 +382,7 @@ class appointmentModelForm(forms.ModelForm):
             "date" : DateInput(attrs={"class":"input_field","name":"date","type":"date","required":"required"}),
             "starting_time" : TimeInput(attrs={"class":"input_field","type":"time","name":"starting_time","required":"required"}),
             "finishing_time" : TimeInput(attrs={"class":"input_field","type":"time","name":"finishing_time","required":"required"}),
-            "message" : Textarea(attrs={"class":"input_field","type":"text","name":"message"}),
+            "message" : Textarea(attrs={"class":"input_field","type":"text","name":"message","row":"5"}),
             
         }
         labels = {     
