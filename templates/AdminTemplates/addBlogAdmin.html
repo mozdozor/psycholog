@@ -3,18 +3,7 @@
 
 {% block contentAdmin %}
     
-<form 
 
-
-{% if blog %}
-	action="{% url 'createBlogModelAdmin' %}?blogId={{blog.pk}}"
-{% else %}
-	action="{% url 'createBlogModelAdmin' %}"
-{% endif %}
-method="post" enctype="multipart/form-data"
->
-{{form.media}}
-    {% csrf_token %}
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -58,7 +47,23 @@ method="post" enctype="multipart/form-data"
 				<h2><i class="fa fa-file"></i>
                 Blog Ekle
                     </h2>
+					<div style="float: right;">
+						<button onclick="javascript:history.go(-1);" href="" class="btn btn-dark btn-sm"><center><i style="font-weight: bold; color: white;" class="fa-solid fa-arrow-left"></i></center></button>
+						</div>
 			</div>
+
+			<form 
+
+
+			{% if blog %}
+				action="{% url 'createBlogModelAdmin' %}?blogId={{blog.pk}}"
+			{% else %}
+				action="{% url 'createBlogModelAdmin' %}"
+			{% endif %}
+			method="post" enctype="multipart/form-data"
+			>
+			{{form.media}}
+				{% csrf_token %}
 			
 			
 			<div class="row">

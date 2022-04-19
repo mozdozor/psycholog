@@ -2,18 +2,7 @@
 {% load static %}
 
 {% block contentAdmin %}
-    
-<form 
 
-
-{% if category %}
-	action="{% url 'addBlogCategoryAdmin' %}?categoryId={{category.pk}}"
-{% else %}
-	action="{% url 'addBlogCategoryAdmin' %}"
-{% endif %}
-method="post" enctype="multipart/form-data"
->
-    {% csrf_token %}
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -29,7 +18,23 @@ method="post" enctype="multipart/form-data"
 				<h2><i class="fa fa-file"></i>
                 Kategori Ekle
                     </h2>
+					
+						<button style="float: right;" onclick="javascript:history.go(-1);" href="" class="btn btn-dark btn-sm"><center><i style="font-weight: bold; color: white;" class="fa-solid fa-arrow-left"></i></center></button>
+						
 			</div>
+
+			    
+			<form 
+
+
+			{% if category %}
+				action="{% url 'addBlogCategoryAdmin' %}?categoryId={{category.pk}}"
+			{% else %}
+				action="{% url 'addBlogCategoryAdmin' %}"
+			{% endif %}
+			method="post" enctype="multipart/form-data"
+			>
+				{% csrf_token %}
 			
 			
 			<div class="row">

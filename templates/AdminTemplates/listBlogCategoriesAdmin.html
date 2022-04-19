@@ -49,11 +49,14 @@
 
     <!-- Example DataTables Card-->
     <div  class="card mb-3">
+
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Blog Kategori Listesi
         <div style="float: right;">
-            <a  href="{% url 'blogListAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-list"></i> Blog Listesi</a>
-          <a  href="{% url 'addBlogCategoryAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kategori Ekle</a>
+          <a  href="{% url 'addBlogCategoryAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kategori Ekle</a>&emsp;
+        
+            <button onclick="javascript:history.go(-1);" href="" class="btn btn-dark btn-sm"><center><i style="font-weight: bold; color: white;" class="fa-solid fa-arrow-left"></i></center></button>
+          
         </div>
       </div>
 

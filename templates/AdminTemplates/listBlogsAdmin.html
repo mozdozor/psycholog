@@ -9,13 +9,14 @@
 
 <div class="content-wrapper">
   <div class="container-fluid">
-
+    
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="{% url 'indexAdmin' %}">Anasayfa</a>
       </li>
       <li class="breadcrumb-item active">Blog Yazıları</li>
+      
     </ol>
 
 
@@ -51,8 +52,10 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Blog Yazıları
         <div style="float: right;">
-          <a  href="{% url 'blogCategoryListAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-list"></i> Blog Kategoriler</a>
-          <a  href="{% url 'createBlogModelAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Blog Yazısı Ekle</a>
+          
+          <a href="{% url 'blogCategoryListAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-list"></i> Blog Kategoriler</a>
+          <a href="{% url 'createBlogModelAdmin' %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Blog Yazısı Ekle</a>
+          
         </div>
       </div>
 

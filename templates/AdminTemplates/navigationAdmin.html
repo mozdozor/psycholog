@@ -308,7 +308,13 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <a href="{% url 'index' %}" title="Siteye Geç" target="blank" class="btn btn-light"><i class="fa-solid fa-forward"></i></a>&emsp;&emsp;
+
+        <!-- <a href="{% url 'index' %}" title="Siteye Geç" target="blank" class="btn btn-light"><i class="fa-solid fa-forward"></i></a>&emsp;&emsp; -->
+
+        
+
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-envelope"></i>
@@ -412,6 +418,12 @@
             </div>
           </form>
         </li>
+
+        <li class="nav-item">
+          <a style="color: white; font-weight: bold;" class="nav-link" href="{% url 'index' %}" target="blank" title="Siteye Geç">
+            <i class="fa-solid fa-forward"></i></a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Çıkış</a>

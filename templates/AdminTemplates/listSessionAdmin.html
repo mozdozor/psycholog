@@ -56,8 +56,9 @@
       <div style="font-weight: bold; color: red;" class="card-header">
         <i class="fa fa-table"></i> Kurs Bölümleri
         <div style="float: right;">
-          <a  href="{% url 'courseListAdmin' %}" type="button" class="btn btn-secondary btn-sm"><i class="fa-solid fa-list"></i> Kurs Listesi</a>&emsp;
           <a  href="{% url 'sessionAddAdmin' pk=courseId %}" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kursa Bölüm Ekle</a>
+          <button onclick="javascript:history.go(-1);" href="" class="btn btn-dark btn-sm"><center><i style="font-weight: bold; color: white;" class="fa-solid fa-arrow-left"></i></center></button>
+
         </div>
       </div>
 
