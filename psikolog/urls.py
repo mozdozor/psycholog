@@ -7,7 +7,7 @@ from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
     kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback,mesafeliSatis,footerMailSave,
-    appointment,addWatchedList,times,activate
+    appointment,addWatchedList,times,activate,getAppointments,submitAppointmentForm
 )
 
 
@@ -63,6 +63,8 @@ urlpatterns = [
     path('uygun-zamanlar',times,name="times"),
     path('activate/<uidb64>/<token>/',activate, name='activate'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-         name='django.contrib.sitemaps.views.sitemap')
+         name='django.contrib.sitemaps.views.sitemap'),
+    path('randevulari-cek',getAppointments,name="getAppointments"),
+    path('randevu-formu-kaydet/<int:randevuId>',submitAppointmentForm,name="submitAppointmentForm"),
 
 ]   

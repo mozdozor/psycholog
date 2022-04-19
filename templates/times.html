@@ -7,6 +7,10 @@
 
 {% block cssFiles %}
 <link href="{% static 'assets/css/responsiveAppointment.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/fullcalendar.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/fullcalendar.print.css' %}" rel="stylesheet" media="print">
+<link href="{% static 'assets/css/responsiveAppointment.css' %}" rel="stylesheet">
+
 {% endblock cssFiles %}
 
 
@@ -19,6 +23,232 @@
 
 
 
+
+
+<main id="firstMain" style="display: block;">
+	<section id="hero_in" class="general">
+		<div class="wrapper">
+			<div class="container">
+				<h1 class="fadeInUp"><span></span>Takvim</h1>
+			</div>
+		</div>
+	</section>
+	<!--/hero_in-->
+
+	<div class="container margin_60_35">
+		
+
+		<div id="sccMessage" style="display: none;" class="alert alert-success" role="alert">
+			<center><strong>Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.</strong></center>
+			</div>
+		
+			<div id="errMessage" style="display: none;" class="alert alert-danger" role="alert">
+				<center><strong>Bir hata ile karşılaşıldı.</strong></center>
+				</div>
+
+
+
+		<div class="row">
+			<div class="col-md-9">
+				<div class="box_general">
+					<div id="calendar"></div>
+					<!-- End calendar -->
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div id="external-events">
+					<h5>Randevu Saatleri</h5>
+					<!-- <div onclick='select();' style="background-color: gray !important;" class='external-event'><i class="icon_mug"></i> Coffe Break</div> -->
+					
+					
+					
+
+				</div>
+			</div>
+		</div>
+		<!--/row-->
+	</div>
+	<!-- /container -->
+</main>
+
+<input type="hidden" value=""  id="currentIdClass">	
+
+
+
+<main id="secondMain" style="display: none;">
+	<section id="hero_in" class="contacts">
+		<div class="wrapper">
+			<div class="container">
+				<h1 class="fadeInUp"><span></span>Randevu Talebinde Bulunun</h1>
+			</div>
+		</div>
+	</section>
+	<!--/hero_in-->
+
+	<div class="contact_info">
+		<div class="container">
+			<ul class="clearfix">
+				<li>
+					<i class="pe-7s-map-marker"></i>
+					<h4>Adres</h4>
+					<span>{{address}}</span>
+				</li>
+				<li>
+					<i class="pe-7s-mail-open-file"></i>
+					<h4>Email Adresi</h4>
+					<span>{{sm.email}}<br><small> </small></span>
+
+				</li>
+				<li>
+					<i class="pe-7s-phone"></i>
+					<h4>Telefon</h4>
+					<span>{{sm.phone_number}}<br><small></small></span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!--/contact_info-->
+
+
+
+
+
+
+
+	<div class="bg_color_1">
+
+		<div class="container margin_120_95">
+
+
+
+			<div class="row justify-content-between">
+				<div class="col-lg-5">
+					<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_eIXuIz.json"
+						background="transparent" speed="1" style="width:100%;" loop autoplay></lottie-player>
+
+				</div>
+				<div class="col-lg-6">
+					<h4>Randevu isteğinde bulunun</h4>
+
+
+					<p>Şimdi zamanı seçin ve randevu isteiğinde bulunun.</p>
+
+					<br>
+					{% if messages %}
+					<ul class="messages">
+						{% for message in messages %}
+
+
+						{% if 'appointmentMessages' in message.extra_tags %}
+
+
+
+
+						{% if message.tags == "error" %}
+
+
+						<div class="alert alert-danger" role="alert">
+
+							<center><strong>{{message}}</strong></center>
+						</div>
+
+
+						{% else %}
+
+						<div class="alert alert-success" role="alert">
+
+							<center><strong>{{message}}</strong></center>
+						</div>
+
+						{% endif %}
+
+						{% endif %}
+						{% endfor %}
+					</ul>
+					{% endif %}
+
+					<div id="message-contact"></div>
+					<form method="post" id="formSubmit" action="">
+						{% csrf_token %}
+						<div class="row">
+
+
+							{% for field in form.visible_fields %}
+
+
+
+
+
+							{% if forloop.last %}
+							<div class="col-md-12">
+								<span class="input">
+									{{field}}
+									<label class="input_label">
+										<span class="input__label-content">{{field.label_tag}}</span>
+									</label>
+								</span>
+							</div>
+							{% elif forloop.first %}
+							<div class="col-md-12">
+								<span class="input">
+									{{field}}
+									<label class="input_label">
+										<span class="input__label-content">{{field.label_tag}}</span>
+									</label>
+								</span>
+							</div>
+							{% else %}
+							<div class="col-md-6">
+								<span class="input">
+									{{field}}
+									<label class="input_label">
+										<span class="input__label-content">{{field.label_tag}}</span>
+									</label>
+								</span>
+							</div>
+							{% endif %}
+
+
+
+							{% endfor %}
+
+						</div>
+						<!-- /row -->
+
+
+						<!-- <span class="input">
+									<input class="input_field" type="text" id="verify_contact" name="verify_contact">
+									<label class="input_label">
+									<span class="input__label-content">Are you human? 3 + 1 =</span>
+									</label>
+							</span> -->
+
+							<button class="btn btn-sm btn-warning">
+								<span class="glyphicon glyphicon-refresh spinning"></span> Loading...    
+							</button>
+						<!-- <p class="add_top_30"><input  
+						{% if isFree == "notNo" %}
+							disabled style="background-color: gray;"
+						{% endif %}
+							 value="Gönder" class="btn_1 rounded"
+								id="submit-contact"></p> -->
+					</form>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /bg_color_1 -->
+</main>
+
+
+
+
+
+
+
+{% comment %}
 <main>
 
 
@@ -218,7 +448,7 @@
 							</div>
 							<!-- /Schedule Widget -->
 							<div class="submit-section proceed-btn text-right">
-								<a href="" id="submit-button" class="btn btn-primary submit-btn">İlerle</a>
+								<a  onclick='forwardClicked();' id="submit-button" class="btn btn-primary submit-btn">İlerle</a>
 							</div>
 		
 		
@@ -236,6 +466,8 @@
 <!--/main-->
 
 <input type="hidden" value=""  id="currentIdClass">	
+{% endcomment %}
+
 
 {% endblock content %}
 
@@ -257,47 +489,231 @@
 <script type="text/javascript" src="{% static 'assets/js/mapmarker.jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/mapmarker_func.jquery.js' %}"></script>
 
+	<!-- SPECIFIC CALENDAR --> 
+	<script src="{% static 'assets/js/moment.min.js' %}"></script>
+	<script src="{% static 'assets/js/fullcalendar.min.js' %}"></script>
+
+
 
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 
 
+
 <script>
-$("html, body").animate({ scrollTop: "125px" });
-var hiddenInputId=document.getElementById("currentIdClass");
-var btn=document.getElementById("submit-button")
-btn.style.backgroundColor="gray";
+
+let today = new Date().toISOString().slice(0, 10)
 
 
-function clicked(element){
-	//$("html, body").animate({ scrollTop: "125px" });
+window.onload = callAjax(today);
 
-	
-hiddenInputId.value=element.id;
 
-var items = document.getElementsByClassName('timing selected');
-for (var i = 0; i < items.length; i++) {
-	if(items[i]!=element){
-		items[i].className="timing";
+
+
+
+	$('#calendar').fullCalendar({
+    selectable: true,
+    select: function(start, end, jsEvent, view) {
+         // start contains the date you have selected
+         // end contains the end date. 
+         // Caution: the end date is exclusive (new since v2).
+         var allDay = !start.hasTime() && !end.hasTime();
+		 callAjax(moment(start).format())
+        //  alert(["Event Start date: " + moment(start).format(),
+        //         "Event End date: " + moment(end).format(),
+        //         "AllDay: " + allDay].join("\n"));
+    }
+});
+
+
+
+
+function callAjax(date){
+	console.log(date)
+	$.ajax({
+		type: "POST",
+		url: "/randevulari-cek",
+		data: {
+			'date': date,
+			
+		},
+		success: function (data) {
+			ourDiv=document.getElementById("external-events");
+			ourDiv.innerHTML="<h5>Randevu Saatleri</h5>";
+			console.log(data);
+			if(data["schedules"].length==0){
+				ourDiv.innerHTML="<h5>Randevu Saatleri</h5><div>Ekli saat bilgisi bulunamadı</div>";
+			}else{
+				for (let i = 0; i < data["schedules"].length; i++) {
+					const start = data["schedules"][i]["starting_time"].split(":")[0];
+					const finish = data["schedules"][i]["finishing_time"].split(":")[0];
+					var addSchedule=`<div id='${data["schedules"][i]["id"]}' onclick='select(${data["schedules"][i]["id"]});' style='width: 40%; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>${start}-${finish}</div>`;
+						
+					if (data["schedules"][i]["status"]=="no"){
+						ourDiv.innerHTML=ourDiv.innerHTML +addSchedule;
+					}else{
+						ourDiv.innerHTML=ourDiv.innerHTML +"<div style='width: 40%; text-decoration: line-through; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>"+start+"-"+finish+"</div>"
+					}
+				
+				}
+				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:gray ' type='button'>İlerle</a>"
+			}
+			
+			
+			
+			
+			// if(data["complete"]=="success"){
+			// 	document.getElementById("completeMessage").hidden=false;
+			// }
+		}
+	});
+}
+ 
+
+
+function select(id){
+	var formm=document.getElementById("formSubmit");
+
+	var btn=document.getElementById("forwardBtn");
+		var scheduleDiv=document.getElementById(id);
+
+		console.log(scheduleDiv.style.backgroundColor);
+		var items = document.getElementsByClassName('external-event');
+		for (var i = 0; i < items.length; i++) {
+			if(items[i]!=scheduleDiv){
+				items[i].style.setProperty("background-color", "gray", "important");
+			}
+			
+		}
+		
+
+
+	if(scheduleDiv.style.backgroundColor=="gray"){
+		scheduleDiv.style.backgroundColor="";
+		btn.disabled=false;
+		btn.style.backgroundColor="";
+		formm.action="/randevu-formu-kaydet/"+id;
+	//	btn.href="/randevu-talebi/"+id;
+		
+	}else{
+		scheduleDiv.style.setProperty("background-color", "gray", "important");
+		btn.disabled=true;
+		btn.href="#";
+		btn.style.backgroundColor="gray";
+		formm.action="#";
+
 	}
+}
+
+
+function forwardClicked(){
 	
+	if(document.getElementById("forwardBtn").disabled==false){
+		document.getElementById("firstMain").style.display="none";
+		document.getElementById("secondMain").style.display="block";
+	}
+
+}
+function backwardClicked(){
+
+document.getElementById("firstMain").style.display="block";
+document.getElementById("secondMain").style.display="none";
+
 }
 
 
-if(element.className=="timing"){
-	element.className="timing selected";
-	btn.disabled=false;
-	btn.style="";
-	btn.href="/randevu-talebi/"+element.id;
+var frm = $('#formSubmit');
+
+$('#submit-contact').click(function(event){
+         event.preventDefault(); //so that we stop normal form submit.
+         $.ajax({
+		type: frm.attr('method'),
+		url: frm.attr('action'),
+		data: frm.serialize(),
+		success: function (data) {
+			console.log("scs");
+			frm.trigger('reset');
+			backwardClicked();
+			document.getElementById(data["randevuId"]).style.setProperty("background-color", "gray", "important");
+			document.getElementById(data["randevuId"]).style.setProperty("text-decoration", "line-through", "important");
+			document.getElementById("forwardBtn").href="#";
+			document.getElementById("forwardBtn").style.backgroundColor="gray";
+			document.getElementById("forwardBtn").disabled=true;
+			frm.action="#";
+			var ourDiv=document.getElementById("external-events");
+			ourDiv.innerHTML="<h5>Randevu Saatleri</h5>";
+			if(data["schedules"].length==0){
+				ourDiv.innerHTML="<h5>Randevu Saatleri</h5><div>Ekli saat bilgisi bulunamadı</div>";
+			}else{
+				for (let i = 0; i < data["schedules"].length; i++) {
+					const start = data["schedules"][i]["starting_time"].split(":")[0];
+					const finish = data["schedules"][i]["finishing_time"].split(":")[0];
+					var addSchedule=`<div id='${data["schedules"][i]["id"]}' onclick='select(${data["schedules"][i]["id"]});' style='width: 40%; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>${start}-${finish}</div>`;
+						
+					if (data["schedules"][i]["status"]=="no"){
+						ourDiv.innerHTML=ourDiv.innerHTML +addSchedule;
+					}else{
+						ourDiv.innerHTML=ourDiv.innerHTML +"<div style='width: 40%; text-decoration: line-through; background-color: gray !important;' class='external-event'><i class='fa-solid fa-clock'></i>"+start+"-"+finish+"</div>"
+					}
+				
+				}
+				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:gray ' type='button'>İlerle</a>"
+			}
+			document.getElementById("sccMessage").style.display="block";
+			
+		},
+		error: function(data) {
+			document.getElementById("errMessage").style.display="block";
+			console.log("err")
+			// $("#MESSAGE-DIV").html("Something went wrong!");
+		}
+	});
+    });
+
+
+
+
+</script>
+
+
+
+
+<script>
+// $("html, body").animate({ scrollTop: "125px" });
+// var hiddenInputId=document.getElementById("currentIdClass");
+// var btn=document.getElementById("submit-button")
+// btn.style.backgroundColor="gray";
+
+
+// function clicked(element){
+// 	$("html, body").animate({ scrollTop: "125px" });
+
 	
-}else{
-	element.className="timing";
-	btn.style.backgroundColor="gray";
-	btn.disabled=true;
-	btn.href="#";
-}
+// hiddenInputId.value=element.id;
 
-}
+// var items = document.getElementsByClassName('timing selected');
+// for (var i = 0; i < items.length; i++) {
+// 	if(items[i]!=element){
+// 		items[i].className="timing";
+// 	}
+	
+// }
+
+
+// if(element.className=="timing"){
+// 	element.className="timing selected";
+// 	btn.disabled=false;
+// 	btn.style="";
+// 	btn.href="/randevu-talebi/"+element.id;
+	
+// }else{
+// 	element.className="timing";
+// 	btn.style.backgroundColor="gray";
+// 	btn.disabled=true;
+// 	btn.href="#";
+// }
+
+// }
 
 
 

@@ -396,8 +396,10 @@ def learningContentList(request):
 
 
 def aboutUs(request):
+    user=CustomUserModel.objects.filter(is_staff=True).first()
     metinler=hakkimizdaModel.objects.all()
     page=topMenuModel.objects.filter(url="/hakkimizda").all()
+    courses=CourseModel.objects.all()
     metin=""
     if metinler:
         metin=metinler.first()
@@ -405,10 +407,13 @@ def aboutUs(request):
         "metin":metin,
         "metinType":"hakkimizda",
         "printMetin":"Hakkımızda",
-        "page":page.first()
+        "page":page.first(),
+        "user":user,
+        "courseCount":courses.count(),
+        "courses":courses
     }
    
-    return render(request,"about.html",context)
+    return render(request,"newAbout.html",context)
 
 
 
@@ -918,6 +923,8 @@ def getShorNameOfDays(days):
 
 
 def times(request):
+    todaySchedules=appointmentModel.objects.filter(date=datetime.datetime.today().date())
+    form = appointmentModelForm()
     engdays=get_days_from_today()
     days=[]
     for i in engdays:
@@ -947,6 +954,8 @@ def times(request):
         "schedules4":schedules4,
         "schedules5":schedules5,
         "schedules6":schedules6,
+        "form":form,
+        "todaySchedules":todaySchedules
         # "schedules7":schedules7,
     }
     return render(request,"times.html",context)
@@ -1038,3 +1047,61 @@ def addWatchedList(request):
             return JsonResponse({}, status = 400)
         print(message)
     return JsonResponse({}, status = 400)
+
+
+
+
+
+
+
+
+@csrf_exempt
+def getAppointments(request):
+    if is_ajax(request=request):
+            dateLong=request.POST["date"]
+            date=dateLong.split("T")[0]
+            date=datetime.datetime.strptime(date, "%Y-%m-%d").date()
+            schedules=appointmentModel.objects.filter(date=date).order_by("starting_time").values()
+            return JsonResponse({"schedules":list(schedules)}, status = 200)
+    else:
+        return JsonResponse({}, status = 400)
+
+
+
+
+
+
+
+
+@csrf_exempt
+def submitAppointmentForm(request,randevuId):
+    if is_ajax(request=request):
+        if request.method == "POST":
+            form = appointmentModelForm(request.POST)
+            if form.is_valid(): 
+                data=form.save(commit=False)
+                schedule=get_object_or_404(appointmentModel,pk=randevuId)
+                schedule.status="pending"
+                schedule.phone_number=form.cleaned_data["phone_number"]
+                schedule.email=form.cleaned_data["email"]
+                schedule.message=form.cleaned_data["message"]
+                schedule.fullname=form.cleaned_data["fullname"]
+                schedule.save()
+                message=form.cleaned_data["fullname"]+" adlı kişiden "+form.cleaned_data["category"].name+" kategorisi ile ilgili " +str((schedule.date).strftime('%d/%m/%Y'))+" tarihinde "+str(schedule.starting_time)+"/"+str((schedule.finishing_time))+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
+                notificationModel.objects.create(title="Randevu Talebi",message=message,type="appointment",appointmentObject=schedule)
+                try:
+                    send_mail(
+                        form.cleaned_data["fullname"],
+                        "turkazepsikolog.com sitesinden "+ "yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"]+"\n Telefon = "+form.cleaned_data["phone_number"]+"\n Mesaj = "+form.cleaned_data["message"],
+                        form.cleaned_data["phone_number"],
+                        ["turkazepsikolog@gmail.com",],
+                    )
+                    messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
+                    data.save()
+                    schedules=appointmentModel.objects.filter(date=schedule.date).order_by("starting_time").values()
+                    return JsonResponse({"status":"success","randevuId":randevuId,"schedules":list(schedules)}, status = 200)
+                except:
+                    return JsonResponse({"status":"error","randevuId":randevuId}, status = 200)
+                
+    else:
+        return JsonResponse({}, status = 400)

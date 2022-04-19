@@ -73,7 +73,7 @@
              {% for blog in blogs %}
              <tr>
                <td>{{blog.title}}</td>
-               <td>{{blog.description|safe|truncatechars:70 }}</td>
+               <td>{{blog.description|safe|truncatechars:70}}</td>
                <td>{{blog.get_categories}}</td>
               
                <td>

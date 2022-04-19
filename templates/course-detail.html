@@ -49,6 +49,16 @@
 				<div class="col-lg-8">
 
 					<section id="description">
+
+						<div class="box_highlight">
+							<ul class="additional_info">
+								<li><i class="pe-7s-timer"></i>Kurs Süresi<strong>{{course.getTotalVideoDuration}}</strong></li>
+								<li><i class="pe-7s-date"></i>Kurs Tarihi<strong>{{course.created_date.date}}</strong></li>
+								<li><i class="pe-7s-wallet"></i>Fiyatı<strong>{{course.price}} ₺</strong></li>
+							</ul>
+						</div>
+
+
 						<h2>{{course.title}}</h2>
 						<p>{{course.description|safe}}</p>
 						<h5>Neler Öğreneceksiniz</h5>
@@ -476,8 +486,8 @@
 						<div id="list_feat">
 							<h3 style="color: red;">Dikkat Edilmesi Gerekenler</h3>
 							<ul>
-								<li style="font-weight: bold; color: black;">* Görüşmelerimiz şimdilik zoom üzerinden sağlanmaktadır.</li>
-								<li style="font-weight: bold; color: black;">* Cihazınıza zoom yüklemeniz tavsiye edilir.</li>
+								<li style="font-weight: bold; color: black;">* Görüşmelerimiz şimdilik zoom üzerinden sağlanmaktadır.</li><br>
+								<li style="font-weight: bold; color: black;">* Cihazınıza zoom yüklemeniz tavsiye edilir.<a href="https://zoom.us/download">Buradan indirebilirsiniz <i class="fas fa-video fa-1,5x"></i></a></li><br>
 								<li style="font-weight: bold; color: black;">* Eğitimi satın aldıktan sonra whatsapptan iletişime geçmeniz gerekmektedir.</li>
 								<!-- <li><i class="icon_archive_alt"></i>Lesson archive</li>
 								<li><i class="icon_mobile"></i>Mobile support</li>

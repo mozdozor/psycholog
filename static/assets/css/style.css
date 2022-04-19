@@ -654,7 +654,7 @@ header.header.sticky {
   transition: all 0.3s ease-in-out;
   background: #480048;
   background: -webkit-linear-gradient(left, #480048, #C04848);
-  background: linear-gradient(to right, #480048, #C04848);
+  background: linear-gradient(to right, #247881, #00ffc6);
   padding: 15px 20px;
 }
 @media (max-width: 991px) {
@@ -923,7 +923,7 @@ main {
 
 /* Footer */
 footer {
-  background-color: #121921;
+  background-color: #05595B;
   color: #fbfbfb;
   color: rgba(255, 255, 255, 0.7);
 }
@@ -1475,7 +1475,7 @@ video {
 }
 
 .features {
-  background-color: #121921;
+  background-color: #05595B;
   color: #fff;
   padding: 30px 0;
   text-align: center;

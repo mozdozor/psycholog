@@ -407,13 +407,15 @@ class appointmentModelForm(forms.ModelForm):
 class hakkimizdaModelForm(forms.ModelForm):
     class Meta:
         model = hakkimizdaModel
-        fields=("image","description",)
+        fields=("image","description","description2",)
         widgets = {           
             "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    
+            "description2" : Textarea(attrs={"class":"form-control","name":"description2","required":"required"}),    
         }
         labels = {     
             'image': "Fotoğraf (800x533)", 
-            'description': "Metin",
+            'description': "Ana sayfa metni",
+            'description2': "Hakkımızda sayfası metni",
             
         }
 

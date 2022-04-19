@@ -46,3 +46,9 @@ hakkımızda anasayfaya da gelecek kısalt devamı                  +
 
 
 
+
+parallax görsel ekel anasayfaya                                     +
+siteye geç ikonu telefon görünümü için üste ikon ekle
+zoomun indirme bölümüne yönelnicek link verilicek                   +
+menu_2/course-detail-2.html#0   üst kısmı kurs detayıda ekle        +
+hakkımızda sayfası güncellenicek teacher detail sayfası             +
