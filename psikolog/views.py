@@ -339,7 +339,7 @@ def courseDetail(request,slug):
         "commentStatus":commentStatus,
         "has_bougth":has_bougth,
         "videoIds":videoIds,
-        "completed":completed
+        "completed":completed,
     }
     if request.method == "POST":
         form=CommentModelStarsForm(data=request.POST)
@@ -923,6 +923,7 @@ def getShorNameOfDays(days):
 
 
 def times(request):
+    page=topMenuModel.objects.filter(url="/uygun-zamanlar").all()
     todaySchedules=appointmentModel.objects.filter(date=datetime.datetime.today().date())
     form = appointmentModelForm()
     engdays=get_days_from_today()
@@ -955,7 +956,8 @@ def times(request):
         "schedules5":schedules5,
         "schedules6":schedules6,
         "form":form,
-        "todaySchedules":todaySchedules
+        "todaySchedules":todaySchedules,
+        "page":page.first()
         # "schedules7":schedules7,
     }
     return render(request,"times.html",context)

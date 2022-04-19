@@ -7,6 +7,23 @@
 
 
 
+{% if course %}
+	
+	{% block title %}
+	<title>{{course.meta_title}}</title>
+	{% endblock title %}
+	
+	
+	{% block description %}
+	<meta name="description" content="{{course.meta_description}}">
+	{% endblock description %}
+	
+	
+	{% block keywords %}
+	<meta name="keywords" content="{{course.meta_keywords}}">
+	{% endblock keywords %}
+	
+{% endif %}
 
 
 

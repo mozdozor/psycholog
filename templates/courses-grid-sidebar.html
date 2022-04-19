@@ -7,11 +7,7 @@
 {% load is_favourite %}
 
 
-{% block cssFiles %}
-	<!-- SPECIFIC CSS -->
-<link href="{% static 'assets/css/skins/square/grey.css' %}" rel="stylesheet">
-{% endblock cssFiles %}
-	
+
 {% if page %}
 	
 	{% block title %}
@@ -29,6 +25,14 @@
 	{% endblock keywords %}
 	
 {% endif %}
+
+
+{% block cssFiles %}
+	<!-- SPECIFIC CSS -->
+<link href="{% static 'assets/css/skins/square/grey.css' %}" rel="stylesheet">
+{% endblock cssFiles %}
+	
+
 
 
 
