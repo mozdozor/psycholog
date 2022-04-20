@@ -54,7 +54,7 @@
 	<!--/hero_in-->
 
 	<div class="container margin_60_35">
-		<div class="row">
+		<div class="row" id="rowId">
 			<div class="col-lg-9">
 
 
@@ -104,81 +104,83 @@
 			<!-- /col -->
 
 
-			<div class="col-lg-3">
+			
 
-			<aside>
-                <div class="widget">
-                    <form action="{% url 'allBlogs' %}" method="POST">
-						{% csrf_token %}
-						<div class="form-group">
-							<input type="text" name="keys" id="search" class="form-control" placeholder="Ara...">
+			<strong>
+				<aside class="col-lg-3">
+					<div class="widget">
+						<form action="{% url 'allBlogs' %}" method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<input type="text" name="keys" id="search" class="form-control" placeholder="Ara...">
+							</div>
+							<button type="submit" id="submit" class="btn_1 rounded">Blog Ara</button>
+						</form>
+					</div>
+					<!-- /widget -->
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Son Yazılar</h4>
 						</div>
-						<button type="submit" id="submit" class="btn_1 rounded">Blog Ara</button>
-					</form>
-                </div>
-                <!-- /widget -->
-                <div class="widget">
-                    <div class="widget-title">
-                        <h4>Son Yazılar</h4>
-                    </div>
-                    <ul class="comments-list">
+						<ul class="comments-list">
+	
+							
+							
+							{% if lastThreeBlogs %}
+								
+								{% for blog in lastThreeBlogs %}
+									<li>
+										<div class="alignleft">
+											<a href="{% url 'blogDetail' blog.slug %}"><img src="{{blog.image.url}}"
+													alt=""></a>
+										</div>
+										<small>{{blog.created_date.date}}</small>
+										<h3><a href="{% url 'blogDetail' blog.slug %}" title="">{{blog.title|safe|truncatechars:30}}</a></h3>
+									</li>
+								{% endfor %}
+									
+							{% endif %}
+								
+						  
+						</ul>
+					</div>
+					<!-- /widget -->
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Blog Kategorileri</h4>
+						</div>
+						<ul class="cats">
+							
+							{% if categories %}
+								
+								{% for cat in categories %}
+									<li><a href="{% url 'allBlogs' %}?kategori={{cat.name}}">{{cat.name}} <span>({{cat.getBlogCount}})</span></a></li>
+								{% endfor %}
+									
+							{% endif %}
+								
+						   
+						</ul>
+					</div>
+					<!-- /widget -->
+					<!-- <div class="widget">
+						<div class="widget-title">
+							<h4>Popular Tags</h4>
+						</div>
+						<div class="tags">
+							<a href="#">Information tecnology</a>
+							<a href="#">Students</a>
+							<a href="#">Community</a>
+							<a href="#">Carreers</a>
+							<a href="#">Literature</a>
+							<a href="#">Seminars</a>
+						</div>
+					</div> -->
+					<!-- /widget -->
+				</aside>
+			</strong>
 
-                        
-                        
-                        {% if lastThreeBlogs %}
-                            
-                            {% for blog in lastThreeBlogs %}
-                                <li>
-                                    <div class="alignleft">
-                                        <a href="{% url 'blogDetail' blog.slug %}"><img src="{{blog.image.url}}"
-                                                alt=""></a>
-                                    </div>
-                                    <small>{{blog.created_date.date}}</small>
-                                    <h3><a href="{% url 'blogDetail' blog.slug %}" title="">{{blog.title|safe|truncatechars:30}}</a></h3>
-                                </li>
-                            {% endfor %}
-                                
-                        {% endif %}
-                            
-                      
-                    </ul>
-                </div>
-                <!-- /widget -->
-                <div class="widget">
-                    <div class="widget-title">
-                        <h4>Blog Kategorileri</h4>
-                    </div>
-                    <ul class="cats">
-                        
-                        {% if categories %}
-                            
-                            {% for cat in categories %}
-                                <li><a href="{% url 'allBlogs' %}?kategori={{cat.name}}">{{cat.name}} <span>({{cat.getBlogCount}})</span></a></li>
-                            {% endfor %}
-                                
-                        {% endif %}
-                            
-                       
-                    </ul>
-                </div>
-                <!-- /widget -->
-                <!-- <div class="widget">
-                    <div class="widget-title">
-                        <h4>Popular Tags</h4>
-                    </div>
-                    <div class="tags">
-                        <a href="#">Information tecnology</a>
-                        <a href="#">Students</a>
-                        <a href="#">Community</a>
-                        <a href="#">Carreers</a>
-                        <a href="#">Literature</a>
-                        <a href="#">Seminars</a>
-                    </div>
-                </div> -->
-                <!-- /widget -->
-            </aside>
-
-				</div>
+				
 			<!-- /aside -->
 		</div>
 		<!-- /row -->
@@ -199,6 +201,17 @@
 <script src="{% static 'assets/js/common_scripts.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 <script src="{% static 'assets/validate.js' %}"></script>
+
+<script>
+
+
+	var content=$("#rowId").html();
+	content=content.replace(/<\/?strong>/g, "");
+	$("#rowId").html(content);
+	
+
+
+</script>
 
 
 {% endblock jsFiles %}
