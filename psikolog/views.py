@@ -43,7 +43,7 @@ def index(request):
     sliders=sliderModel.objects.all().order_by("sira")
     courses=CourseModel.objects.all().order_by("created_date")
     categories=CategoryModel.objects.all().order_by("created_date")
-    blogs=blogModel.objects.all().order_by("created_date")
+    blogs=blogModel.objects.all().order_by("created_date")[:4]
     metinler=hakkimizdaModel.objects.all()
     metin=""
     if metinler:
