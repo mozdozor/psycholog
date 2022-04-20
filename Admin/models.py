@@ -217,7 +217,7 @@ class CourseModel(models.Model):
 class whatWillYouLearnModel(models.Model):
     course=models.ForeignKey(CourseModel,on_delete=models.CASCADE,related_name="whatWillYouLearns")  
     title=models.CharField(max_length=300)
-    description=models.TextField()
+    description=models.TextField(blank=True,null=True)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
    
     class Meta:

@@ -67,7 +67,7 @@ class whatWillYouLearnModelForm(forms.ModelForm):
         exclude=("course",)
         widgets = {
             "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title","required":"required"}),
-            "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),
+            "description" : Textarea(attrs={"class":"form-control","name":"description"}),
         }
         labels = {      
             'title': "Başlık",
