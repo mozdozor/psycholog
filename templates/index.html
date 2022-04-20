@@ -231,13 +231,13 @@
                 <h2>Haberler ve Blog Yazıları</h2>
                 <p>En yeni yazılmış blog yazılarına,makalelere ve güncel haberlerden haberdar olabilirsiniz.</p>
             </div>
-            <div class="row">
+            <div class="row" id="rowId">
 
                 
                 {% if blogs %}
                     
                     {% for blog in blogs %}
-                    <div class="col-lg-6">
+                    <div  class="col-lg-6">
                         <a class="box_news" href="{% url 'blogDetail' blog.slug %}">
                             <figure><img src="{{blog.image.url}}" alt="">
                                 <figcaption><strong>{{blog.created_date.date.day}}</strong>{{blog.getCreatedMonth}}</figcaption>
@@ -246,8 +246,8 @@
                                 <li>{{blog.author.get_full_name}}</li>
                                 <li>{{blog.created_date.date}}</li>
                             </ul>
-                            <h4>{{blog.title}}</h4>
-                            <p>{{blog.description|safe|truncatechars:110}}</p>
+                            <h4>{{blog.title|truncatechars:25}}</h4>
+                            <p>{{blog.description|safe|truncatechars:80}}</p>
                         </a>
                     </div>
                     {% endfor %}
@@ -324,6 +324,17 @@
             // Please make sure that you didn't forget to add a comma to the line endings
             // except the last line!
     });
+
+
+
+var content=$("#rowId").html();
+content=content.replace(/<\/?strong>/g, "");
+$("#rowId").html(content);
+
+
+
+
+
 </script>
 
 
