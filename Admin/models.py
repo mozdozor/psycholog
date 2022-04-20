@@ -128,6 +128,7 @@ class CourseModel(models.Model):
     bottomDescription=RichTextUploadingField(blank=False,null=False)
     videoCount=models.PositiveSmallIntegerField(default=0)
     price=models.PositiveSmallIntegerField(default=0)
+    zoomDuration=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
     average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=0)
     none_average_star=models.PositiveSmallIntegerField(blank=True,null=True,default=5)
     meta_title=models.CharField(max_length=65,blank=True,null=True) 
