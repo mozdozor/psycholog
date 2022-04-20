@@ -46,7 +46,7 @@
               <li><strong>Fiyat</strong> {{course.price}} ₺</li>
 						</ul>
 						<h4>Kurs Üst Açıklama</h4> 
-						<p>{{course.description}}</p>
+						<p>{{course.description|safe}}</p>
                         <h4>Öğrenecekleriniz</h4> 
 						<p>
                             
@@ -64,7 +64,7 @@
                         
                         
                         <h4>Kurs Alt Açıklama</h4> 
-						<p>{{course.bottomDescription}}</p>
+						<p>{{course.bottomDescription|safe}}</p>
 
 
 
