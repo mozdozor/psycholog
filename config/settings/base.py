@@ -87,7 +87,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',  # <--
-                'social_django.context_processors.login_redirect', # <--
+             #   'social_django.context_processors.login_redirect', # <--
             ],
         },
     },
@@ -167,7 +167,7 @@ CSRF_TRUSTED_ORIGINS = ['https://*.turkazepsikolog.com','https://*.127.0.0.1']
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'psikolog.backendForFacebook.CustomFacebookOauth',
+    'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
 ]
@@ -190,8 +190,8 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-
+LOGIN_URL="login"
+LOGOUT_URL="logoutIndex"
 
 SOCIALACCOUNT_ADAPTER = "psikolog.adapter.MySocialAccountAdapter"
 
