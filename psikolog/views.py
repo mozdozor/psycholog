@@ -625,6 +625,9 @@ def paymentPage(request,slug):
     payment_amount = (course.price)* 100 
     user_name = request.user.get_full_name()
     user_address = request.user.address
+    if user_address == None or user_address=="":
+        messages.error(request,"Ödeme sayfasına girmek için lütfen önce adres bilginizi güncelleyiniz.")
+        return redirect("profileSettings")
     user_phone = request.user.phone_number
     merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-odeme/'+course.slug  #turkaze olarak değiştirirelecek
     merchant_fail_url = 'http://'+request.META['HTTP_HOST']+'/hatali-odeme/'+course.slug  #turkaze olarak değiştirirelecek
