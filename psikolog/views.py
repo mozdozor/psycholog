@@ -320,7 +320,7 @@ def courseDetail(request,slug):
     videoIds = json.dumps(videoIds)
     if request.user.is_authenticated:
         NoneWatched=getCountOfNoneWatchedVideo(request.user.pk,course.pk)
-        if NoneWatched==0 and course.countOfVideos != 0:
+        if NoneWatched==0 and course.countOfVideos() != 0:
             completed="true"
         billings=orderModel.objects.filter(user=request.user,course=course,status="yes").all()
         if billings:
