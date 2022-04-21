@@ -167,7 +167,7 @@ CSRF_TRUSTED_ORIGINS = ['https://*.turkazepsikolog.com','https://*.127.0.0.1']
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'social_core.backends.facebook.FacebookOAuth2',
+    'psikolog.backendForFacebook.CustomFacebookOauth',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
 ]
@@ -208,3 +208,13 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 
 
 
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.social_details',
+#     'social_core.pipeline.social_auth.social_uid',
+#     #'psikolog.custom_social_auth_pipeline.auth_allowed',
+#     'social_core.pipeline.user.get_username',
+#     'psikolog.custom_social_auth_pipeline.create_user',
+#     'social_core.pipeline.social_auth.associate_user',
+#     'social_core.pipeline.social_auth.load_extra_data',
+#     'social_core.pipeline.user.user_details',
+# )
