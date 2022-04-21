@@ -168,8 +168,8 @@
                 <div class="col-md-4">
                     <a href="#0" class="boxed_list">
                         <i class="pe-7s-help2"></i>
-                        <h4>Yardıma mı ihtiyazcınız var? İletişime Geçin</h4>
-                        <p>İletişim sayfanızdan yönetimizle iletişime geçebilirsiniz</p>
+                        <h4>Yardıma mı ihtiyacınız var?</h4>
+                        <p><strong onclick="iletisim();">İletişim</strong> sayfanızdan yönetimizle iletişime geçebilirsiniz</p>
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -210,5 +210,21 @@
 <script src="{% static 'assets/js/common_scripts.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 <script src="{% static 'assets/validate.js' %}"></script>
+
+
+
+<script>
+    function iletisim(){
+        var url="{% url 'contact' %}";
+        window.open(
+            url,
+            '_blank' // <- This is what makes it open in a new window.
+        );
+    }
+</script>
+
+
+
+
 
 {% endblock jsFiles %}
