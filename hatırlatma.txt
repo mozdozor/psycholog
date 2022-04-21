@@ -59,5 +59,4 @@ hakkımızda sayfası güncellenicek teacher detail sayfası             +
 geri butonlar eklenecek admine                                      +
 process işlemi yap                                                  +
 
-yazar kısmında herkes geliyor onu kaldır
 sertifika yolla işlemi 

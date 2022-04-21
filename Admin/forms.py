@@ -33,10 +33,9 @@ class categoryModelForm(forms.ModelForm):
 class CourseModelForm(forms.ModelForm):
     class Meta:
         model = CourseModel
-        exclude=("videoCount","created_date","updated_date","average_star","none_average_star")
+        exclude=("videoCount","created_date","updated_date","average_star","none_average_star","author")
         widgets = {
             "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title","required":"required"}),
-            "author" : forms.Select(attrs={"class":"form-control select","name":"author","required":"required"}),
             "category" : forms.Select(attrs={"class":"form-control select","name":"categoryName","required":"required"}),
             "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),
             "bottomDescription" : Textarea(attrs={"class":"form-control","name":"bottomDescription","required":"required"}),
@@ -47,7 +46,6 @@ class CourseModelForm(forms.ModelForm):
             "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords","data-max-words":"5"}),
         }
         labels = {      
-            'author':"Yazar",
             'image':"Kurs Fotoğrafı (800x533)",
             'title': "Kurs Başlığı",
             'description': "Açıklama Yazısı",

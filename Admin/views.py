@@ -319,7 +319,9 @@ def courseAddAdmin(request):
         else:
             form = CourseModelForm(request.POST, request.FILES or None)	
         if form.is_valid(): 
-            form.save()            
+            data=form.save(commit=False)            
+            data.author=request.user
+            data.save()
             messages.success(request,"Kurs başarıyla kaydedildi.")
             return redirect("courseListAdmin")
         else:

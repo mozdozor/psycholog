@@ -629,7 +629,7 @@ def paymentPage(request,slug):
         messages.error(request,"Ödeme sayfasına girmek için lütfen önce adres bilginizi güncelleyiniz.")
         return redirect("profileSettings")
     user_phone = request.user.phone_number
-    merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-odeme/'+course.slug  #turkaze olarak değiştirirelecek
+    merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-odeme/'+course.slug+"?user="+request.user.slug  #turkaze olarak değiştirirelecek
     merchant_fail_url = 'http://'+request.META['HTTP_HOST']+'/hatali-odeme/'+course.slug  #turkaze olarak değiştirirelecek
     user_basket = base64.b64encode(json.dumps([[course.title, payment_amount, 1],]).encode('UTF-8'))
     user_ip = get_client_ip(request)  #canlıda test yap
@@ -740,7 +740,20 @@ def callback(request):
 
 @login_required(login_url="login")
 def successPayment(request,slug):
+    userSlug=request.GET.get("user",None)
+    user=get_object_or_404(CustomUserModel,slug=userSlug)
     course=get_object_or_404(CourseModel,slug=slug)
+    message=str(course.title)+" adlı kursunuz "+user.get_full_name()+" tarafından satın alınmıştır.Sipariş kısmından kontrol edebilirsiniz"
+    notificationModel.objects.create(title="Kurs Satın Alımı",message=message,type="billing",object=course)
+    try:
+        send_mail(
+            "Yeni kurs satın alımı",
+            "turkazepsikolog.com sitesinden "+ "yeni bir mailiniz var.\n\n"+message+"\n\n\n ",
+             user.phone_number,
+            ["turkazepsikolog@gmail.com",],
+        )
+    except:
+        messages.error(request,"Mail Gönderilemedi.")
     context={
         "course":course,
         

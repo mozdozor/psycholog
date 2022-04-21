@@ -57,6 +57,10 @@
                         <figure><img src="{{not.object.image.url}}" alt=""></figure>
                         <small>{{not.object.category.name}}</small>
                         <h4>{{not.object.title}}</h4>
+                        {% elif not.type == "billing" %}
+                        <figure><img src="{{not.object.image.url}}" alt=""></figure>
+                        <small>{{not.object.category.name}}</small>
+                        <h4>{{not.object.title}}</h4>
                         {% elif not.type == "commentBlog" %}
                         <figure><img src="{{not.blogObject.image.url}}" alt=""></figure>
                         <!-- <small>{{not.blogObject.title}}</small> -->
