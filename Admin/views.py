@@ -785,7 +785,7 @@ def deleteNotificationsAdmin(request,pk):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def listBillingsAdmin(request):
-    billings=orderModel.objects.all()
+    billings=orderModel.objects.filter(status="yes")
     context={
         "billings":billings,
 
