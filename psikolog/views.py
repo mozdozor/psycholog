@@ -610,18 +610,12 @@ currentUser=""
 @login_required(login_url="login")
 def paymentPage(request,slug):
     course=get_object_or_404(CourseModel,slug=slug)
-
-
     has_created_order=orderModel.objects.filter(course=course,user=request.user,status="no")
     if has_created_order:
         orderOfUser=has_created_order.first()
     else:
         merchant_oid = "SPR"+secrets.token_hex(10)
         orderOfUser=orderModel.objects.create(course=course,user=request.user,status="no",merchant_oid=merchant_oid,price=course.price)
-
-
-
-    
     env = environ.Env()
     environ.Env.read_env("../config/.env")
     merchant_id = env("merchant_id")
@@ -629,7 +623,6 @@ def paymentPage(request,slug):
     merchant_salt = env("merchant_salt").encode('UTF-8')
     email = request.user.email
     payment_amount = (course.price)* 100 
-    
     user_name = request.user.get_full_name()
     user_address = request.user.address
     user_phone = request.user.phone_number
@@ -643,7 +636,6 @@ def paymentPage(request,slug):
     no_installment = '0' # Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
     max_installment = '0'
     currency = 'TL'
-
         # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
     hash_str = str(merchant_id) + str(user_ip) + str(orderOfUser.merchant_oid) + str(email) + str(payment_amount) + user_basket.decode() + no_installment + max_installment + currency + test_mode
     paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8') + merchant_salt, hashlib.sha256).digest())
