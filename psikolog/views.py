@@ -322,7 +322,7 @@ def courseDetail(request,slug):
         NoneWatched=getCountOfNoneWatchedVideo(request.user.pk,course.pk)
         if NoneWatched==0:
             completed="true"
-        billings=orderModel.objects.filter(user=request.user,course=course).all()
+        billings=orderModel.objects.filter(user=request.user,course=course,status="yes").all()
         if billings:
             has_bougth="true"
         for cs in comments:
