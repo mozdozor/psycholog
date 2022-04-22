@@ -65,7 +65,17 @@ def index(request):
 
 def login(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)		
+        username=""
+        email=request.POST.get("username",None)	
+        isAdmina=CustomUserModel.objects.filter(email=email).all()
+        if isAdmina:
+            if isAdmina.first().is_staff==True:
+                username=isAdmina.first().username
+                _mutable = request.POST._mutable
+                request.POST._mutable = True
+                request.POST["username"]=username
+                request.POST._mutable = _mutable
+        form = AuthenticationForm(request, data=request.POST)	
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')

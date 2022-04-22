@@ -1401,7 +1401,9 @@ def appointmentsAdmin(request):
     appointments=appointmentAdminModel.objects.all().order_by("date")
     for i in appointments:
         if i.date<datetime.datetime.today().date():
-            i.delete()
+            for j in i.bottomsAppo.all():
+                if j.status=="no":
+                    j.delete()
     appointments=appointmentAdminModel.objects.all().order_by("date")
     context={
         "appointments":appointments,
