@@ -211,7 +211,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 # SOCIAL_AUTH_PIPELINE = (
 #     'social_core.pipeline.social_auth.social_details',
 #     'social_core.pipeline.social_auth.social_uid',
-#     #'psikolog.custom_social_auth_pipeline.auth_allowed',
+#     'social.pipeline.social_auth.auth_allowed',
+#     # 'social.pipeline.social_auth.social_user',  # 3
 #     'social_core.pipeline.user.get_username',
 #     'psikolog.custom_social_auth_pipeline.create_user',
 #     'social_core.pipeline.social_auth.associate_user',
