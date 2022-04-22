@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,PasswordInput, Select
 from psikolog.models import CommentModel, CustomUserModel, sliderModel
-
+from django.forms.widgets import ClearableFileInput
 
 
 
@@ -57,10 +57,20 @@ class registerUserForm(UserCreationForm):
 
 
 
+
+class MyClearableFileInput(ClearableFileInput):
+    initial_text = 'Profil Resminiz'
+
+
+
+
+
 class userSettingsProfileModelForm(forms.ModelForm):
+    image = forms.ImageField(widget=MyClearableFileInput)
     class Meta:
         model = CustomUserModel
         fields=("first_name","last_name","phone_number","email","address","image")
+        widget=MyClearableFileInput
         widgets = {
             "first_name" : TextInput(attrs={"class":"input_field","type":"text","name":"first_name","required":"required"}),
             "last_name" : TextInput(attrs={"class":"input_field","type":"text","name":"last_name","required":"required"}),

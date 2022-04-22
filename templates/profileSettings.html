@@ -76,7 +76,7 @@
                 {% for message in messages %}
 
                 {% if message.tags == "error" %}
-                <div class="alert alert-danger" role="alert">
+                <div id="dangerMessage" class="alert alert-danger" role="alert">
 
                     <center><strong>{{message}}</strong></center>
                 </div>
@@ -95,7 +95,7 @@
             {% endif %}
 
 
-            <form action="{% url 'profileSettings' %}" method="post" enctype="multipart/form-data">
+            <form id="formProfile" action="{% url 'profileSettings' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     {% for field in form.visible_fields %}
@@ -109,7 +109,9 @@
                         </label>
                     </span>
                     {% else %}
-                   
+                    <br>
+                    <img width="40%" src="{{request.user.image.url}}" alt="">
+                    <br><br>
                     {{field}}
                     
                     {% endif %}
@@ -143,12 +145,43 @@
 
 
     <script>
-
         $(document).ready(function () {
 
             document.getElementById("id_password1").className = "input_field";
             document.getElementById("id_password2").className = "input_field";
         });
+        var element=document.getElementById("dangerMessage")
+        if(element){
+            var form=document.getElementById("formProfile")
+            form.action=form.action+"?next="+"{{nextCourse}}";
+        }
+
+        var nextPage="{{isNextPage}}";
+        if(nextPage){
+            // I threw in a few goodies to study - it will help you later
+            doc = document; bod = doc.body; htm = doc.documentElement;
+            C = function(tag){
+            return doc.createElement(tag);
+            }
+            E = function(id){
+            return doc.getElementById(id);
+            }
+            T = function(tag){ // returns an Array of Elements by tag name
+            return doc.getElementsByTagName(tag);
+            }
+            // notice that `window` is implicit, so you don't actually need to use it to access its properties
+            setTimeout(function(){ // unexecuted functions and Anonymous functions behave the same
+            location = "/odeme-sayfasi/"+nextPage; // it's really this easy to set the `window.location.href`
+            }, 3000);
+        }
+
+        var doc, bod, htm, C, E, T; // for use on other loads
+
+
+
+
+
+
 
 
     </script>

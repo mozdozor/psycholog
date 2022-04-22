@@ -199,10 +199,26 @@ def changePassword(request):
 
 @login_required(login_url="login")
 def profileSettings(request):
+    nextCourse=""
+    isNextPage=""
+    if 'nextCourse' in request.session:
+        nextCourse = request.session['nextCourse']
+        del request.session['nextCourse']
+    if 'nextPage' in request.session:
+        isNextPage = request.session['nextPage']
+        del request.session['nextPage']
+    if nextCourse:
+        pass
+    else:
+        nextCourse=request.GET.get("next",None)
     if request.method == "POST":
         form = userSettingsProfileModelForm(request.POST or None,request.FILES or None,instance=request.user)  	
         if form.is_valid():
             form.save()          
+            if nextCourse:
+                request.session['nextPage'] = nextCourse
+                messages.success(request,'Bilgileriniz başarıyla güncellendi.Satın alma sayfasına yönlendiriliyorsunuz.Lütfen bekleyiniz.')
+                return redirect("profileSettings")
             messages.success(request,'Bilgileriniz başarıyla güncellendi!')
             return redirect("profileSettings")
         else:
@@ -215,6 +231,8 @@ def profileSettings(request):
     form=userSettingsProfileModelForm(instance=request.user)
     context={
         "form":form,
+        "nextCourse":nextCourse,
+        "isNextPage":isNextPage
     }
     return render(request,"profileSettings.html",context)
 
@@ -627,6 +645,7 @@ def paymentPage(request,slug):
     user_address = request.user.address
     if user_address == None or user_address=="":
         messages.error(request,"Ödeme sayfasına girmek için lütfen önce adres bilginizi güncelleyiniz.")
+        request.session['nextCourse'] = course.slug
         return redirect("profileSettings")
     user_phone = request.user.phone_number
     merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-odeme/'+course.slug+"?user="+request.user.slug  #turkaze olarak değiştirirelecek
@@ -802,7 +821,12 @@ def mesafeliSatis(request):
 @csrf_exempt
 def footerMailSave(request):
     if request.method == 'POST':
-        footerMailModel.objects.create(email=request.POST["email"])
+        email=request.POST["email"]
+        footerList=list(footerMailModel.objects.all().values_list('email', flat=True)) 
+        if email in footerList:
+            messages.error(request,"Email adresiniz daha önce kaydedilmiş",extra_tags="footerMail")
+            return redirect(request.META['HTTP_REFERER'])
+        footerMailModel.objects.create(email=email)
         messages.success(request,"Email adresiniz başarıyla kaydedildi",extra_tags="footerMail")
         return redirect(request.META['HTTP_REFERER'])
   

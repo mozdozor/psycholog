@@ -60,3 +60,12 @@ geri butonlar eklenecek admine                                      +
 process işlemi yap                                                  +
 
 sertifika yolla işlemi 
+
+
+email işleminden sonra footer scroole gelsin                    +
+daha önce kayıtlı email footer uyarı                            +
+sayfa yukarı çıkartma butonu kontol et
+profil güncelle foto göster                                     +
+Şuanki  yerine Profil Resminiz yazsın                           +
+kaldığım yerden devam etmeli adres güncelleme işleminden sonra  +
+src ekle muted falan
