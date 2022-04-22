@@ -126,7 +126,7 @@
 
 
 <script>
-    console.log(screen.width)
+   // console.log(screen.width)
     var danger=document.getElementById("dangerMessageFooter");
     var success=document.getElementById("successMessageFooter");
     if (danger!=null && danger!=""){
@@ -134,7 +134,7 @@
     }else if(success!=null && success!=""){
         $("html, body").animate({ scrollTop: "6000px" });
     }
-    if(screen.width<990){
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         var cikis=`<li name="cikisElementi"><span><a href="{% url 'logoutIndex' %}">Çıkış</a></span></li>`;
         var giris=`<li name="girisElementi"><span><a href="{% url 'login' %}">Giriş</a></span></li>`;
         var kayit=`<li name="kayitElementi"><span><a href="{% url 'registerUser' %}">Kayıt Ol</a></span></li>`;
