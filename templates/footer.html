@@ -128,17 +128,13 @@
 <script>
    // console.log(screen.width)
 
-   
-
-    var danger=document.getElementById("dangerMessageFooter");
-    var success=document.getElementById("successMessageFooter");
-    if (danger!=null && danger!=""){
-        $("html, body").animate({ scrollTop: "6000px" });
-    }else if(success!=null && success!=""){
-        $("html, body").animate({ scrollTop: "6000px" });
+    const isMobile=function(){
+        const match=window.matchMedia('(pointer:coarse)');
+        return (match && match.matches)
     }
-    if (/Mobi/.test(navigator.userAgent)) {
-      
+    
+    if(isMobile()==true){
+       
         var cikis=`<li name="cikisElementi"><span><a href="{% url 'logoutIndex' %}">Çıkış</a></span></li>`;
         var giris=`<li name="girisElementi"><span><a href="{% url 'login' %}">Giriş</a></span></li>`;
         var kayit=`<li name="kayitElementi"><span><a href="{% url 'registerUser' %}">Kayıt Ol</a></span></li>`;
@@ -169,6 +165,30 @@
                 i.remove();
             }
         }
-     
+
     }
+    
+    
+
+    // now I can use is_mobile to run javascript conditionally
+
+   
+        
+        
+
+
+   
+
+    var danger=document.getElementById("dangerMessageFooter");
+    var success=document.getElementById("successMessageFooter");
+    if (danger!=null && danger!=""){
+        $("html, body").animate({ scrollTop: "6000px" });
+    }else if(success!=null && success!=""){
+        $("html, body").animate({ scrollTop: "6000px" });
+    }
+    
+      
+        
+     
+    
 </script>
