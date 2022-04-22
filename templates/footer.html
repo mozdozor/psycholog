@@ -97,6 +97,8 @@
 <!--/footer-->
 
 
+<script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+
 
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
@@ -111,17 +113,6 @@
     })();
 </script>
     <!--End of Tawk.to Script-->
-
-
-
-
-
-<!-- COMMON SCRIPTS -->
-<script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
-<script src="{% static 'assets/js/common_scripts.js' %}"></script>
-<script src="{% static 'assets/js/main.js' %}"></script>
-<script src="{% static 'assets/validate.js' %}"></script>
-
 
 
 
@@ -168,16 +159,7 @@
 
     }
     
-    
 
-    // now I can use is_mobile to run javascript conditionally
-
-   
-        
-        
-
-
-   
 
     var danger=document.getElementById("dangerMessageFooter");
     var success=document.getElementById("successMessageFooter");
@@ -192,3 +174,12 @@
      
     
 </script>
+
+
+
+<!-- COMMON SCRIPTS -->
+
+<script src="{% static 'assets/js/common_scripts.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/validate.js' %}"></script>
+
