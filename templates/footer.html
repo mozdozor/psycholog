@@ -126,11 +126,50 @@
 
 
 <script>
+    console.log(screen.width)
     var danger=document.getElementById("dangerMessageFooter");
     var success=document.getElementById("successMessageFooter");
     if (danger!=null && danger!=""){
         $("html, body").animate({ scrollTop: "6000px" });
     }else if(success!=null && success!=""){
         $("html, body").animate({ scrollTop: "6000px" });
+    }
+    if(screen.width<990){
+        var cikis=`<li name="cikisElementi"><span><a href="{% url 'logoutIndex' %}">Çıkış</a></span></li>`;
+        var giris=`<li name="girisElementi"><span><a href="{% url 'login' %}">Giriş</a></span></li>`;
+        var kayit=`<li name="kayitElementi"><span><a href="{% url 'registerUser' %}">Kayıt Ol</a></span></li>`;
+        var is_authenticated = "{{request.user.is_authenticated}}";
+        var ulPart=document.getElementById("menuIdHeader");
+        var isLogoutElements=document.getElementsByName("cikisElementi");
+        var isLoginElements=document.getElementsByName("girisElementi");
+        var isRegisterElements=document.getElementsByName("kayitElementi");
+        if (is_authenticated=="True"){
+            if(isLogoutElements.length==0){
+                ulPart.innerHTML=ulPart.innerHTML +cikis;
+            }
+            for(let i = 0;i < isLoginElements.length; i++)
+            {
+                i.remove();
+            }
+            for(let i = 0;i < isRegisterElements.length; i++)
+            {
+                i.remove();
+            }
+        }else{
+            if(isLoginElements.length==0){
+                ulPart.innerHTML=ulPart.innerHTML +giris;
+                ulPart.innerHTML=ulPart.innerHTML +kayit;
+            }
+            for(let i = 0;i < isLogoutElements.length; i++)
+            {
+                i.remove();
+            }
+        }
+        
+        // var ulPart=document.getElementById("menuIdHeader");
+        // var li = document.createElement("li");
+        // li.appendChild(document.createTextNode("Four"));
+        // ulPart.appendChild(li);
+        var cikis=`<li id='cikisElement'><span><a href="{% url 'logoutIndex' %}">Çıkış</a></span></li>`
     }
 </script>

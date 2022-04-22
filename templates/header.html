@@ -30,7 +30,7 @@
         </div>
     </a>
     <nav id="menu" class="main-menu">
-        <ul>
+        <ul id="menuIdHeader">
             {% if top_menus %}
                 {% for menu in top_menus %}
                     <li><span><a href="{{menu.url}}">{{menu.name}}</a></span>
@@ -41,7 +41,9 @@
                                     <li><a href="{{altMenu.url}}">{{altMenu.name}}</a></li>
                             {% endfor %}
                             </ul>   
+                            
                         {% endif %}
+                    </li>
                             
                 {% endfor %}
                     
