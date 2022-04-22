@@ -94,7 +94,7 @@ class courseSessionVideoModelForm(forms.ModelForm):
         ('herkes','Herkes'),
         
     )
-    video_type=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"video_type","required":"required"}), choices=CHOICES)
+    video_type=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"video_type","required":"required"}), choices=CHOICES,label="Videoyu kim izlesin")
     class Meta:
         model = courseSessionVideoModel
         fields=("title","url","video_type","minute","seconds")
@@ -107,7 +107,7 @@ class courseSessionVideoModelForm(forms.ModelForm):
         }
         labels = {      
             'title': "Video Başlığı",
-            'url': "URL Adresi",
+            'url': "URL Adresi (Videoların otomatik oynamasını istiyorsanız url adresinin sonuna '&autoplay=1&muted=1' komutunu tırnak işaretleri olmadan yazınız.)",
             'video_type': "Video Tipi",
             'minute': "Dakika",
             'seconds': "Saniye",
