@@ -69,3 +69,16 @@ profil güncelle foto göster                                     +
 Şuanki  yerine Profil Resminiz yazsın                           +
 kaldığım yerden devam etmeli adres güncelleme işleminden sonra  +
 src ekle muted falan
+
+
+
+
+
+
+
+slider buton ekle  daha fazlası olacak butonun ismi
+
+gizlilik ilkesi eklenecek
+
+kategori fiyatlandırması ayrı olacak 
+randevu al olacak gönder 
