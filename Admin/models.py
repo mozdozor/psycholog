@@ -326,7 +326,7 @@ class notificationModel(models.Model):
     title=models.CharField(max_length=200,blank=True,null=True)
     message=models.CharField(max_length=400,blank=True,null=True)
     type=models.CharField(max_length=200)
-    noti_user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="allNotifications",blank=True,null=True)  
+    noti_user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="allNotificationsUser",blank=True,null=True)  
     object=models.ForeignKey(CourseModel,on_delete=models.CASCADE,related_name="notificationsOfCourse",blank=True,null=True)  
     blogObject=models.ForeignKey("Admin.blogModel",on_delete=models.CASCADE,related_name="notificationsOfBlogs",blank=True,null=True)  
     appointmentObject=models.ForeignKey("Admin.appointmentModel",on_delete=models.CASCADE,related_name="notificationsOfAppo",blank=True,null=True)  
