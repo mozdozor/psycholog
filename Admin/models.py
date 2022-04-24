@@ -592,6 +592,8 @@ class appointmentModel(models.Model):
 
 
 
+
+
 class hakkimizdaModel(models.Model):
     image=models.ImageField(upload_to="hakkimizdaImages",blank=True,null=True)
     description=RichTextUploadingField(blank=True,null=True) 
