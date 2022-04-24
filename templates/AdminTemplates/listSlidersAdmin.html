@@ -68,6 +68,7 @@
                 <th>Foto</th>
                 <th>Üst Başlık</th>
                 <th>Alt Başlık</th>
+                <th>Url</th>
                 <th>Sıra</th>
                 <th>İşlemler</th>
                 
@@ -79,6 +80,7 @@
                 <td><center><img style="width: 101px; height: 73px;" src="{{slider.image.url}}" alt=""></center></td>
                 <td>{{slider.top_title|truncatechars:25}}</td>
                 <td>{{slider.bottom_title|truncatechars:25}}</td>
+                <td>{{slider.url|truncatechars:25}}</td>
                 <td>{{slider.sira}}</td>
                 <td>
                     <center><a href="{% url 'createSliderModelAdmin' %}?sliderId={{slider.pk}}" type="button" class="btn btn-primary btn-sm" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>

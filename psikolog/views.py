@@ -10,7 +10,7 @@ from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appo
 from django.contrib.auth import logout
 from Admin.templatetags.coutOfNoneWatched import getCountOfNoneWatchedVideo
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
-from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, hasWatchedModel, orderModel, sliderModel
+from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, hasWatchedModel, mediaGalleryImageModel, mediaGalleryVideoModel, orderModel, sliderModel
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate,update_session_auth_hash,logout
@@ -730,12 +730,26 @@ def callback(request):
     # BURADA YAPILMASI GEREKENLER
     # 1) Siparişin durumunu post['merchant_oid'] değerini kullanarak veri tabanınızdan sorgulayın.
     # 2) Eğer sipariş zaten daha önceden onaylandıysa veya iptal edildiyse "OK" yaparak sonlandırın.
-    order=orderModel.objects.get(merchant_oid=post['merchant_oid'])
+    type=""
+    order1=orderModel.objects.filter(merchant_oid=post['merchant_oid'])
+    order2=appointmentModel.objects.filter(merchant_oid=post['merchant_oid'])
+    order=""
+    if order1:
+        order=order1.first()
+        type="order"
+    elif order2:
+        order=order2.first()
+        type="schedule"
+
 
     if post['status'] == 'success':  # Ödeme Onaylandı
 
-        order.status="yes"
-        order.save()
+        if type=="order":
+            order.status="yes"
+            order.save()
+        elif type=="schedule":
+            order.status="pending"
+            order.save()
         """
         BURADA YAPILMASI GEREKENLER
         1) Siparişi onaylayın.
@@ -1122,25 +1136,176 @@ def submitAppointmentForm(request,randevuId):
     if is_ajax(request=request):
         if request.method == "POST":
             schedule=get_object_or_404(appointmentModel,pk=randevuId)
+            schedules=appointmentModel.objects.filter(date=schedule.date).order_by("starting_time").values()
             form = appointmentModelForm(request.POST, request.FILES or None,instance=schedule)	
             if form.is_valid(): 
                 form.save()  
-                schedule.status="pending"
-                schedule.save()
-                message=form.cleaned_data["fullname"]+" adlı kişiden "+form.cleaned_data["category"].name+" kategorisi ile ilgili " +str((schedule.date).strftime('%d/%m/%Y'))+" tarihinde "+str(schedule.starting_time)+"/"+str((schedule.finishing_time))+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
-                notificationModel.objects.create(title="Randevu Talebi",message=message,type="appointment",appointmentObject=schedule)
-                try:
-                    send_mail(
-                        form.cleaned_data["fullname"],
-                        "turkazepsikolog.com sitesinden "+ "yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"]+"\n Telefon = "+form.cleaned_data["phone_number"]+"\n Mesaj = "+form.cleaned_data["message"],
-                        form.cleaned_data["phone_number"],
-                        ["turkazepsikolog@gmail.com",],
-                    )
-                    messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
-                    schedules=appointmentModel.objects.filter(date=schedule.date).order_by("starting_time").values()
-                    return JsonResponse({"status":"success","randevuId":randevuId,"schedules":list(schedules)}, status = 200)
-                except:
-                    return JsonResponse({"status":"error","randevuId":randevuId}, status = 200)
-                
+                return JsonResponse({"status":"success","randevuId":randevuId,"schedules":list(schedules)}, status = 200)
+                # schedule.status="pending"
+                # schedule.save()
+                # message=str(form.cleaned_data["fullname"])+" adlı kişiden "+str(form.cleaned_data["category"])+" kategorisi ile ilgili " +str((schedule.date).strftime('%d/%m/%Y'))+" tarihinde "+str(schedule.starting_time)+"/"+str((schedule.finishing_time))+" saatlerinde bir randevu isteiğiniz bulunmaktadır."
+                # notificationModel.objects.create(title="Randevu Talebi",message=message,type="appointment",appointmentObject=schedule)
+                # try:
+                #     send_mail(
+                #         form.cleaned_data["fullname"],
+                #         "turkazepsikolog.com sitesinden "+ "yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+form.cleaned_data["email"]+"\n Telefon = "+form.cleaned_data["phone_number"]+"\n Mesaj = "+form.cleaned_data["message"],
+                #         form.cleaned_data["phone_number"],
+                #         ["turkazepsikolog@gmail.com",],
+                #     )
+                #   #  messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
+                    
+                #     return JsonResponse({"status":"success","randevuId":randevuId,"schedules":list(schedules)}, status = 200)
+                # except:
+                #     return JsonResponse({"status":"error","randevuId":randevuId,"schedules":list(schedules)}, status = 200)
+            else:
+                return JsonResponse({"status":"error","randevuId":randevuId,"schedules":list(schedules)}, status = 200)
+    return JsonResponse({}, status = 400)   
+
+
+
+
+
+
+
+def mediaGallery(request):
+    images=mediaGalleryImageModel.objects.all()
+    videos=mediaGalleryVideoModel.objects.all()
+    page=topMenuModel.objects.filter(url="/medya-galeri").all()
+    context={
+        "images":images,
+        "videos":videos,
+        "page":page.first()
+    }
+    return render(request,"media-gallery.html",context)
+
+
+
+
+
+
+
+
+def paymentPageOfAppointment(request,pk):
+    schedule=get_object_or_404(appointmentModel,pk=pk)
+    if schedule.status!="no":
+        return redirect("times")
+    merchant_oid = "RND"+secrets.token_hex(10)
+    schedule.merchant_oid=merchant_oid
+    schedule.save()
+    env = environ.Env()
+    environ.Env.read_env("../config/.env")
+    merchant_id = env("merchant_id")
+    merchant_key = env("merchant_key").encode('UTF-8')
+    merchant_salt = env("merchant_salt").encode('UTF-8')
+    email = schedule.email
+    payment_amount = (schedule.category.price)* 100 
+    user_name = schedule.fullname
+    user_address = schedule.address
+    if user_address == None or user_address=="":
+        messages.error(request,"Ödeme sayfasına girmek için lütfen önce adres bilginizi güncelleyiniz.",extra_tags="appointmentMessages")
+        return redirect("times")
+    user_phone = schedule.phone_number
+    merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-randevu-satin-alimi/'+str(schedule.pk)
+    merchant_fail_url = 'http://'+request.META['HTTP_HOST']+'/hatali-randevu-satin-alimi/'+str(schedule.pk)
+    user_basket = base64.b64encode(json.dumps([[schedule.category.name, payment_amount, 1],]).encode('UTF-8'))
+    user_ip = get_client_ip(request)  #canlıda test yap
+    timeout_limit = '30'
+    debug_on = '1'   #canlıda 0 yap
+    test_mode = '1' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
+    no_installment = '0' # Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
+    max_installment = '0'
+    currency = 'TL'
+        # Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur.
+    hash_str = str(merchant_id) + str(user_ip) + str(schedule.merchant_oid) + str(email) + str(payment_amount) + user_basket.decode() + no_installment + max_installment + currency + test_mode
+    paytr_token = base64.b64encode(hmac.new(merchant_key, hash_str.encode('UTF-8') + merchant_salt, hashlib.sha256).digest())
+    params = {
+        'merchant_id': merchant_id,
+        'user_ip': user_ip,
+        'merchant_oid': schedule.merchant_oid,
+        'email': email,
+        'payment_amount': payment_amount,
+        'paytr_token': paytr_token,
+        'user_basket': user_basket,
+        'debug_on': debug_on,
+        'no_installment': no_installment,
+        'max_installment': max_installment,
+        'user_name': user_name,
+        'user_address': user_address,
+        'user_phone': user_phone,
+        'merchant_ok_url': merchant_ok_url,
+        'merchant_fail_url': merchant_fail_url,
+        'timeout_limit': timeout_limit,
+        'currency': currency,
+        'test_mode': test_mode
+    }
+
+    result = requests.post('https://www.paytr.com/odeme/api/get-token', params)
+    res = json.loads(result.text)
+
+    arr=user_name.split(" ")
+    lastName=""
+    firstName=""
+    for i in range(len(arr)):
+        if i==0:
+            firstName=arr[i]
+        else:
+            lastName=lastName+" "+arr[i]
+
+    context={
+        "schedule":schedule,
+        'token': res['token'],
+        "firstName":firstName,
+        "lastName":lastName,
+    }
+    if res['status'] == 'success':
+        print("success")
+      
     else:
-        return JsonResponse({}, status = 400)
+        context["failMessage"]="Ödeme formu açılırken bir hata ile karşılaşıldı.Sistem yöneticiniz ile ileişime geçiniz"
+        return render(request,"fail-payment.html",context)
+
+    return render(request,"appointment-payment-page.html",context)
+
+
+
+
+
+
+
+
+def successPaymentOfAppointment(request,pk):
+    schedule=get_object_or_404(appointmentModel,pk=pk)
+    schedule.status="pending"
+    schedule.save()
+    message=str(schedule.fullname)+" adlı kişiden "+str(schedule.category.name)+" kategorisi ile ilgili " +str((schedule.date).strftime('%d/%m/%Y'))+" tarihinde "+str(schedule.starting_time)+"/"+str((schedule.finishing_time))+" saatlerinde ödemesi yapılmış bir randevu isteğiniz bulunmaktadır."
+    notificationModel.objects.create(title="Randevu Talebi",message=message,type="appointment",appointmentObject=schedule)
+    context={
+        "schedule":schedule,
+    }
+    try:
+        send_mail(
+            schedule.fullname,
+            "turkazepsikolog.com sitesinden "+ "yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+schedule.email+"\n Telefon = "+schedule.phone_number+"\n Mesaj = "+schedule.message,
+            schedule.phone_number,
+            ["turkazepsikolog@gmail.com",],
+        )
+        context["success"]="success"
+        #  messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
+        
+        return render(request,"appointmentPaymentResult.html",context)
+    except:
+        context["fail"]="fail"
+        return render(request,"appointmentPaymentResult.html",context)
+    
+    
+
+
+
+
+
+
+def failPaymentOfAppointment(request,pk):
+    context={
+        "failAppo":"fail",
+    }
+    return render(request,"appointmentPaymentResult.html",context)

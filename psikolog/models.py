@@ -135,6 +135,7 @@ class sliderModel(models.Model):
     image=models.ImageField(upload_to="sliderImages")
     top_title=models.CharField(max_length=300)
     bottom_title=models.CharField(max_length=300)
+    url=models.CharField(max_length=300,blank=True,null=True)
     sira=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
@@ -213,3 +214,44 @@ class hasWatchedModel(models.Model):
 
 
 
+
+
+
+
+
+
+class mediaGalleryImageModel(models.Model):
+    image=models.ImageField(upload_to="mediaGalleryImages")
+    image2=models.ImageField(upload_to="mediaGalleryImages",blank=True,null=True)
+    title=models.CharField(max_length=300)
+    sira=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+
+    class Meta:
+        db_table="MediaGalleryImages"
+        verbose_name = "MediaGalleryImage"
+        verbose_name_plural = "MediaGalleryImages"
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
+class mediaGalleryVideoModel(models.Model):
+    url=models.CharField(max_length=300)
+    image=models.ImageField(upload_to="mediaGalleryVideoImages")
+    title=models.CharField(max_length=300)
+    sira=models.PositiveSmallIntegerField(default=0,blank=True,null=True)
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+
+    class Meta:
+        db_table="MediaGalleryVideos"
+        verbose_name = "MediaGalleryVideo"
+        verbose_name_plural = "MediaGalleryVideos"
+
+    def __str__(self):
+        return self.url

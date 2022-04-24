@@ -7,7 +7,8 @@ from .views import (
     index,login,logoutIndex,registerUser,changePassword,profileSettings,coursesGridList,favouritesCoursesGridList,
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
     kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback,mesafeliSatis,footerMailSave,
-    appointment,addWatchedList,times,activate,getAppointments,submitAppointmentForm
+    appointment,addWatchedList,times,activate,getAppointments,submitAppointmentForm,mediaGallery,paymentPageOfAppointment,
+    successPaymentOfAppointment,failPaymentOfAppointment
 )
 
 
@@ -66,5 +67,12 @@ urlpatterns = [
          name='django.contrib.sitemaps.views.sitemap'),
     path('randevulari-cek',getAppointments,name="getAppointments"),
     path('randevu-formu-kaydet/<int:randevuId>',submitAppointmentForm,name="submitAppointmentForm"),
+    path('medya-galeri',mediaGallery,name="mediaGallery"),
+    path('randevu-satin-alimi/<int:pk>',paymentPageOfAppointment,name="paymentPageOfAppointment"),
+    path('basarili-randevu-satin-alimi/<int:pk>',successPaymentOfAppointment,name="successPaymentOfAppointment"),
+    path('hatali-randevu-satin-alimi/<int:pk>',failPaymentOfAppointment,name="failPaymentOfAppointment"),
 
 ]   
+
+
+

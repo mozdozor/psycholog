@@ -10,7 +10,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
         return ['index', 'login', 'logoutIndex','registerUser','changePassword','password_reset','password_reset_done','password_reset_complete',
         'profileSettings','coursesGridList','favouritesCoursesGridList',
         'learningContentList','aboutUs','contact','aydinlatmaMetni','gizlilikPolitikası','kvkkMetni','allBlogs',
-        'callback','mesafeliSatis','footerMailSave',"times"]
+        'callback','mesafeliSatis','footerMailSave',"times","mediaGallery"]
 
     def location(self, item):
         return reverse(item)

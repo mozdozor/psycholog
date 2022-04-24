@@ -104,8 +104,9 @@
 			</div>
 		
 			<div id="errMessage" style="display: none;" class="alert alert-danger" role="alert">
-				<center><strong>Bir hata ile karşılaşıldı.</strong></center>
+				<center><strong>Lütfen zorunlu bilgilerin eksiksiz girildiğinden emin olunuz.</strong></center>
 				</div>
+				
 
 
 
@@ -238,11 +239,9 @@
 
 
 
-
-
 							{% if forloop.last %}
 							<div class="col-md-12">
-								<span class="input">
+								<span id="{{field.name}}" class="input">
 									{{field}}
 									<label class="input_label">
 										<span class="input__label-content">{{field.label_tag}}</span>
@@ -251,7 +250,7 @@
 							</div>
 							{% elif forloop.first %}
 							<div class="col-md-12">
-								<span class="input">
+								<span id="{{field.name}}" class="input">
 									{{field}}
 									<label class="input_label">
 										<span>{{field.label_tag}}</span>
@@ -260,7 +259,7 @@
 							</div>
 							{% else %}
 							<div class="col-md-6">
-								<span class="input">
+								<span id="{{field.name}}" class="input">
 									{{field}}
 									<label class="input_label">
 										<span class="input__label-content">{{field.label_tag}}</span>
@@ -288,7 +287,7 @@
 						{% if isFree == "notNo" %}
 							disabled style="background-color: turquoise;"
 						{% endif %}
-							 value="Gönder" class="btn_1 rounded"
+							 value="Randevu Al" class="btn_1 rounded"
 								id="submit-contact"></p>
 								<div class="loader">
 									<div class="loading">
@@ -598,7 +597,6 @@ window.onload = callAjax(today);
 
 
 function callAjax(date){
-	console.log(date)
 	$.ajax({
 		type: "POST",
 		url: "/randevulari-cek",
@@ -680,13 +678,16 @@ function forwardClicked(){
 	if(document.getElementById("forwardBtn").disabled==false){
 		document.getElementById("firstMain").style.display="none";
 		document.getElementById("secondMain").style.display="block";
+		fillTheForm();
 	}
+	document.getElementsByClassName("loader")[0].style.display = "none";
 
 }
 function backwardClicked(){
 
 document.getElementById("firstMain").style.display="block";
 document.getElementById("secondMain").style.display="none";
+document.getElementsByClassName("loader")[0].style.display = "none";
 
 }
 
@@ -728,18 +729,63 @@ $('#submit-contact').click(function(event){
 				}
 				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:turquoise ' type='button'>İlerle</a>"
 			}
-			document.getElementById("sccMessage").style.display="block";
+			if(data["status"]=="success"){
+				location.replace("/randevu-satin-alimi/"+data["randevuId"])
+				// setTimeout(function(){ // unexecuted functions and Anonymous functions behave the same
+				// 	location = "/medya-galeri"; // it's really this easy to set the `window.location.href`
+				// }, 2000);
+				// document.getElementById("sccMessage").style.display="block";
+				// document.getElementById("errMessage").style.display="none";
+			}else if(data["status"]=="error"){
+				document.getElementById("sccMessage").style.display="none";
+				document.getElementById("errMessage").style.display="block";
+			}
+			
 			document.getElementsByClassName("loader")[0].style.display = "none";
 			
 		},
 		error: function(data) {
 			document.getElementById("errMessage").style.display="block";
+			document.getElementById("sccMessage").style.display="none";
+			document.getElementsByClassName("loader")[0].style.display = "none";
+			frm.trigger('reset');
+			backwardClicked();
 			console.log("err")
+			frm.action="#";
 			// $("#MESSAGE-DIV").html("Something went wrong!");
 		}
 	});
     });
 
+
+
+	function fillTheForm(){
+		var is_authenticated = "{{request.user.is_authenticated}}";
+		if(is_authenticated=="True"){
+			var fullname="{{request.user.get_full_name}}";
+			var phone_number="{{request.user.phone_number}}";
+			var email="{{request.user.email}}";
+			var address="{{request.user.address}}";
+			if (fullname!="" ){
+				document.getElementById("id_fullname").value=fullname;
+				document.getElementById("fullname").className="input input--filled";
+			}
+			if (phone_number!="" ){
+				document.getElementById("id_phone_number").value=phone_number;
+				document.getElementById("phone_number").className="input input--filled";
+			}
+			if (email!="" ){
+				document.getElementById("id_email").value=email;
+				document.getElementById("email").className="input input--filled";
+			}
+			if (address!="" ){
+				document.getElementById("id_address").value="{{request.user.address}}";
+				document.getElementById("address").className="input input--filled";
+			}
+
+			
+		}
+	}
 
 
 

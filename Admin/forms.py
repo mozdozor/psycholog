@@ -373,12 +373,13 @@ class footerMailModelForm(forms.ModelForm):
 class appointmentModelForm(forms.ModelForm):
     class Meta:
         model = appointmentModel
-        exclude=("created_date","status","starting_time","finishing_time","date","top")
+        exclude=("created_date","status","starting_time","finishing_time","date","top","merchant_oid")
         widgets = {
             "category" : forms.Select(attrs={"class":"input_field","name":"category","required":"required"}),
             "fullname" : TextInput(attrs={"class":"input_field","type":"text","name":"fullname","required":"required"}),
             "phone_number" : TextInput(attrs={"class":"input_field","type":"text","name":"phone_number","required":"required"}),
             "email" : TextInput(attrs={"class":"input_field","type":"email","name":"email","required":"required"}),
+            "address" : TextInput(attrs={"class":"input_field","type":"text","name":"address","required":"required"}),
             "date" : DateInput(attrs={"class":"input_field","name":"date","type":"date","required":"required"}),
             "starting_time" : TimeInput(attrs={"class":"input_field","type":"time","name":"starting_time","required":"required"}),
             "finishing_time" : TimeInput(attrs={"class":"input_field","type":"time","name":"finishing_time","required":"required"}),
@@ -386,11 +387,12 @@ class appointmentModelForm(forms.ModelForm):
             
         }
         labels = {     
-            'category': "Kategori Seçiniz", 
-            'fullname': "İsim Soyisim",
-            'phone_number': "Telefon",
-            'email': "Email",
-            'date': "Tarih",
+            'category': "Kategori Seçiniz * ", 
+            'fullname': "İsim Soyisim * ",
+            'phone_number': "Telefon * ",
+            'email': "Email * ",
+            'address': "Adres * ",
+            'date': "Tarih * ",
             'starting_time': "Başlangıç Saati",
             'finishing_time': "Bitiş Saati",
             'message': "İletmek istediğiniz özel bir mesajınız varsa yazınız",
@@ -464,10 +466,12 @@ class appointmentAdminModelForm(forms.ModelForm):
 class appointmentCategoryModelForm(forms.ModelForm):
     class Meta:
         model = appointmentCategoryModel
-        fields=("name",)
+        fields=("name","price")
         widgets = {
             "name" : TextInput(attrs={"class":"form-control","type":"text","name":"name","required":"required"}),
+            "price" : forms.NumberInput(attrs={"class":"form-control","name":"price","required":"required"}),
         }
         labels = {      
             'name': "Randevu Kategori İsmi",
+            "price":"Seans Ücreti"
         }

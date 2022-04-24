@@ -64,9 +64,15 @@
                         data-ls="durationin:2000;delayin:1000;easingin:easeOutElastic;">
                         {{slider.bottom_title}}
                     </p>
-                    <!-- <a class="ls-l btn_1 rounded" style="top:65%; left:50%;white-space: nowrap;"
-                        data-ls="durationin:2000;delayin:1400;easingin:easeOutElastic;" href='courses-grid.html'>Read
-                        more</a> -->
+                    <a class="ls-l btn_1 rounded" style="top:65%; left:50%;white-space: nowrap;"
+                        data-ls="durationin:2000;delayin:1400;easingin:easeOutElastic;" 
+                        {% if slider.url %}
+                            href='{{slider.url}}'
+                        {% else %}
+                        href="/"
+                        {% endif %}
+                            >Daha Fazlası
+                        </a>
                 </div>
                 {% endfor %}
             {% endif %}

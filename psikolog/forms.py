@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,PasswordInput, Select
-from psikolog.models import CommentModel, CustomUserModel, sliderModel
+from psikolog.models import CommentModel, CustomUserModel, mediaGalleryImageModel, mediaGalleryVideoModel, sliderModel
 from django.forms.widgets import ClearableFileInput
 
 
@@ -15,12 +15,14 @@ class sliderModelForm(forms.ModelForm):
         widgets = {
             "top_title" : TextInput(attrs={"class":"form-control","type":"text","name":"top_title","required":"required"}),
             "bottom_title" : TextInput(attrs={"class":"form-control","name":"bottom_title","required":"required"}),
+            "url" : TextInput(attrs={"class":"form-control","type":"text","name":"url","required":"required"}),
             "sira" : forms.NumberInput(attrs={"class":"form-control","name":"sira","required":"required"}),
         }
         labels = {      
             "image":"Foto (1600x750)",
             'top_title': "Üst Başlık",
             'bottom_title': "Alt Başlık",
+            'url': "Url",
             'sira': "Sıra",
         }
 
@@ -104,3 +106,43 @@ class CommentModelStarsForm(forms.ModelForm):
 
 
 
+
+
+
+
+
+class mediaGalleryImageModelForm(forms.ModelForm):
+    class Meta:
+        model = mediaGalleryImageModel
+        exclude=("created_date","updated_date")
+        widgets = {
+            "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title","required":"required"}),
+            "sira" : forms.NumberInput(attrs={"class":"form-control","name":"sira","required":"required"}),
+        }
+        labels = {      
+            'title': "Başlık",
+            "image":"Fotoğraf (400x300)",
+            "image2":"Büyük Fotoğraf (Tıklandığında daha büyük gözükecek foto 800x533.Boş bırakırsanız fotoğraf küçük görünecektir.)",
+            'sira': "Sıra",
+        }
+
+
+
+
+
+
+class mediaGalleryVideoModelForm(forms.ModelForm):
+    class Meta:
+        model = mediaGalleryVideoModel
+        exclude=("created_date","updated_date")
+        widgets = {
+            "url" : TextInput(attrs={"class":"form-control","type":"text","name":"url","required":"required"}),
+            "sira" : forms.NumberInput(attrs={"class":"form-control","name":"sira","required":"required"}),
+            "title" : TextInput(attrs={"class":"form-control","type":"text","name":"title","required":"required"}),
+        }
+        labels = {      
+            'url': "Url",
+            'image': "Fotoğraf",
+            'sira': "Sıra",
+            'title': "Başlık",
+        }

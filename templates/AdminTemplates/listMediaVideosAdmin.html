@@ -3,10 +3,6 @@
 
 {% load static %}
 
-{% block cssFiles %}
-<link href="{% static 'assetsAdmin/vendor/dropzone.css' %}" rel="stylesheet">
-<link href="{% static 'assetsAdmin/css/date_picker.css' %}" rel="stylesheet">
-{% endblock cssFiles %}
 
 
 {% block contentAdmin %}
@@ -20,7 +16,7 @@
       <li class="breadcrumb-item">
         <a href="{% url 'indexAdmin' %}">Anasayfa</a>
       </li>
-      <li class="breadcrumb-item active">Randevu Kategori Ayarları</li>
+      <li class="breadcrumb-item active">Medya Video Listesi</li>
     </ol>
 
 
@@ -54,9 +50,9 @@
     <!-- Example DataTables Card-->
     <div  class="card mb-3">
       <div style="font-weight: bold; color: red;" class="card-header">
-        <i class="fa fa-table"></i> Randevu Kategorileri
+        <i class="fa fa-table"></i> Medya Video Ayarları
         <div style="float: right;">
-          <a  href="{% url 'addAppointmentCategoryAdmin' %}" type="button" title="Kategori Ekle" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Kategori Ekle</a>
+          <a  href="{% url 'addMediaGalleryVideo' %}" type="button" title="Medya Video Ekle" class="btn btn-warning btn-sm"><i class="fa-solid fa-circle-plus"></i> Medya Video Ekle</a>
         </div>
       </div>
 
@@ -65,19 +61,23 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr style="font-weight: bold; color: black;">
-                <th>Kategori Adı</th>
-                <th>Seans Ücreti</th>
+                <th>Fotoğraf</th>
+                <th>Video Link</th>
+                <th>Başlık</th>
+                <th>Sıra</th>
                 <th>İşlemler</th>
               </tr>
             </thead>
             <tbody>
-              {% for cat in categories %}
+              {% for video in videos %}
               <tr>
-                <td>{{cat.name|truncatechars:40}}</td>
-                <td>{{cat.price}} ₺</td>
+                <td class="w-25"><img src="{{video.image.url}}" class="img-fluid img-thumbnail" alt=""></td>
+                <td>{{video.url|truncatechars:25}}</td>
+                <td>{{video.title|truncatechars:25}}</td>
+                <td>{{video.sira}}</td>
                 <td>
-                  <center><a href="{% url 'addAppointmentCategoryAdmin' %}?categoryId={{cat.pk}}" type="button" title="Düzenle" class="btn btn-primary btn-sm"><i class="fas fa-solid fa-pen-to-square"></i></a>
-                    <a href="#" type="button" onclick="deleteObject('{{cat.pk}}')" title="Sil" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a></center>
+                  <center><a href="{% url 'addMediaGalleryVideo' %}?videoId={{video.pk}}" type="button" title="Düzenle" class="btn btn-primary btn-sm"><i class="fas fa-solid fa-pen-to-square"></i></a>    
+                    <a href="#" type="button" onclick="deleteObject('{{video.pk}}')" title="Sil" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a></center>
                 </td>
 
               </tr>
@@ -124,9 +124,9 @@
 
 <script>
   function deleteObject(pk){
-      var result= confirm("Bu randevu kategorisini silmek istediğinize emin misiniz?");
+      var result= confirm("Bu videoyu silmek istediğinize emin misiniz?");
       if (result){
-          document.location.href = "/psyc-admin/admin-randevu-kategori-sil/" + pk;
+          document.location.href = "/psyc-admin/admin-medya-video-sil/" + pk;
       }
   }
 </script>

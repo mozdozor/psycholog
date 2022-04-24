@@ -559,12 +559,14 @@ class footerMailModel(models.Model):
 
 class appointmentModel(models.Model):
     top=models.ForeignKey("Admin.appointmentAdminModel",on_delete=models.CASCADE,related_name="bottomsAppo",blank=True,null=True) 
-    category=models.ForeignKey("Admin.appointmentCategoryModel",on_delete=models.CASCADE,related_name="modelssOfCategory",blank=True,null=True,default=None) 
-    fullname=models.CharField(max_length=250,blank=True,null=True)
-    phone_number=models.CharField(max_length=250,blank=True,null=True)
-    email=models.EmailField(max_length=250,blank=True,null=True)
+    category=models.ForeignKey("Admin.appointmentCategoryModel",on_delete=models.CASCADE,related_name="modelssOfCategory") 
+    fullname=models.CharField(max_length=250)
+    phone_number=models.CharField(max_length=250)
+    email=models.EmailField(max_length=250)
+    address=models.CharField(max_length=250)
     date=models.DateField(max_length=250,blank=True,null=True)
     status=models.CharField(max_length=200,blank=True,null=True,default="no")
+    merchant_oid=models.CharField(max_length=250,blank=True,null=True)
     starting_time=models.TimeField(max_length=250,blank=True,null=True)
     finishing_time=models.TimeField(max_length=250,blank=True,null=True)
     message=models.TextField(blank=True,null=True)
@@ -632,6 +634,7 @@ class appointmentAdminModel(models.Model):
 
 class appointmentCategoryModel(models.Model):
     name=models.CharField(max_length=500,blank=True,null=True) 
+    price=models.SmallIntegerField(default=0,blank=True,null=True)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True) 
     
@@ -641,4 +644,4 @@ class appointmentCategoryModel(models.Model):
         verbose_name_plural ="Randevu Kategori"
 
     def __str__(self):
-        return self.name
+        return str(self.name)+" ("+str(self.price)+" ₺)"

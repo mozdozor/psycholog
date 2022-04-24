@@ -7,8 +7,8 @@ from django.contrib.auth import login, authenticate,update_session_auth_hash,log
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, appointmentAdminModelForm, appointmentCategoryModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
-from psikolog.forms import sliderModelForm
-from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, orderModel, sliderModel
+from psikolog.forms import mediaGalleryImageModelForm, mediaGalleryVideoModelForm, sliderModelForm
+from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, mediaGalleryImageModel, mediaGalleryVideoModel, orderModel, sliderModel
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
@@ -1654,3 +1654,126 @@ def deleteAppointmentDetailAdmin(request,pk):
         obj.delete()
         messages.success(request,"Randevu başarıyla silindi")
         return redirect(request.META['HTTP_REFERER'])
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def mediaGalleryImageListAdmin(request):
+    images=mediaGalleryImageModel.objects.all().order_by("created_date")
+    context={
+        "images":images,
+    }
+    return render(request,"AdminTemplates/listMediaImagesAdmin.html",context)
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def addMediaGalleryImage(request):
+    image=""
+    imageId=request.GET.get("imageId",None)
+    if request.method == "POST":   
+        if imageId:
+            image=get_object_or_404(mediaGalleryImageModel,pk=imageId)
+            form = mediaGalleryImageModelForm(request.POST, request.FILES or None,instance=image)	
+        else:
+            form = mediaGalleryImageModelForm(request.POST, request.FILES or None)	
+        if form.is_valid(): 
+            form.save()            
+            messages.success(request,"Medya fotoğraf başarıyla kaydedildi.")
+            return redirect("mediaGalleryImageListAdmin")
+        else:
+            messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            return redirect("mediaGalleryImageListAdmin")
+    if imageId:
+        image=get_object_or_404(mediaGalleryImageModel,pk=imageId)
+        form = mediaGalleryImageModelForm(instance=image)
+    else:
+        form = mediaGalleryImageModelForm()
+    context={
+        "form":form,
+        "image":image
+    }
+    
+    return render(request,"AdminTemplates/addMediaGaleryAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteMediaImageAdmin(request,pk):
+    obj=get_object_or_404(mediaGalleryImageModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Medya foto başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER']) 
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def mediaGalleryVideoListAdmin(request):
+    videos=mediaGalleryVideoModel.objects.all().order_by("created_date")
+    context={
+        "videos":videos,
+    }
+    return render(request,"AdminTemplates/listMediaVideosAdmin.html",context)
+
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def addMediaGalleryVideo(request):
+    video=""
+    videoId=request.GET.get("videoId",None)
+    if request.method == "POST":   
+        if videoId:
+            video=get_object_or_404(mediaGalleryVideoModel,pk=videoId)
+            form = mediaGalleryVideoModelForm(request.POST, request.FILES or None,instance=video)	
+        else:
+            form = mediaGalleryVideoModelForm(request.POST, request.FILES or None)	
+        if form.is_valid(): 
+            form.save()            
+            messages.success(request,"Medya videonuz başarıyla kaydedildi.")
+            return redirect("mediaGalleryVideoListAdmin")
+        else:
+            messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
+            return redirect("mediaGalleryVideoListAdmin")
+    if videoId:
+        video=get_object_or_404(mediaGalleryVideoModel,pk=videoId)
+        form = mediaGalleryVideoModelForm(instance=video)
+    else:
+        form = mediaGalleryVideoModelForm()
+    context={
+        "form":form,
+        "video":video
+    }
+    
+    return render(request,"AdminTemplates/addMediaVideoAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def deleteMediaVideoAdmin(request,pk):
+    obj=get_object_or_404(mediaGalleryVideoModel,pk=pk)
+    obj.delete()
+    messages.success(request,"Medya videonuz başarıyla silindi")
+    return redirect(request.META['HTTP_REFERER']) 
+

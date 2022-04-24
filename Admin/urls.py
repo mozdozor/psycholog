@@ -16,7 +16,8 @@ from .views import (
     deleteAppointmentRequestAdmin,nextAppointmentsAdmin,pastAppointmentsAdmin,deleteAppointmentOfAdmin,
     showAppointmentsScheduleAdmin,showDetailOrderAdmin,deleteMessagesAdmin,appointmentCategoryListAdmin,
     addAppointmentCategoryAdmin,deleteAppointmentCategoryAdmin,editAppointmentsScheduleAdmin,
-    deleteAppointmentDetailAdmin
+    deleteAppointmentDetailAdmin,mediaGalleryImageListAdmin,addMediaGalleryImage,deleteMediaImageAdmin,
+    mediaGalleryVideoListAdmin,addMediaGalleryVideo,deleteMediaVideoAdmin
     
 )
 
@@ -96,6 +97,11 @@ urlpatterns = [
     path('admin-randevu-kategori-sil/<int:pk>',deleteAppointmentCategoryAdmin,name="deleteAppointmentCategoryAdmin"),
     path('admin-randevu-düzenle/<int:pk>',editAppointmentsScheduleAdmin,name="editAppointmentsScheduleAdmin"),
     path('admin-randevu-detay-sil/<int:pk>',deleteAppointmentDetailAdmin,name="deleteAppointmentDetailAdmin"),
-    
+    path('admin-medya-galeri-listele',mediaGalleryImageListAdmin,name="mediaGalleryImageListAdmin"),
+    path('admin-medya-galeri-ekle',addMediaGalleryImage,name="addMediaGalleryImage"),
+    path('admin-medya-foto-sil/<int:pk>',deleteMediaImageAdmin,name="deleteMediaImageAdmin"),
+    path('admin-medya-video-listele',mediaGalleryVideoListAdmin,name="mediaGalleryVideoListAdmin"),
+    path('admin-medya-video-ekle',addMediaGalleryVideo,name="addMediaGalleryVideo"),
+    path('admin-medya-video-sil/<int:pk>',deleteMediaVideoAdmin,name="deleteMediaVideoAdmin"),
 
 ]
