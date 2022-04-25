@@ -269,11 +269,13 @@
 							{% endif %}
 
 
-
 							{% endfor %}
 
 						</div>
 						<!-- /row -->
+
+						<input onchange="changeCheck()" type="checkbox" id="checkBuy">
+						<label for="checkBuy"> <a target="blank" href="/mesafeli-satis-sozlesmesi">Mesafeli satış sözleşmesini</a> okudum,onaylıyorum.</label><br>
 
 
 						<!-- <span class="input">
@@ -283,11 +285,11 @@
 									</label>
 							</span> -->
 
-						<p class="add_top_30"><input   onclick="spinner()"
+						<p class="add_top_30"><input style="background-color: gray;" onclick="spinner()"
 						{% if isFree == "notNo" %}
 							disabled style="background-color: turquoise;"
 						{% endif %}
-							 value="Randevu Al" class="btn_1 rounded"
+							 value="Randevu Al" class="btn_1 rounded" 
 								id="submit-contact"></p>
 								<div class="loader">
 									<div class="loading">
@@ -295,6 +297,11 @@
 								  </div>
 						
 					</form>
+
+
+					
+
+
 				</div>
 			</div>
 			<!-- /row -->
@@ -688,6 +695,7 @@ function backwardClicked(){
 document.getElementById("firstMain").style.display="block";
 document.getElementById("secondMain").style.display="none";
 document.getElementsByClassName("loader")[0].style.display = "none";
+changeCheck();
 
 }
 
@@ -740,7 +748,7 @@ $('#submit-contact').click(function(event){
 				document.getElementById("sccMessage").style.display="none";
 				document.getElementById("errMessage").style.display="block";
 			}
-			
+			changeCheck();
 			document.getElementsByClassName("loader")[0].style.display = "none";
 			
 		},
@@ -786,6 +794,23 @@ $('#submit-contact').click(function(event){
 			
 		}
 	}
+
+
+	function changeCheck(){
+		var box=document.getElementById("checkBuy");
+		var btnBuy=document.getElementById("submit-contact");
+		if(box.checked==true){
+			btnBuy.style.backgroundColor="";
+			btnBuy.disabled="";
+			
+		}else{
+			btnBuy.style.backgroundColor="gray";
+			btnBuy.disabled="disabled";
+		}
+	}
+
+
+
 
 
 

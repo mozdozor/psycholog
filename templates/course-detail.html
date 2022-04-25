@@ -483,13 +483,15 @@
 							{{course.price}} ₺
 							<!-- <span class="original_price"><em>$49</em>60% discount price</span> -->
 						</div>
+						<input onchange="changeCheck()" type="checkbox" id="checkBuy">
+						<label for="checkBuy"> <a target="blank" href="/mesafeli-satis-sozlesmesi">Mesafeli satış sözleşmesini</a> okudum,onaylıyorum.</label><br>
 						{% isFavourite request course.pk as favouritea %}
 
 						
 						{% if has_bougth == "true" %}
 						<a href="#" class="btn_1 full-width">Satın Aldınız</a>
 						{% elif has_bougth == "false" %}	
-						<a href="{% url 'paymentPage' course.slug %}" class="btn_1 full-width">Satın Al</a>
+						<a id="buyButton" style="background-color: gray;" href="#" class="btn_1 full-width">Satın Al</a>
 						{% endif %}
 							
 						
@@ -651,6 +653,19 @@ function callAjax(videoId,courseId){
 }
 
 
+
+function changeCheck(){
+	var box=document.getElementById("checkBuy");
+	var btnBuy=document.getElementById("buyButton");
+	if(box.checked==true){
+		btnBuy.style.backgroundColor="";
+		btnBuy.href="{% url 'paymentPage' course.slug %}";
+		
+	}else{
+		btnBuy.style.backgroundColor="gray";
+		btnBuy.href="#"
+	}
+}
 
 
 

@@ -1135,6 +1135,7 @@ def getAppointments(request):
 def submitAppointmentForm(request,randevuId):
     if is_ajax(request=request):
         if request.method == "POST":
+            print(request.POST)
             schedule=get_object_or_404(appointmentModel,pk=randevuId)
             schedules=appointmentModel.objects.filter(date=schedule.date).order_by("starting_time").values()
             if request.POST["category"]=="":

@@ -1,5 +1,5 @@
 from dataclasses import fields
-from django import forms
+from django import forms 
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 import datetime
 from psikolog.models import CommentModel, CustomUserModel
@@ -7,7 +7,7 @@ from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageMo
 
 from string import Template
 from django.utils.safestring import mark_safe
-from django.forms import ImageField, TimeInput
+from django.forms import BooleanField, ImageField, TimeInput
 
 
 
