@@ -559,14 +559,14 @@ class footerMailModel(models.Model):
 
 class appointmentModel(models.Model):
     top=models.ForeignKey("Admin.appointmentAdminModel",on_delete=models.CASCADE,related_name="bottomsAppo",blank=True,null=True) 
-    category=models.ForeignKey("Admin.appointmentCategoryModel",on_delete=models.CASCADE,related_name="modelssOfCategory") 
+    category=models.ForeignKey("Admin.appointmentCategoryModel",on_delete=models.CASCADE,related_name="modelssOfCategory",blank=True,null=True) 
     fullname=models.CharField(max_length=250)
     phone_number=models.CharField(max_length=250)
     email=models.EmailField(max_length=250)
     address=models.CharField(max_length=250)
     date=models.DateField(max_length=250,blank=True,null=True)
     status=models.CharField(max_length=200,blank=True,null=True,default="no")
- #   merchant_oid=models.CharField(max_length=250,blank=True,null=True,default="asd")
+    merchant_oid=models.CharField(max_length=250,blank=True,null=True,default="asd")
     starting_time=models.TimeField(max_length=250,blank=True,null=True)
     finishing_time=models.TimeField(max_length=250,blank=True,null=True)
     message=models.TextField(blank=True,null=True)

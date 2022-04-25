@@ -373,7 +373,7 @@ class footerMailModelForm(forms.ModelForm):
 class appointmentModelForm(forms.ModelForm):
     class Meta:
         model = appointmentModel
-        exclude=("created_date","status","starting_time","finishing_time","date","top")
+        exclude=("created_date","status","starting_time","finishing_time","date","top","merchant_oid")
         widgets = {
             "category" : forms.Select(attrs={"class":"input_field","name":"category","required":"required"}),
             "fullname" : TextInput(attrs={"class":"input_field","type":"text","name":"fullname","required":"required"}),
