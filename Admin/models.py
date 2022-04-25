@@ -566,7 +566,7 @@ class appointmentModel(models.Model):
     address=models.CharField(max_length=250)
     date=models.DateField(max_length=250,blank=True,null=True)
     status=models.CharField(max_length=200,blank=True,null=True,default="no")
-    merchant_oid=models.CharField(max_length=250,blank=True,null=True,default="asd")
+ #   merchant_oid=models.CharField(max_length=250,blank=True,null=True,default="asd")
     starting_time=models.TimeField(max_length=250,blank=True,null=True)
     finishing_time=models.TimeField(max_length=250,blank=True,null=True)
     message=models.TextField(blank=True,null=True)
