@@ -124,8 +124,8 @@
                             <a style="background-color: green;" href="{% url 'AddFavouritesCoursesGridList' course.course.pk %}" class="wish_bt"></a>
                             <a href="{% url 'courseDetail' course.course.slug %}"><img src="{{course.course.image.url}}" class="img-fluid"
                                     alt=""></a>
-                            <div class="price">{{course.course.price}} ₺</div>
-                            <div class="preview"><span>Kursu Görüntüle</span></div>
+                            <!-- <div class="price">{{course.course.price}} ₺</div> -->
+                            <a href="{% url 'courseDetail' course.course.slug %}"> <div class="preview"><span>Kursu Görüntüle</span></div></a>
                         </figure>
                         <div class="wrapper">
                             <small>{{course.course.category.name}}</small>

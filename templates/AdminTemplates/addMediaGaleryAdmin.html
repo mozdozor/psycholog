@@ -1,6 +1,18 @@
 {% extends 'AdminTemplates/baseAdmin.html' %}
 {% load static %}
 
+
+
+
+
+{% block cssFiles %}
+<link href="{% static 'assetsAdmin/vendor/dropzone.css' %}" rel="stylesheet">
+{% endblock cssFiles %}
+	
+
+
+
+
 {% block contentAdmin %}
     
 
@@ -13,20 +25,28 @@
           <a href="{% url 'indexAdmin' %}">Anasayfa</a>
         </li>
         <li class="breadcrumb-item active">Medya Galeri Foto Ekle</li>
-      </ol>
+      </ol>	 
 		<div class="box_general padding_bottom">
 			<div class="header_box version_2">
 				<h2><i class="fa fa-file"></i>
+
                     Medya Galeri Foto Ekle
                     </h2>
 					<div style="float: right;">
-						<button onclick="javascript:history.go(-1);" href="" class="btn btn-dark btn-sm"><center><i style="font-weight: bold; color: white;" class="fa-solid fa-arrow-left"></i></center></button>
+						<button onclick="GoBackWithRefresh();" href=""  class="btn btn-dark btn-sm"><center><i style="font-weight: bold; color: white;" class="fa-solid fa-arrow-left"></i></center></button>
 						</div>
 			</div>
+			<div  class="alert alert-info col-lg-12" role="alert">
+				<center><strong>Fotoğrafların 800x533 boyutlarında olması görsellik açısından iyi olacaktır.</strong></center>
+				</div>
 
-			<form 
+<form enctype='multipart/form-data' action="{% url 'fileUpload' %}" method="post" class="dropzone" >
 
 
+</form>
+
+
+			<!-- <form 
 {% if image %}
 	action="{% url 'addMediaGalleryImage' %}?imageId={{image.pk}}"
 {% else %}
@@ -35,8 +55,6 @@
 method="post" enctype="multipart/form-data"
 >
     {% csrf_token %}
-			
-			
 			<div class="row">
 				<div class="col-md-12">
 					{% for field in form.visible_fields %}
@@ -48,22 +66,13 @@ method="post" enctype="multipart/form-data"
 				</div>
 				
 			</div>
-			<!-- /row-->
-			
-			
-		
 		</div>
-		<!-- /box_general-->
-		
-		
-		
 		<p><button type="submit" class="btn_1 medium">Kaydet</button></p>
 	  </div>
-	  <!-- /.container-fluid-->
+
    	</div>
+</form> -->
 
-
-</form>
 
 {% endblock contentAdmin %}
 
@@ -86,6 +95,24 @@ method="post" enctype="multipart/form-data"
 	<script src="{% static 'assetsAdmin/vendor/dropzone.min.js' %}"></script>
 	<script src="{% static 'assetsAdmin/vendor/bootstrap-datepicker.js' %}"></script>
 	<script>$('input.date-pick').datepicker();</script>
+
+
+
+<script>
+	function GoBackWithRefresh(event) {
+    if ('referrer' in document) {
+        window.location = document.referrer;
+        /* OR */
+        //location.replace(document.referrer);
+    } else {
+        window.history.back();
+    }
+}
+</script>
+
+
+
+
 {% endblock scriptsAdmin %}
    
 

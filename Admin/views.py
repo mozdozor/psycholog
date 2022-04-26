@@ -1,6 +1,7 @@
 import datetime
 from email import message
 import json
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
@@ -1776,4 +1777,17 @@ def deleteMediaVideoAdmin(request,pk):
     obj.delete()
     messages.success(request,"Medya videonuz başarıyla silindi")
     return redirect(request.META['HTTP_REFERER']) 
+
+
+
+
+
+
+@csrf_exempt
+def fileUpload(request):
+    if request.method == 'POST':
+        my_file=request.FILES.get('file')
+        mediaGalleryImageModel.objects.create(image=my_file,title="Turkaze Psikolog")
+        return HttpResponse('')
+    return JsonResponse({"status":"yes"})   
 

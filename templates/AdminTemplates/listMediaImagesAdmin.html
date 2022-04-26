@@ -82,8 +82,8 @@ h4 {
             <thead>
               <tr style="font-weight: bold; color: black;">
                 <th>Fotoğraf</th>
+                <th>İd</th>
                 <th>Başlık</th>
-                <th>Sıra</th>
                 <th>İşlemler</th>
               </tr>
             </thead>
@@ -91,12 +91,9 @@ h4 {
               {% for image in images %}
               <tr>
                 <td class="w-25"><img src="{{image.image.url}}" class="img-fluid img-thumbnail" alt=""></td>
+                <td>{{image.pk}}</td>
                 <td>{{image.title|truncatechars:25}}</td>
-                <td>{{image.sira}}</td>
-               
                 <td>
-                  
-                  <a href="{% url 'addMediaGalleryImage' %}?imageId={{image.pk}}" type="button" title="Düzenle" class="btn btn-primary btn-sm"><i class="fas fa-solid fa-pen-to-square"></i></a>&emsp;
                     <a href="#" type="button" onclick="deleteObject('{{image.pk}}')" title="Sil" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a>
                 </td>
 

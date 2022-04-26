@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from Admin.models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, bottomMenuModel, courseFeaturesModel, courseSessionModel, courseSessionVideoModel, gizlilikMetniModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
+from psikolog.models import mediaGalleryImageModel
 
 # Register your models here.
 
@@ -25,3 +26,4 @@ admin.site.register(aydinlatmaMetniModel)
 admin.site.register(gizlilikMetniModel)
 admin.site.register(appointmentModel)
 admin.site.register(appointmentAdminModel)
+admin.site.register(mediaGalleryImageModel)

@@ -135,6 +135,18 @@
 							<div class="add_bottom_30"><strong>{{schedule.category.name}}</strong> kategorisine {{schedule.date}} tarihinde {{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}} saatleri arasındaki randevuyu satın almak üzeresiniz.</div>
 							<!-- <a href="cart-3.html" class="btn_1 full-width">Checkout</a> -->
 							<a href="{% url 'times' %}" class="btn_1 full-width outline"><i class="icon-right"></i>Randevu seçimine Geri Dön</a>
+							<div id="list_feat">
+								<h3 style="color: red;">Dikkat Edilmesi Gerekenler</h3>
+								<ul>
+									<li style="color: black;">* Sistemden alınan randevular geri iade edilmemektedir. Detaylı bilgi için bizimle <a target="blank" href="https://wa.me/{{sm.phone_number}}" style="font-weight: bold;">iletişime</a> geçiniz.</li><br>
+									<!-- <li style="font-weight: bold; color: black;">* Cihazınıza zoom yüklemeniz tavsiye edilir.<a href="https://zoom.us/download">Buradan indirebilirsiniz <i class="fas fa-video fa-1,5x"></i></a></li><br>
+									<li style="font-weight: bold; color: black;">* Eğitimi satın aldıktan sonra whatsapptan iletişime geçmeniz gerekmektedir.</li> -->
+									<!-- <li><i class="icon_archive_alt"></i>Lesson archive</li>
+									<li><i class="icon_mobile"></i>Mobile support</li>
+									<li><i class="icon_chat_alt"></i>Tutor chat</li>
+									<li><i class="icon_document_alt"></i>Course certificate</li> -->
+								</ul>
+							</div>
 						</div>
 					</aside>
 				</div>
@@ -157,6 +169,8 @@
 
 <script src="https://www.paytr.com/js/iframeResizer.min.js"></script>
 <script>iFrameResize({},'#paytriframe');</script>
+
+
 {% endblock jsFiles %}
 	
 

@@ -84,3 +84,8 @@ kategori fiyatlandırması ayrı olacak                            +
 randevu al olacak gönder                                        +  
 randevu ödeme sistemi
 sitemap gallery ekle page ekle                                  +
+Yazım hatası var birde resimlerin arasında boşluk olsun         +
+Ve bir profesyonel olarak adminden toplu resim aktarmayı yapsan daha iyi olur       +
+Randrvu sayfsında üst kısımda şunu yazalım                                      +
+ Sistemden alınan randevular geri iade edilmemektedir. Detaylı bilgi için bizimle iletişime geçiniz     +
+ İletişim yazısına direk aramaya yönlendirenbilirmisin              +
