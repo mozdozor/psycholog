@@ -51,15 +51,15 @@
 				<h2>Fotoğraflarımız ...</h2>
 				<p>Bize ait fotoğraflarımız aşağıda lisetelenmiştir.</p>
 			</div>
-			<div class="grid col-lg-12">
+			<div class="grid">
 				<ul class="magnific-gallery">
 
                     
                     {% for image in images %}
                         
-					<li style="margin: 5px !important;">
+					<li>
 						<figure>
-							<img src="{{image.image.url}}" alt="">
+							<img style="width: 400px; height: 300px;" src="{{image.image.url}}" alt="">
 							<figcaption>
 								<div class="caption-content">
 									<a 
@@ -104,7 +104,7 @@
 
 						
 						{% for video in videos %}
-							<li style="margin: 5px !important;">
+							<li>
 								<figure>
 									<img src="{{video.image.url}}" alt="">
 									<figcaption>
