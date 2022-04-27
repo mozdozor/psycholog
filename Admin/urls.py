@@ -17,7 +17,7 @@ from .views import (
     showAppointmentsScheduleAdmin,showDetailOrderAdmin,deleteMessagesAdmin,appointmentCategoryListAdmin,
     addAppointmentCategoryAdmin,deleteAppointmentCategoryAdmin,editAppointmentsScheduleAdmin,
     deleteAppointmentDetailAdmin,mediaGalleryImageListAdmin,addMediaGalleryImage,deleteMediaImageAdmin,
-    mediaGalleryVideoListAdmin,addMediaGalleryVideo,deleteMediaVideoAdmin,fileUpload
+    mediaGalleryVideoListAdmin,addMediaGalleryVideo,deleteMediaVideoAdmin,fileUpload,appointmentSatisAdmin
     
 )
 
@@ -104,5 +104,6 @@ urlpatterns = [
     path('admin-medya-video-ekle',addMediaGalleryVideo,name="addMediaGalleryVideo"),
     path('admin-medya-video-sil/<int:pk>',deleteMediaVideoAdmin,name="deleteMediaVideoAdmin"),
     path('admin-medya-toplu-foto-ekle',fileUpload,name="fileUpload"),
+    path('admin-randevu-satis-sozlesme',appointmentSatisAdmin,name="appointmentSatisAdmin"),
 
 ]

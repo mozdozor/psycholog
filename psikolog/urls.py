@@ -8,7 +8,7 @@ from .views import (
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
     kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback,mesafeliSatis,footerMailSave,
     appointment,addWatchedList,times,activate,getAppointments,submitAppointmentForm,mediaGallery,paymentPageOfAppointment,
-    successPaymentOfAppointment,failPaymentOfAppointment
+    successPaymentOfAppointment,failPaymentOfAppointment,randevuSatisMetni
 
    
 )
@@ -49,6 +49,7 @@ urlpatterns = [
     path('kurs-detay/<slug:slug>',courseDetail,name="courseDetail"),
     path('ogrenim-icerigim',learningContentList,name="learningContentList"),
     path('hakkimizda',aboutUs,name="aboutUs"),
+    path('randevu-satis-sozlesmesi',randevuSatisMetni,name="randevuSatisMetni"),
     path('iletisim',contact,name="contact"),
     path('aydinlatma-metni',aydinlatmaMetni,name="aydinlatmaMetni"),
     path('gizlilik-politikasi',gizlilikPolitikası,name="gizlilikPolitikası"),

@@ -6,7 +6,7 @@ from unicodedata import category
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm, appointmentAdminModelForm, appointmentModelForm, footerMailModelForm
-from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, appointmentSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from Admin.templatetags.coutOfNoneWatched import getCountOfNoneWatchedVideo
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
@@ -487,6 +487,23 @@ def aydinlatmaMetni(request):
         "metin":metin,
         "metinType":"aydinlatma",
         "printMetin":"Aydınlatma Metni",
+    }
+    return render(request,"metinler.html",context)
+
+
+
+
+
+
+def randevuSatisMetni(request):
+    metinler=appointmentSatisModel.objects.all()
+    metin=""
+    if metinler:
+        metin=metinler.first()
+    context={
+        "metin":metin,
+        "metinType":"appointmentSatis",
+        "printMetin":"Randevu Satış Sözleşmesi",
     }
     return render(request,"metinler.html",context)
 
@@ -978,7 +995,20 @@ def getShorNameOfDays(days):
 
 
 
+
+def deleteOldAppointments():
+    appointments=appointmentModel.objects.filter(date__lt=datetime.datetime.today().date(),status="no")
+    for i in appointments:
+        i.delete()
+
+
+
+
+
+
+
 def times(request):
+    deleteOldAppointments()
     page=topMenuModel.objects.filter(url="/uygun-zamanlar").all()
     todaySchedules=appointmentModel.objects.filter(date=datetime.datetime.today().date())
     form = appointmentModelForm()
@@ -1119,7 +1149,22 @@ def getAppointments(request):
             dateLong=request.POST["date"]
             date=dateLong.split("T")[0]
             date=datetime.datetime.strptime(date, "%Y-%m-%d").date()
-            schedules=appointmentModel.objects.filter(date=date).order_by("starting_time").values()
+            schedules1=appointmentModel.objects.filter(date=date).order_by("starting_time").values()
+            schedules=list()
+            if date>datetime.datetime.today().date():
+                schedules=schedules1
+            elif date==datetime.datetime.today().date():
+                for i in schedules1:
+                    if i["starting_time"]>datetime.datetime.now().time():
+                        schedules.append(i)
+                    else:
+                        if i["status"]=="no":
+                            appo=appointmentModel.objects.filter(id=i["id"]).all()
+                            if appo:
+                                appo.first().delete()
+                            
+            else:
+                pass
             return JsonResponse({"schedules":list(schedules)}, status = 200)
     else:
         return JsonResponse({}, status = 400)

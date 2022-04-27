@@ -7,10 +7,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate,update_session_auth_hash,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, appointmentAdminModelForm, appointmentCategoryModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
+from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, appointmentAdminModelForm, appointmentCategoryModelForm, appointmentSatisModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import mediaGalleryImageModelForm, mediaGalleryVideoModelForm, sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, mediaGalleryImageModel, mediaGalleryVideoModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, appointmentSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 
@@ -1176,6 +1176,42 @@ def mesafeliSatisAdmin(request):
         "metin":"Mesafeli Satış Sözleşmesi"
     }
     return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)
+
+
+
+
+
+
+
+@permission_required('is_staff',login_url="loginAdmin")
+def appointmentSatisAdmin(request):
+    metinler=appointmentSatisModel.objects.all()
+    if request.method == 'POST':
+        if metinler:
+            form=appointmentSatisModelForm(request.POST or None,request.FILES or None,instance=metinler.first())
+        else:
+            form=appointmentSatisModelForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Randevu satış sözleşmesi başarıyla kaydedildi.")
+            return redirect("appointmentSatisAdmin")
+        else:
+            messages.error(request,"Bir hata oluştu.Yönetici ile iletişime geçiniz.")
+            return redirect("appointmentSatisAdmin")
+    else:
+        if metinler:
+            form = appointmentSatisModelForm(instance=metinler.first())
+        else:
+            form = appointmentSatisModelForm()
+    context={
+        "form":form,
+        "type":"appointmentSatis",
+        "metin":"Randevu Satış Sözleşmesi"
+    }
+    return render(request,"AdminTemplates/aydinlatmaMetniAdmin.html",context)
+
+
+
 
 
 

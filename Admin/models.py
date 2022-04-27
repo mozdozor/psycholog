@@ -538,6 +538,25 @@ class mesafeliSatisModel(models.Model):
 
 
 
+class appointmentSatisModel(models.Model):
+    description=RichTextUploadingField(blank=True,null=True) 
+    created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
+    
+    class Meta:
+        db_table="appointmentSatisModel"
+        verbose_name ="Randevu Satis Bilgisi"  
+        verbose_name_plural ="Randevu Satis Bilgileri"
+
+    def __str__(self):
+        return self.description
+
+
+
+
+
+
+
 class footerMailModel(models.Model):
     email=models.EmailField(max_length=200)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
