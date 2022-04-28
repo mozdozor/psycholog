@@ -45,13 +45,16 @@
 		</section>
 		<!--/hero_in-->
 
-		<div class="container margin_60_35">
+		<div>
 			<div class="main_title_2">
 				<span><em></em></span>
 				<h2>Fotoğraflarımız ...</h2>
 				<p>Bize ait fotoğraflarımız aşağıda lisetelenmiştir.</p>
 			</div>
-			<div class="grid">
+
+	
+			
+			<!-- <div class="grid">
 				<ul class="magnific-gallery">
 
                     
@@ -86,8 +89,46 @@
 					
 					
 				</ul>
-			</div>
-			<!-- /grid gallery -->
+			</div> -->
+	
+
+
+
+
+
+			<div class="row">
+
+				
+				{% for image in images %}
+					
+					<div style="padding: p-3;" class="col-md-3 mt-3 mb-3 ">
+					  <div class="thumbnail">
+						<a href="{{image.image.url}}">
+						  <img style="width: 400px; height: 300px;" src="{{image.image.url}}" alt="Lights" style="width:100%">
+						  <!-- <div class="caption">
+							<p>Lorem ipsum...</p>
+						  </div> -->
+						</a>
+					  </div>
+					</div>
+				{% endfor %}
+					
+			
+			  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		</div>
 		<!-- /container -->
 		
