@@ -51,17 +51,10 @@
 			</div>
 		</div>
 	</section>
-	<!--/hero_in-->
-
 	<div class="container margin_60_35">
 		<div class="row" id="rowId">
 			<div class="col-lg-9">
-
-
-
-
 				{% if blogs %}
-
 				{% for blog in blogs %}
 				<article class="blog wow fadeIn">
 					<div class="row no-gutters">
@@ -101,12 +94,7 @@
 				{% endif %}
 
 			</div>
-			<!-- /col -->
-
-
 			<!-- aşağıdaki strong tagı normalde yoktu canlıda kendisi ekliyordu lokalde ekleyip javascriptten kaldırdım -->
-			
-
 			<strong>    
 				<aside class="col-lg-3">
 					<div class="widget">
@@ -124,11 +112,7 @@
 							<h4>Son Yazılar</h4>
 						</div>
 						<ul class="comments-list">
-	
-							
-							
 							{% if lastThreeBlogs %}
-								
 								{% for blog in lastThreeBlogs %}
 									<li>
 										<div class="alignleft">
@@ -141,54 +125,25 @@
 								{% endfor %}
 									
 							{% endif %}
-								
-						  
 						</ul>
 					</div>
-					<!-- /widget -->
 					<div class="widget">
 						<div class="widget-title">
 							<h4>Blog Kategorileri</h4>
 						</div>
 						<ul class="cats">
-							
 							{% if categories %}
-								
 								{% for cat in categories %}
 									<li><a href="{% url 'allBlogs' %}?kategori={{cat.name}}">{{cat.name}} <span>({{cat.getBlogCount}})</span></a></li>
 								{% endfor %}
-									
 							{% endif %}
-								
-						   
 						</ul>
 					</div>
-					<!-- /widget -->
-					<!-- <div class="widget">
-						<div class="widget-title">
-							<h4>Popular Tags</h4>
-						</div>
-						<div class="tags">
-							<a href="#">Information tecnology</a>
-							<a href="#">Students</a>
-							<a href="#">Community</a>
-							<a href="#">Carreers</a>
-							<a href="#">Literature</a>
-							<a href="#">Seminars</a>
-						</div>
-					</div> -->
-					<!-- /widget -->
 				</aside>
 			</strong>
-
-				
-			<!-- /aside -->
 		</div>
-		<!-- /row -->
 	</div>
-	<!-- /container -->
 </main>
-<!--/main-->
 
 {% endblock content %}
 

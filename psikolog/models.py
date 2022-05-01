@@ -1,8 +1,7 @@
 from django.db import models
 from autoslug import AutoSlugField
 from django.contrib.auth.models import AbstractUser
-
-
+import os
 
 
 
@@ -235,6 +234,10 @@ class mediaGalleryImageModel(models.Model):
 
     def __str__(self):
         return self.title
+
+    
+    def image_name(self):
+        return os.path.basename(self.image.name)
 
 
 

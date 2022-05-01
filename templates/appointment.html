@@ -57,8 +57,6 @@
 			</div>
 		</div>
 	</section>
-	<!--/hero_in-->
-
 	<div class="contact_info">
 		<div class="container">
 			<ul class="clearfix">
@@ -81,37 +79,20 @@
 			</ul>
 		</div>
 	</div>
-	<!--/contact_info-->
-
-
-
-
-
-
-
 	<div class="bg_color_1">
-
 		<div class="container margin_120_95">
-
-
-
 			<div class="row justify-content-between">
 				<div class="col-lg-5">
 					<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_eIXuIz.json"
 						background="transparent" speed="1" style="width:100%;" loop autoplay></lottie-player>
-
 				</div>
 				<div class="col-lg-6">
 					<h4>Randevu isteğinde bulunun</h4>
-
-
 					<p>Şimdi zamanı seçin ve randevu isteiğinde bulunun.</p>
-
 					<br>
 					{% if messages %}
 					<ul class="messages">
 						{% for message in messages %}
-
 
 						{% if 'appointmentMessages' in message.extra_tags %}
 
@@ -122,7 +103,6 @@
 
 
 						<div class="alert alert-danger" role="alert">
-
 							<center><strong>{{message}}</strong></center>
 						</div>
 
@@ -130,7 +110,6 @@
 						{% else %}
 
 						<div class="alert alert-success" role="alert">
-
 							<center><strong>{{message}}</strong></center>
 						</div>
 
@@ -140,13 +119,10 @@
 						{% endfor %}
 					</ul>
 					{% endif %}
-
 					<div id="message-contact"></div>
 					<form method="post" action="{% url 'appointment' randevuId %}">
 						{% csrf_token %}
 						<div class="row">
-
-
 							{% for field in form.visible_fields %}
 
 
@@ -187,15 +163,6 @@
 							{% endfor %}
 
 						</div>
-						<!-- /row -->
-
-
-						<!-- <span class="input">
-									<input class="input_field" type="text" id="verify_contact" name="verify_contact">
-									<label class="input_label">
-									<span class="input__label-content">Are you human? 3 + 1 =</span>
-									</label>
-							</span> -->
 						<p class="add_top_30"><input type="submit" 
 						{% if isFree == "notNo" %}
 							disabled style="background-color: gray;"
@@ -205,15 +172,9 @@
 					</form>
 				</div>
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
-	<!-- /bg_color_1 -->
 </main>
-<!--/main-->
-
-
 
 {% endblock content %}
 
@@ -227,8 +188,6 @@
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript" src="{% static 'assets/js/mapmarker.jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/mapmarker_func.jquery.js' %}"></script>
-
-
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 

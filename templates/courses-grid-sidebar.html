@@ -28,7 +28,6 @@
 
 
 {% block cssFiles %}
-	<!-- SPECIFIC CSS -->
 <link href="{% static 'assets/css/skins/square/grey.css' %}" rel="stylesheet">
 {% endblock cssFiles %}
 	
@@ -39,13 +38,7 @@
 
 
 {% block divFeatures %} id="page" class="theia-exception" {% endblock divFeatures %}
-	
-
-	
-
 {% block content %}
-	
-
 	<main>
 		<section id="hero_in" class="courses">
 			<div class="wrapper">
@@ -54,55 +47,23 @@
 				</div>
 			</div>
 		</section>
-		<!--/hero_in-->
-
 		<div class="filters_listing sticky_horizontal">
 			<div class="container">
 				<ul class="clearfix">
-					<!-- <li>
-						<div class="switch-field">
-							<input type="radio" id="all" name="listing_filter" value="all" checked>
-							<label for="all">All</label>
-							<input type="radio" id="popular" name="listing_filter" value="popular">
-							<label for="popular">Popular</label>
-							<input type="radio" id="latest" name="listing_filter" value="latest">
-							<label for="latest">Latest</label>
-						</div>
-					</li> -->
-					<!-- <li>
-						<div class="layout_view">
-							<a href="#0" class="active"><i class="icon-th"></i></a>
-							<a href="courses-list.html"><i class="icon-th-list"></i></a>
-						</div>
-					</li> -->
-					<!-- <li>
-						<select name="orderby" class="selectbox">
-							<option value="category">Category</option>
-							<option value="category 2">Literature</option>
-							<option value="category 3">Architecture</option>
-							<option value="category 4">Economy</option>
-						</select>
-					</li> -->
+					
 				</ul>
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /filters -->
-
 		<div class="container margin_60_35">
 			<div class="row">
 				<aside class="col-lg-3" id="sidebar">
 					<div id="filters_col"> <a data-toggle="collapse" href="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt">Filtreleme </a>
-
 						<form action="{% url 'coursesGridList' %}" method="post">
-
 							{% csrf_token %}
-
 						<div class="collapse show" id="collapseFilters">
 							<div class="filter_type">
 								<h6>Kategoriler</h6>
 								<ul>
-
 									<li>
 										<label>
 											<input type="checkbox" name="categoryName" value="all" class="icheck" 
@@ -112,7 +73,6 @@
 												>Tümü <small>({{allCoursesCount}})</small>
 										</label>
 									</li>
-									
 									{% for category in categories %}
 										<li>
 											<label>
@@ -122,8 +82,6 @@
 											</label>
 										</li>
 									{% endfor %}
-										
-								
 								</ul>
 							</div>
 							<div class="filter_type">
@@ -178,28 +136,15 @@
 									</li>
 								</ul>
 							</div>
-
-
 							<div class="filter_type">
 								<button class="btn btn-primary">Fitrele</button>
 							</div>
-
-
 						</div>
-						<!--/collapse -->
-
 					</form>
 					</div>
-					<!--/filters col-->
 				</aside>
-				<!-- /aside -->
-
 				<div class="col-lg-9">
 					<div class="row">
-
-
-						
-						
 						{% if courses %}
 							{% for course in courses %}
 							{% isFavourite request course.pk as favourite %}
@@ -213,7 +158,6 @@
 											{% endif %}
 												  href="{% url 'AddFavouritesCoursesGridList' course.pk %}" class="wish_bt"></a>
 											<a href="{% url 'courseDetail' course.slug %}"><img src="{{course.image.url}}" class="img-fluid" alt=""></a>
-											<!-- <div class="price">{{course.price}} ₺</div> -->
 											<a href="{% url 'courseDetail' course.slug %}"><div class="preview"><span>Kursu Görüntüle</span></div></a>
 										</figure>
 										<div class="wrapper">
@@ -246,18 +190,9 @@
 					{% if not courses %}
 					<center><div><p style="color: red;">Aradığınız kriterlere uygun kurs bulunmamaktadır.</p></div></center>
 					{% endif %}
-						
-					
-					<!-- /row -->
-					<!-- <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p> -->
-					
 				</div>
-				<!-- /col -->
-				
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 		<div class="bg_color_1">
 			<div class="container margin_60_35">
 				<div class="row">
@@ -283,36 +218,18 @@
 						</a>
 					</div>
 				</div>
-				<!-- /row -->
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /bg_color_1 -->
 	</main>
-	<!--/main-->
-
-
 	{% endblock content %}
-
-
-
-
 	{% block jsFiles %}
-    
-
-
 <script>
-
 	function contact(){
-
 		var anchor = document.createElement('a');
 		anchor.href = '/iletisim';
 		anchor.target="_blank";
 		anchor.click();
-
 	}
-
-
 </script>
 
 {% endblock jsFiles %}

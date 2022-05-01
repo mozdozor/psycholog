@@ -41,14 +41,7 @@
 </head>
 
 <body id="register_bg">
-
     <nav id="menu" class="fake_menu"></nav>
-
-    <div id="preloader">
-        <div data-loader="circle-side"></div>
-    </div>
-    <!-- End Preload -->
-
     <div id="login">
         <aside>
             <figure>
@@ -99,9 +92,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     {% for field in form.visible_fields %}
-                    
                     {% if field.name != "image" %}
-                        
                     <span class="input">
                         {{field}}
                         <label class="input_label">
@@ -113,34 +104,19 @@
                     <img width="40%" src="{{request.user.image.url}}" alt="">
                     <br><br>
                     {{field}}
-                    
                     {% endif %}
-                   
-                   
-                    
-                  
                    {% endfor %}
-                       
-
-
                     <div id="pass-info" class="clearfix"></div>
                 </div>
-
                 <button type="submit" class="btn_1 rounded full-width add_top_30">Kaydet</button>
-                
             </form>
             <div class="copy">© 2022 TURKAZE</div>
         </aside>
     </div>
-    <!-- /login -->
-
-    <!-- COMMON SCRIPTS -->
     <script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'assets/js/common_scripts.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
     <script src="{% static 'assets/validate.js' %}"></script>
-
-    <!-- SPECIFIC SCRIPTS -->
     <script src="{% static 'assets/js/pw_strenght.js' %}"></script>
 
 
@@ -176,18 +152,7 @@
         }
 
         var doc, bod, htm, C, E, T; // for use on other loads
-
-
-
-
-
-
-
-
     </script>
-
-
-
 </body>
 
 </html>

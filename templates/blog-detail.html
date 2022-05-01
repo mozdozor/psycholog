@@ -51,8 +51,6 @@
             </div>
         </div>
     </section>
-    <!--/hero_in-->
-
     <div class="container margin_60_35">
         <div class="row">
             <div class="col-lg-9">
@@ -66,27 +64,17 @@
                             <li><a href="#"><i class="icon_comment_alt"></i> ({{blog.totalCommentCount}}) Yorum</a></li>
                         </ul>
                     </div>
-                    <!-- /post meta -->
                     <div class="post-content">
                         <div class="dropcaps">
                             <p>{{blog.description|safe}}</p>
                         </div>
-
                     </div>
-                    <!-- /post -->
                 </div>
-                <!-- /single-post -->
-
                 <div id="comments">
                     <h5>Yorumlar</h5>
                     <ul>
-
                         {% if comments %}
-
                         {% for comment in comments %}
-
-
-
                         <li>
                             <div class="avatar">
                                 <a href="#"><img src="{{comment.comment_user.image.url}}" alt="">
@@ -101,9 +89,7 @@
                                     {{comment.comment}}
                                 </p>
                             </div>
-
                             {% if comment.children %}
-
                             {% for children in comment.children %}
                             <ul class="replied-to">
                                 <li>
@@ -119,27 +105,20 @@
                                         <p>
                                             {{children.comment}}
                                         </p>
-
                                     </div>
-
                                 </li>
                             </ul>
                             {% endfor %}
 
                             {% endif %}
-
                         </li>
                         {% endfor %}
                         {% else %}
                         <center><p>Henüz bu blog yazısına yorum yapılmamış.</p></center>
 
                         {% endif %}
-
-
-
                     </ul>
                 </div>
-
                 <hr>
                 {% if messages %}
                 <ul class="messages">
@@ -156,18 +135,12 @@
                         <center><strong>{{message}}</strong></center>
                     </div>
                     {% endif %}
-
-
-
                     {% endfor %}
                 </ul>
                 {% endif %}
-
                 <h5>Yorum Yap</h5>
                 <br>
-
                 {% if request.user.is_authenticated %}
-
                 {% if hasAuthUserMadeComment %}
                 <center>
                     <p style="color: red; font-weight: bold;">Daha önceden yorum yapmışsınız</p>
@@ -175,34 +148,25 @@
                 {% else %}
                 <form action="{% url 'blogDetail' blog.slug %}" method="post">
                     {% csrf_token %}
-
                     {% for field in form.visible_fields %}
-
                     {% if forloop.first %}
                     <div class="form-group">
                         {{field}}
                     </div>
                     {% endif %}
-
                     {% endfor %}
-
                     <br>
                     <div class="form-group">
                         <button type="submit" id="submit2" class="btn_1 rounded add_bottom_30"> Kaydet</button>
                     </div>
                 </form>
                 {% endif %}
-
-
                 {% else %}
                 <center>
                     <p style="color: red; font-weight: bold;">Yorum yapmak için giriş yapmanız gerekmektedir</p>
                 </center>
                 {% endif %}
-
             </div>
-            <!-- /col -->
-
             <aside class="col-lg-3">
                 <div class="widget">
                     <form action="{% url 'allBlogs' %}" method="POST">
@@ -213,17 +177,12 @@
 						<button type="submit" id="submit" class="btn_1 rounded">Blog Ara</button>
 					</form>
                 </div>
-                <!-- /widget -->
                 <div class="widget">
                     <div class="widget-title">
                         <h4>Son Yazılar</h4>
                     </div>
                     <ul class="comments-list">
-
-                        
-                        
                         {% if lastThreeBlogs %}
-                            
                             {% for blog in lastThreeBlogs %}
                                 <li>
                                     <div class="alignleft">
@@ -234,53 +193,25 @@
                                     <h3><a href="{% url 'blogDetail' blog.slug %}" title="">{{blog.title|safe|truncatechars:30}}</a></h3>
                                 </li>
                             {% endfor %}
-                                
                         {% endif %}
-                            
-                      
                     </ul>
                 </div>
-                <!-- /widget -->
                 <div class="widget">
                     <div class="widget-title">
                         <h4>Blog Kategorileri</h4>
                     </div>
                     <ul class="cats">
-                        
                         {% if categories %}
-                            
                             {% for cat in categories %}
                                 <li><a href="{% url 'allBlogs' %}?kategori={{cat.name}}">{{cat.name}} <span>({{cat.getBlogCount}})</span></a></li>
                             {% endfor %}
-                                
                         {% endif %}
-                            
-                       
                     </ul>
                 </div>
-                <!-- /widget -->
-                <!-- <div class="widget">
-                    <div class="widget-title">
-                        <h4>Popular Tags</h4>
-                    </div>
-                    <div class="tags">
-                        <a href="#">Information tecnology</a>
-                        <a href="#">Students</a>
-                        <a href="#">Community</a>
-                        <a href="#">Carreers</a>
-                        <a href="#">Literature</a>
-                        <a href="#">Seminars</a>
-                    </div>
-                </div> -->
-                <!-- /widget -->
             </aside>
-            <!-- /aside -->
         </div>
-        <!-- /row -->
     </div>
-    <!-- /container -->
 </main>
-<!--/main-->
 
 {% endblock content %}
 

@@ -1,36 +1,17 @@
 {% extends 'base.html' %}
-
-
 {% load static %}
 {% load booking_dates %}
-
-
-
-
 {% if page %}
-	
 	{% block title %}
 	<title>{{page.meta_title}}</title>
 	{% endblock title %}
-	
-	
 	{% block description %}
 	<meta name="description" content="{{page.meta_description}}">
 	{% endblock description %}
-	
-	
 	{% block keywords %}
 	<meta name="keywords" content="{{page.meta_keywords}}">
 	{% endblock keywords %}
-	
 {% endif %}
-
-
-
-
-
-
-
 {% block cssFiles %}
 <link href="{% static 'assets/css/responsiveAppointment.css' %}" rel="stylesheet">
 <link href="{% static 'assets/css/fullcalendar.css' %}" rel="stylesheet">
@@ -91,19 +72,8 @@ td.fc-day.fc-past {
 </style>
 
 {% endblock cssFiles %}
-
-
-
 {% block divFeatures %}id=page{% endblock divFeatures %}
-
-
-
 {% block content %}
-
-
-
-
-
 <main id="firstMain" style="display: block;">
 	<section id="hero_in" class="general">
 		<div class="wrapper">
@@ -127,37 +97,21 @@ td.fc-day.fc-past {
 			<div id="errMessage" style="display: none;" class="alert alert-danger col-lg-9" role="alert">
 				<center><strong>Lütfen zorunlu bilgilerin eksiksiz girildiğinden emin olunuz.</strong></center>
 				</div>
-				
-
-
-
 		<div class="row">
 			<div class="col-md-9">
 				<div class="box_general">
 					<div id="calendar"></div>
-					<!-- End calendar -->
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div id="external-events">
 					<h5>Randevu Saatleri</h5>
-					<!-- <div onclick='select();' style="background-color: turquoise !important;" class='external-event'><i class="icon_mug"></i> Coffe Break</div> -->
-					
-					
-					
-
 				</div>
 			</div>
 		</div>
-		<!--/row-->
 	</div>
-	<!-- /container -->
 </main>
-
 <input type="hidden" value=""  id="currentIdClass">	
-
-
-
 <main id="secondMain" style="display: none;">
 	<section id="hero_in" class="contacts">
 		<div class="wrapper">
@@ -166,8 +120,6 @@ td.fc-day.fc-past {
 			</div>
 		</div>
 	</section>
-	<!--/hero_in-->
-
 	<div class="contact_info">
 		<div class="container">
 			<ul class="clearfix">
@@ -180,7 +132,6 @@ td.fc-day.fc-past {
 					<i class="pe-7s-mail-open-file"></i>
 					<h4>Email Adresi</h4>
 					<span>{{sm.email}}<br><small> </small></span>
-
 				</li>
 				<li>
 					<i class="pe-7s-phone"></i>
@@ -190,52 +141,28 @@ td.fc-day.fc-past {
 			</ul>
 		</div>
 	</div>
-	<!--/contact_info-->
-
-
-
-
-
-
 
 	<div class="bg_color_1">
-
 		<div class="container margin_120_95">
-
-
-
 			<div class="row justify-content-between">
 				<div class="col-lg-5">
 					<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_eIXuIz.json"
 						background="transparent" speed="1" style="width:100%;" loop autoplay></lottie-player>
-
 				</div>
 				<div class="col-lg-6">
 					<h4>Randevu isteğinde bulunun</h4>
-
-
 					<p>Şimdi zamanı seçin ve randevu isteiğinde bulunun.</p>
-
 					<br>
 					{% if messages %}
 					<ul class="messages">
 						{% for message in messages %}
 
-
 						{% if 'appointmentMessages' in message.extra_tags %}
-
-
-
-
 						{% if message.tags == "error" %}
-
-
 						<div class="alert alert-danger" role="alert">
 
 							<center><strong>{{message}}</strong></center>
 						</div>
-
-
 						{% else %}
 
 						<div class="alert alert-success" role="alert">
@@ -293,18 +220,8 @@ td.fc-day.fc-past {
 							{% endfor %}
 
 						</div>
-						<!-- /row -->
-
 						<input onchange="changeCheck()" type="checkbox" id="checkBuy">
 						<label for="checkBuy"> <a target="blank" href="/randevu-satis-sozlesmesi">Randevu onay sözleşmesini</a> okudum,onaylıyorum.</label><br>
-
-
-						<!-- <span class="input">
-									<input class="input_field" type="text" id="verify_contact" name="verify_contact">
-									<label class="input_label">
-									<span class="input__label-content">Are you human? 3 + 1 =</span>
-									</label>
-							</span> -->
 
 						<p class="add_top_30"><input style="background-color: gray;" onclick="spinner()"
 						{% if isFree == "notNo" %}
@@ -318,91 +235,46 @@ td.fc-day.fc-past {
 								  </div>
 						
 					</form>
-
-
-					
-
-
 				</div>
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
-	<!-- /bg_color_1 -->
 </main>
-
-
-
-
-
-
-
 {% comment %}
 <main>
-
-
 	<div class="bg_color_1">
-
 		<div class="container margin_120_95">
-
-
-			
 			<hr>
 			<br>
-
-
 			<div class="row justify-content-between">
-				
 				<div class="col-lg-12">
-
 					<div id="message-contact"></div>
-
 					<center>
 						<div class="col-lg-12">
-		
-		
-							<!-- Schedule Widget -->
 							<div class="card booking-schedule schedule-widget">
-		
-								<!-- Schedule Header -->
 								<div class="schedule-header">
 									<div class="row">
 										<div class="col-md-12">
-		
-											<!-- Day Slot -->
 											<div class="day-slot">
 												<ul>
-		
 													{% for day in days %}
 													{% dates day as dayName %}
-		
 													<li>
 														<span>{{day}}</span>
 														<span class="slot-date">{{dayName}}</span>
 													</li>
 													{% endfor %}
-		
 												</ul>
 											</div>
-											<!-- /Day Slot -->
-		
 										</div>
 									</div>
 								</div>
-								<!-- /Schedule Header -->
-		
-								<!-- Schedule Content -->
 								<div class="schedule-cont">
 									<div class="row">
 										<div class="col-md-12">
-		
-											<!-- Time Slot -->
 											<div class="time-slot">
 												<ul class="clearfix">
 													<li>
-		
-		
 														{% if schedules1 %}
 														{% for schedule in schedules1 %}
 														<a {% if schedule.status == "no" %} 
@@ -415,14 +287,10 @@ td.fc-day.fc-past {
 															<span>{{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}}
 																</span>
 														</a>
-														
 														{% endfor %}
 														{% else %}
 														<center>-</center>
 														{% endif %}
-		
-		
-		
 													</li>
 													<li style="padding-left: 0px;">
 														{% if schedules2 %}
@@ -509,52 +377,22 @@ td.fc-day.fc-past {
 														<center>-</center>
 														{% endif %}
 													</li>
-													<!-- <li>
-														{% if schedules7 %}
-														{% for schedule in schedules7 %}
-														<a {% if schedule.status == "no" %} onclick="clicked(this)" style="color: green;"
-														 {% else %}
-															style="text-decoration: line-through; color: red;" 
-															{% endif %} 
-															class="timing"
-															id="{{schedule.pk}}" href="#">
-															<span>{{schedule.starting_time}}
-																</span>
-														</a>
-														{% endfor %}
-														{% else %}
-														<center>-</center>
-														{% endif %}
-													</li> -->
 												</ul>
 											</div>
-											<!-- /Time Slot -->
-		
 										</div>
 									</div>
 								</div>
-								<!-- /Schedule Content -->
-		
 							</div>
-							<!-- /Schedule Widget -->
 							<div class="submit-section proceed-btn text-right">
 								<a  onclick='forwardClicked();' id="submit-button" class="btn btn-primary submit-btn">İlerle</a>
 							</div>
-		
-		
 						</div>
 					</center>
-					
 				</div>
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
-	<!-- /bg_color_1 -->
 </main>
-<!--/main-->
-
 <input type="hidden" value=""  id="currentIdClass">	
 {% endcomment %}
 
@@ -582,30 +420,15 @@ td.fc-day.fc-past {
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 
-
-
 <script>
-
-	
-	
-
 
 function spinner() {
     document.getElementsByClassName("loader")[0].style.display = "block";
 }
 
-
-
-
 let today = new Date().toISOString().slice(0, 10)
 
-
 window.onload = callAjax(today);
-
-
-
-
-
 	$('#calendar').fullCalendar({
 	monthNames: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
     monthNamesShort: ['Ocak','Şbt','Mrt','Nsn','Mys','Hzr','Tmz','Ağs','Eyl','Ekm','Ksm','Arl'],
@@ -628,10 +451,6 @@ window.onload = callAjax(today);
 	},
 
 });
-
-
-
-
 function callAjax(date){
 	$.ajax({
 		type: "POST",
@@ -667,13 +486,6 @@ function callAjax(date){
 				}
 				ourDiv.innerHTML=ourDiv.innerHTML +"<br><br><a id='forwardBtn' disabled class='btn btn-success' onclick='forwardClicked();' style='float:right; color: white; background-color:turquoise ' type='button'>İlerle</a>"
 			}
-			
-			
-			
-			
-			// if(data["complete"]=="success"){
-			// 	document.getElementById("completeMessage").hidden=false;
-			// }
 		}
 	});
 }
@@ -682,10 +494,8 @@ function callAjax(date){
 
 function select(id){
 	var formm=document.getElementById("formSubmit");
-
 	var btn=document.getElementById("forwardBtn");
 		var scheduleDiv=document.getElementById(id);
-
 		console.log(scheduleDiv.style.backgroundColor);
 		var items = document.getElementsByClassName('external-event');
 		for (var i = 0; i < items.length; i++) {
@@ -694,9 +504,6 @@ function select(id){
 			}
 			
 		}
-		
-
-
 	if(scheduleDiv.style.backgroundColor=="turquoise"){
 		scheduleDiv.style.backgroundColor="";
 		btn.disabled=false;
@@ -713,8 +520,6 @@ function select(id){
 
 	}
 }
-
-
 function forwardClicked(){
 	
 	if(document.getElementById("forwardBtn").disabled==false){
@@ -723,7 +528,6 @@ function forwardClicked(){
 		fillTheForm();
 	}
 	document.getElementsByClassName("loader")[0].style.display = "none";
-
 }
 function backwardClicked(){
 
@@ -733,8 +537,6 @@ document.getElementsByClassName("loader")[0].style.display = "none";
 changeCheck();
 
 }
-
-
 var frm = $('#formSubmit');
 
 $('#submit-contact').click(function(event){
@@ -774,11 +576,6 @@ $('#submit-contact').click(function(event){
 			}
 			if(data["status"]=="success"){
 				location.replace("/randevu-satin-alimi/"+data["randevuId"])
-				// setTimeout(function(){ // unexecuted functions and Anonymous functions behave the same
-				// 	location = "/medya-galeri"; // it's really this easy to set the `window.location.href`
-				// }, 2000);
-				// document.getElementById("sccMessage").style.display="block";
-				// document.getElementById("errMessage").style.display="none";
 			}else if(data["status"]=="error"){
 				document.getElementById("sccMessage").style.display="none";
 				document.getElementById("errMessage").style.display="block";
@@ -795,13 +592,9 @@ $('#submit-contact').click(function(event){
 			backwardClicked();
 			console.log("err")
 			frm.action="#";
-			// $("#MESSAGE-DIV").html("Something went wrong!");
 		}
 	});
     });
-
-
-
 	function fillTheForm(){
 		var is_authenticated = "{{request.user.is_authenticated}}";
 		if(is_authenticated=="True"){
@@ -829,8 +622,6 @@ $('#submit-contact').click(function(event){
 			
 		}
 	}
-
-
 	function changeCheck(){
 		var box=document.getElementById("checkBuy");
 		var btnBuy=document.getElementById("submit-contact");
@@ -843,62 +634,5 @@ $('#submit-contact').click(function(event){
 			btnBuy.disabled="disabled";
 		}
 	}
-
-
-
-
-
-
 </script>
-
-
-
-
-<script>
-// $("html, body").animate({ scrollTop: "125px" });
-// var hiddenInputId=document.getElementById("currentIdClass");
-// var btn=document.getElementById("submit-button")
-// btn.style.backgroundColor="turquoise";
-
-
-// function clicked(element){
-// 	$("html, body").animate({ scrollTop: "125px" });
-
-	
-// hiddenInputId.value=element.id;
-
-// var items = document.getElementsByClassName('timing selected');
-// for (var i = 0; i < items.length; i++) {
-// 	if(items[i]!=element){
-// 		items[i].className="timing";
-// 	}
-	
-// }
-
-
-// if(element.className=="timing"){
-// 	element.className="timing selected";
-// 	btn.disabled=false;
-// 	btn.style="";
-// 	btn.href="/randevu-talebi/"+element.id;
-	
-// }else{
-// 	element.className="timing";
-// 	btn.style.backgroundColor="turquoise";
-// 	btn.disabled=true;
-// 	btn.href="#";
-// }
-
-// }
-
-
-
-
-</script>
-
-
-
-
-
-
 {% endblock jsFiles %}

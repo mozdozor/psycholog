@@ -32,9 +32,6 @@
 
 
 {% block content %}
-    
-    
-	
 	<main>
 		<section id="hero_in" class="general">
 			<div class="wrapper">
@@ -43,24 +40,18 @@
 				</div>
 			</div>
 		</section>
-		<!--/hero_in-->
-
 		<div class="container margin_60_35">
 			<div class="main_title_2">
 				<span><em></em></span>
 				<h2>Fotoğraflarımız ...</h2>
 				<p>Bize ait fotoğraflarımız aşağıda listelenmiştir.</p>
 			</div>
-
-	
-			
 		 <div class="grid">
 				<ul class="magnific-gallery">
                     {% for image in images %}
-                        
 					<li>
 						<figure>
-							<img src="{{image.image.url}}" alt="">
+							<img width="400" height="300" src="{{image.image.url}}" alt="{{image.image_name}}">
 							<figcaption>
 								<div class="caption-content">
 									<a 
@@ -69,7 +60,7 @@
 									{% else %}
 										href="{{image.image.url}}"
 									{% endif %}
-										 title="{{image.title}}" data-effect="mfp-zoom-in">
+										 title="{{image.image_name}}" data-effect="mfp-zoom-in">
 										<i class="pe-7s-albums"></i>
 										<p>Görüntüle</p>
 									</a>
@@ -77,22 +68,10 @@
 							</figcaption>
 						</figure>
 					</li>
-
                     {% endfor %}
-					
 				</ul>
 			</div> 
-	
-
-
-
-
-
-
-
 		</div>
-		<!-- /container -->
-		
 		<div class="bg_color_1">
 			<div class="container margin_60_35">
 				<div class="main_title_2">
@@ -100,18 +79,12 @@
 					<h2>Videolarımız ...</h2>
 					<p>Bize ait videolarımız aşağıda listelenmiştir.</p>
 				</div>
-
-
-
 				<div class="grid">
 					<ul class="magnific-gallery">
-
-						
 						{% for video in videos %}
-						
 							<li>
 								<figure>
-									<img src="{{video.image.url}}" alt="">
+									<img width="400" height="300" src="{{video.image.url}}" alt="{{image.image_name}}">
 									<figcaption>
 									<div class="caption-content">
 										<a href="{{video.url}}" class="video" title="{{video.title}}">
@@ -122,22 +95,12 @@
 									</figcaption>
 								</figure>
 							</li>
-						
 						{% endfor %}
-							
-				
-					
 					</ul>
 				</div>
-				<!-- /grid -->
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /bg_color_1 -->
-		
 	</main>
-	<!--/main-->
-	
 
     {% endblock content %}
 

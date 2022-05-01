@@ -50,7 +50,6 @@
 		</div>
 	</section>
 	<!--/hero_in-->
-
 	<div class="bg_color_1">
 		<nav class="secondary_nav sticky_horizontal">
 			<div class="container">
@@ -64,9 +63,7 @@
 		<div class="container margin_60_35">
 			<div class="row">
 				<div class="col-lg-8">
-
 					<section id="description">
-
 						<div class="box_highlight">
 							<ul class="additional_info">
 								<li><i class="pe-7s-timer"></i>Kurs Süresi<strong>{{course.zoomDuration}} saat</strong></li>
@@ -74,13 +71,10 @@
 								<li><i class="pe-7s-wallet"></i>Fiyatı<strong>{{course.price}} ₺</strong></li>
 							</ul>
 						</div>
-
-
 						<h2>{{course.title}}</h2>
 						<p>{{course.description|safe}}</p>
 						<h5>Neler Öğreneceksiniz</h5>
 						<ul class="list_ok">
-
 							{% if learns %}
 
 							{% for wwyl in learns %}
@@ -97,31 +91,8 @@
 						</ul>
 						<hr>
 						<p>{{course.bottomDescription|safe}}</p>
-						<!-- <div class="row">
-								<div class="col-lg-6">
-									<ul class="bullets">
-										<li>Dolorem mediocritatem</li>
-										<li>Mea appareat</li>
-										<li>Prima causae</li>
-										<li>Singulis indoctum</li>
-									</ul>
-								</div>
-								<div class="col-lg-6">
-									<ul class="bullets">
-										<li>Timeam inimicus</li>
-										<li>Oportere democritum</li>
-										<li>Cetero inermis</li>
-										<li>Pertinacia eum</li>
-									</ul>
-								</div>
-							</div> -->
-						<!-- /row -->
 					</section>
 					<!-- /section -->
-
-
-				
-				
 					
 					{% if completed %}
 						<div class="alert alert-success" hidden id="completeMessage" role="alert">
@@ -132,9 +103,6 @@
 						
 					
 					<section id="lessons">
-	
-					
-
 						<div class="intro_title">
 							<h2>Videolar</h2>
 							<ul>
@@ -142,13 +110,7 @@
 								<li>{{course.getTotalVideoDuration}}</li>
 							</ul>
 						</div>
-
-					
-
-
 						<div id="accordion_lessons" role="tablist" class="add_bottom_45">
-
-							
 							{% if sessions %}
 
 							{% for session in sessions %}
@@ -171,9 +133,6 @@
 											{{session.title}}</a>
 									</h5>
 								</div>
-
-							
-
 								<div id="collapseOne{{session.pk}}" 
 								{% if forloop.first %}
 								 class="collapse show"
@@ -212,9 +171,6 @@
 										</div>
 									</div>
 								</div>
-
-
-
 							</div>
 							{% endfor %}
 							{% else %}
@@ -222,24 +178,10 @@
 							<center>
 								<p style="color: red;">Henüz bu kursa ekli bir bölüm veya video bulunmamaktadır.</p>
 							</center>
-
 							{% endif %}
-							
-
-
 						</div>
 						<!-- /accordion -->
 					</section>
-				
-						
-					<!-- /section -->
-
-
-
-			
-
-
-					
 					{% if has_bougth == "true" %}
 					<center>
 						<div class="alert alert-danger" role="alert">
@@ -248,13 +190,6 @@
 					</center>
 					<br><br>
 					{% endif %}
-						
-
-					
-					
-
-
-
 					<section id="reviews">
 						<h2>Yorumlar</h2>
 						<div class="reviews-container">
@@ -327,11 +262,6 @@
 						</div>
 
 						<hr>
-
-					
-						
-
-
 
 						{% if messages %}
     <ul class="messages">
@@ -455,22 +385,8 @@
 
 	</ul>
 </div>
-
-				
-
-
-
-
-
-
-
-						
-						<!-- /review-container -->
 					</section>
-					<!-- /section -->
 				</div>
-				<!-- /col -->
-
 				<aside class="col-lg-4" id="sidebar">
 					<div class="box_detail">
 						<figure>
@@ -481,7 +397,6 @@
 						</figure>
 						<div class="price">
 							{{course.price}} ₺
-							<!-- <span class="original_price"><em>$49</em>60% discount price</span> -->
 						</div>
 						<input onchange="changeCheck()" type="checkbox" id="checkBuy">
 						<label for="checkBuy"> <a target="blank" href="/mesafeli-satis-sozlesmesi">Mesafeli satış sözleşmesini</a> okudum,onaylıyorum.</label><br>
@@ -493,8 +408,6 @@
 						{% elif has_bougth == "false" %}	
 						<a id="buyButton" style="background-color: gray;" href="#" class="btn_1 full-width">Satın Al</a>
 						{% endif %}
-							
-						
 						<a href="{% url 'AddFavouritesCoursesGridList' course.pk %}" 
 						{% if favouritea %}
 							style="color: green;"
@@ -508,10 +421,7 @@
 								<li style="font-weight: bold; color: black;">* Görüşmelerimiz şimdilik zoom üzerinden sağlanmaktadır.</li><br>
 								<li style="font-weight: bold; color: black;">* Cihazınıza zoom yüklemeniz tavsiye edilir.<a href="https://zoom.us/download">Buradan indirebilirsiniz <i class="fas fa-video fa-1,5x"></i></a></li><br>
 								<li style="font-weight: bold; color: black;">* Eğitimi satın aldıktan sonra whatsapptan iletişime geçmeniz gerekmektedir.</li>
-								<!-- <li><i class="icon_archive_alt"></i>Lesson archive</li>
-								<li><i class="icon_mobile"></i>Mobile support</li>
-								<li><i class="icon_chat_alt"></i>Tutor chat</li>
-								<li><i class="icon_document_alt"></i>Course certificate</li> -->
+							
 							</ul>
 						</div>
 					</div>
@@ -542,17 +452,12 @@ if (completed=="true"){
 	document.getElementById("completeMessage").hidden=false;
 }
 
-
-
 var mylist1 = JSON.parse("{{videoIds}}");
-// var mylistUrl = JSON.parse(document.getElementById('videoInfo').textContent);
 var mylistId=[];
 for (let i = 0; i < mylist1.length; i++){
 	mylistId.push(mylist1[i]);
 }
-// for (let i = 0; i < mylistUrl.length; i++){
-// 	console.log(mylistUrl[i]);
-// }
+
 
 
 var currentIndex=0;
@@ -566,8 +471,6 @@ function runPLayerApi(id){
 			getElement();
 		}, 500);
 
-	
-	//youtubeDiv.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
 
 	function consolelog(){
 		console.log(id);

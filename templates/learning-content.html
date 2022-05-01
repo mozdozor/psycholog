@@ -100,20 +100,9 @@
         {% endfor %}
     </ul>
     {% endif %}
-
-
-
         <div class="row">
-
-
-
-            
             {% if courses %}
                 {% for course in courses %}
-    
-             
-    
-    
                 <div class="col-xl-4 col-lg-6 col-md-6">
                     <div class="box_grid wow">
                         <figure class="block-reveal">
@@ -121,7 +110,6 @@
                             <a style="background-color: green;" href="{% url 'AddFavouritesCoursesGridList' course.course.pk %}" class="wish_bt"></a>
                             <a href="{% url 'courseDetail' course.course.slug %}"><img src="{{course.course.image.url}}" class="img-fluid"
                                     alt=""></a>
-                            <!-- <div class="price">{{course.course.price}} ₺</div> -->
                             <div class="preview"><span><a href="">Kursu Görüntüle</a></span></div>
                         </figure>
                         <div class="wrapper">
@@ -148,11 +136,7 @@
     
                 {% endfor %}
             {% endif %}
-                
-
         </div>
-        <!-- /row -->
-        <!-- <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p> -->
         {% if not courses %}
         <center>
             <div>
@@ -161,7 +145,6 @@
         </center>
         {% endif %}
     </div>
-    <!-- /container -->
     <div class="bg_color_1">
         <div class="container margin_60_35">
             <div class="row">
@@ -187,14 +170,9 @@
                     </a>
                 </div>
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /bg_color_1 -->
 </main>
-<!--/main-->
-
 
 {% endblock content %}
 

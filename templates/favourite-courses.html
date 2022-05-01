@@ -48,30 +48,7 @@
     <div class="filters_listing sticky_horizontal">
         <div class="container">
             <ul class="clearfix">
-                <!-- <li>
-                    <div class="switch-field">
-                        <input type="radio" id="all" name="listing_filter" value="all" checked>
-                        <label for="all">All</label>
-                        <input type="radio" id="popular" name="listing_filter" value="popular">
-                        <label for="popular">Popular</label>
-                        <input type="radio" id="latest" name="listing_filter" value="latest">
-                        <label for="latest">Latest</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="layout_view">
-                        <a href="#0" class="active"><i class="icon-th"></i></a>
-                        <a href="courses-list.html"><i class="icon-th-list"></i></a>
-                    </div>
-                </li>
-                <li>
-                    <select name="orderby" class="selectbox">
-                        <option value="category">Category</option>
-                        <option value="category 2">Literature</option>
-                        <option value="category 3">Architecture</option>
-                        <option value="category 4">Economy</option>
-                    </select>
-                </li> -->
+               
             </ul>
         </div>
         <!-- /container -->
@@ -98,25 +75,12 @@
         </div>
         {% endif %}
 
-
-
         {% endfor %}
     </ul>
     {% endif %}
-
-
-
         <div class="row">
-
-
-
-            
             {% if courses %}
                 {% for course in courses %}
-    
-             
-    
-    
                 <div class="col-xl-4 col-lg-6 col-md-6">
                     <div class="box_grid wow">
                         <figure class="block-reveal">
@@ -124,7 +88,6 @@
                             <a style="background-color: green;" href="{% url 'AddFavouritesCoursesGridList' course.course.pk %}" class="wish_bt"></a>
                             <a href="{% url 'courseDetail' course.course.slug %}"><img src="{{course.course.image.url}}" class="img-fluid"
                                     alt=""></a>
-                            <!-- <div class="price">{{course.course.price}} ₺</div> -->
                             <a href="{% url 'courseDetail' course.course.slug %}"> <div class="preview"><span>Kursu Görüntüle</span></div></a>
                         </figure>
                         <div class="wrapper">
@@ -151,11 +114,7 @@
     
                 {% endfor %}
             {% endif %}
-                
-
         </div>
-        <!-- /row -->
-        <!-- <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p> -->
         {% if not courses %}
         <center>
             <div>
@@ -164,7 +123,6 @@
         </center>
         {% endif %}
     </div>
-    <!-- /container -->
     <div class="bg_color_1">
         <div class="container margin_60_35">
             <div class="row">
@@ -190,13 +148,9 @@
                     </a>
                 </div>
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /bg_color_1 -->
 </main>
-<!--/main-->
 
 
 {% endblock content %}

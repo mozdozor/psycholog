@@ -41,14 +41,7 @@
 </head>
 
 <body id="register_bg">
-
     <nav id="menu" class="fake_menu"></nav>
-
-    <div id="preloader">
-        <div data-loader="circle-side"></div>
-    </div>
-    <!-- End Preload -->
-
     <div id="login">
         <aside>
             <figure>
@@ -93,8 +86,6 @@
             </ul>
             {% endif %}
             {% endif %}
-
-
             <form action="{% url 'registerUser' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group">
@@ -116,11 +107,8 @@
                     </ul>
                     {% endif %}
                     {% endfor %}
-
-
                     <div id="pass-info" class="clearfix"></div>
                 </div>
-
                 <button type="submit" class="btn_1 rounded full-width add_top_30">Kayıt Ol</button>
                 <div class="text-center add_top_10">Hesabınız Var mı? <strong><a href="{% url 'login' %}">Giriş
                             Yap</a></strong></div>
@@ -128,18 +116,11 @@
             <div class="copy">© 2022 TURKAZE</div>
         </aside>
     </div>
-    <!-- /login -->
-
-    <!-- COMMON SCRIPTS -->
     <script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'assets/js/common_scripts.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
     <script src="{% static 'assets/validate.js' %}"></script>
-
-    <!-- SPECIFIC SCRIPTS -->
     <script src="{% static 'assets/js/pw_strenght.js' %}"></script>
-
-
     <script>
 
         $(document).ready(function () {
@@ -147,12 +128,7 @@
             document.getElementById("id_password1").className = "input_field";
             document.getElementById("id_password2").className = "input_field";
         });
-
-
     </script>
-
-
-
 </body>
 
 </html>

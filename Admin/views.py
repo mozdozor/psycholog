@@ -13,6 +13,7 @@ from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, h
 from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, appointmentSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
+from PIL import Image
 
 
 
@@ -1783,8 +1784,14 @@ def addMediaGalleryVideo(request):
         else:
             form = mediaGalleryVideoModelForm(request.POST, request.FILES or None)	
         if form.is_valid(): 
-            form.save()            
-            messages.success(request,"Medya videonuz başarıyla kaydedildi.")
+            my_file=form.cleaned_data.get("image")
+            im = Image.open(my_file)
+            width, height = im.size
+            if width==800 and height==533:
+                form.save()            
+                messages.success(request,"Medya videonuz başarıyla kaydedildi.")
+            else:
+                messages.error(request,"Lütfen 800x533 boyutunda görsel giriniz")
             return redirect("mediaGalleryVideoListAdmin")
         else:
             messages.error(request,"İşleminiz gerçekleştirilemdi.Lütfen formu doğru doldurduğunuzdan emin olunuz.")
@@ -1823,7 +1830,12 @@ def deleteMediaVideoAdmin(request,pk):
 def fileUpload(request):
     if request.method == 'POST':
         my_file=request.FILES.get('file')
-        mediaGalleryImageModel.objects.create(image=my_file,title="Turkaze Psikolog")
-        return HttpResponse('')
+        im = Image.open(my_file)
+        width, height = im.size
+        if width==800 and height==533:
+            mediaGalleryImageModel.objects.create(image=my_file,title="Turkaze Psikolog")
+            return JsonResponse({'status':"true"})   
+        else:
+            return JsonResponse({'status':"false"})   
     return JsonResponse({"status":"yes"})   
 

@@ -46,18 +46,13 @@
 				</div>
 			</div>
 		</section>
-		<!--/hero_in-->
 		<div class="container margin_60_35">
 			<div class="row">
 				<aside class="col-lg-3" id="sidebar">
 					<div class="profile">
 						<figure><img width="99%" src="{{metin.image.url}}" alt="Teacher" class="rounded-circle"></figure>
 						<center>
-						
 							<a href="{% url 'times' %}" target="_blank" style="background-color: turquoise;" type="button" class="btn btn-light">Randevu Al</a>
-						
-							
-								
 						</center>
 						<br>
 						<ul class="social_teacher">
@@ -68,20 +63,15 @@
 						</ul>
 						<ul>
 							<li>İsim <span class="float-right">{{user.get_full_name}}</span> </li>
-							<!-- <li>Students <span class="float-right">42</span></li>
-							<li>Lessons <span class="float-right">12</span></li> -->
 							<li>Kurs Sayısı <span class="float-right">{{courseCount}}</span></li>
 						</ul>
 					</div>
 				</aside>
-				<!--/aside -->
-
 				<div class="col-lg-9">
 					<div class="box_teacher">
 						<div class="indent_title_in">
 							<i class="pe-7s-user"></i>
 							<h3>Profil</h3>
-							<!-- <p>Mussum ipsum cacilds, vidis litro abertis.</p> -->
 						</div>
 						<div class="wrapper_indent">
 							<p>{{metin.description2|safe}}</p>
@@ -109,7 +99,6 @@
 								</div>
 								<div class="col-md-6">
 									<ul class="list_3">
-										
                                         <li><strong>AİLE DANIŞMANLIĞI</strong>
 											<p>AİLE DANIŞMANLIĞI</p>
 										</li>
@@ -120,7 +109,6 @@
 											<p>Artemis Psikolojik ve Eğitim Merkezi</p>
 										</li>
                                         <li><strong>NARSİSTLİK(KİŞİLİK BOZUKLUĞU)</strong>
-											<!-- <p>Artemis Psikolojik veEğitim Merkezi</p> -->
                                             <p></p>
 										</li>
                                         <li><strong>DİSLEKSİ </strong>
@@ -135,9 +123,7 @@
 									</ul>
 								</div>
 							</div>
-							<!-- End row-->
 						</div>
-						<!--wrapper_indent -->
 						<hr class="styled_2">
 						<div class="indent_title_in">
 							<i class="pe-7s-display1"></i>
@@ -156,9 +142,6 @@
 											</tr>
 										</thead>
 										<tbody>
-	
-	
-											
 											{% for course in courses %}
 												<tr>
 													<td>{{course.category.name}}</td>
@@ -166,25 +149,15 @@
 													<td class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i> <i class="icon-star voted"></i></td>
 												</tr>
 											{% endfor %}
-												
-	
-	
-	
-											
 										</tbody>
 									</table>
 								</center>
 						</div>
-						<!--wrapper_indent -->
 					</div>
 				</div>
-				<!-- /col -->
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</main>
-	<!--/main-->
 	{% endblock content %}
 	
 
