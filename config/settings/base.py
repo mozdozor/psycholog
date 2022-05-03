@@ -190,8 +190,8 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL="login"
-LOGOUT_URL="logoutIndex"
+LOGIN_URL="/giris"
+LOGOUT_URL="/cikis"
 
 SOCIALACCOUNT_ADAPTER = "psikolog.adapter.MySocialAccountAdapter"
 
