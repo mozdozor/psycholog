@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'storages',
     'ckeditor',
     'social_django',
+    'social.apps.django_app.default',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

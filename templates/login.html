@@ -60,7 +60,7 @@
 			  <form action="{% url 'login' %}" method="post">
                   {% csrf_token %}
 				<div class="access_social">
-					<a href="{% url 'social:begin' 'facebook' %}" class="social_bt facebook">Facebook ile Giriş Yap</a>
+					<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" class="social_bt facebook">Facebook ile Giriş Yap</a>
 					<a href="{% url 'social:begin' 'google-oauth2' %}"  class="social_bt google">Google ile Giriş Yap</a>
 					<!-- <a href="#0" class="social_bt linkedin">Login with Linkedin</a> -->
 				</div>
