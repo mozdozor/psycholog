@@ -61,6 +61,7 @@
 			  <form action="{% url 'login' %}" method="post">
                   {% csrf_token %}
 				<div class="access_social">
+				
 					<a href="{% provider_login_url 'facebook' method='js_sdk' %}">Login with Facebook</a>
 					<a href="{% url 'social:begin' 'facebook' %}" class="social_bt facebook">Facebook ile Giriş Yap</a>
 					<a href="{% url 'social:begin' 'google-oauth2' %}"  class="social_bt google">Google ile Giriş Yap</a>
@@ -74,15 +75,16 @@
       {% if message.tags == "error" %}
       <div class="alert alert-danger" role="alert">
   
-        <center><strong>{{message}}</strong></center>
+        <b class="text-align: center;">{{message}}</b>
       </div>
       {% else %}
       <div class="alert alert-success" role="alert">
   
-        <center><strong>{{message}}</strong></center>
+        <b class="text-align: center;">{{message}}</b>
       </div>
       {% endif %}
   
+	
   
   
       {% endfor %}

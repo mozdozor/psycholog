@@ -89,3 +89,12 @@ Ve bir profesyonel olarak adminden toplu resim aktarmayı yapsan daha iyi olur  
 Randrvu sayfsında üst kısımda şunu yazalım                                      +
  Sistemden alınan randevular geri iade edilmemektedir. Detaylı bilgi için bizimle iletişime geçiniz     +
  İletişim yazısına direk aramaya yönlendirenbilirmisin              +
+
+
+
+
+
+
+
+ medya ekle  (medya ayarları yerine gelecek) bülten maillerinin üzerine gelecek
+ user image admin
