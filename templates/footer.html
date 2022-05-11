@@ -14,10 +14,23 @@
                 <div class="follow_us">
                     <ul>
                         <li>Bizi Takip Et</li>
-                        <li><a target="blank" href="{{sm.facebook}}"><i class="ti-facebook"></i></a></li>
-                        <li><a target="blank" href="{{sm.twitter}}"><i class="ti-twitter-alt"></i></a></li>
-                        <li><a target="blank" href="{{sm.pinterest}}"><i class="ti-pinterest"></i></a></li>
-                        <li><a target="blank" href="{{sm.instagram}}"><i class="ti-instagram"></i></a></li>
+                        
+                        {% if sm.facebook != None and sm.facebook != "" %}
+                            <li><a target="blank" href="{{sm.facebook}}"><i class="ti-facebook"></i></a></li>
+                        {% endif %}
+
+                        {% if sm.twitter != None and sm.twitter != "" %}
+                            <li><a target="blank" href="{{sm.twitter}}"><i class="ti-twitter-alt"></i></a></li>
+                        {% endif %}
+
+                        {% if sm.pinterest != None and sm.pinterest != "" %}
+                            <li><a target="blank" href="{{sm.pinterest}}"><i class="ti-pinterest"></i></a></li>
+                        {% endif %}
+
+                        {% if sm.instagram != None and sm.instagram != "" %}
+                             <li><a target="blank" href="{{sm.instagram}}"><i class="ti-instagram"></i></a></li>
+                        {% endif %}
+                       
                     </ul>
                 </div>
             </div>

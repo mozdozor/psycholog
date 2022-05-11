@@ -98,3 +98,5 @@ Randrvu sayfsında üst kısımda şunu yazalım                                
 
  medya ekle  (medya ayarları yerine gelecek) bülten maillerinin üzerine gelecek
  user image admin
+
+ footer da hangi ssoyal  adresler girildiyse göster girilmediyse hiç gösterme 
