@@ -3,7 +3,7 @@ from django import forms
 from django.forms.widgets import DateInput, DateTimeInput, EmailInput, FileInput, TextInput, Textarea,SelectMultiple
 import datetime
 from psikolog.models import CommentModel, CustomUserModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, appointmentSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, randevuSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, socialModel, whatWillYouLearnModel
 
 from string import Template
 from django.utils.safestring import mark_safe
@@ -484,7 +484,7 @@ class appointmentCategoryModelForm(forms.ModelForm):
 
 class appointmentSatisModelForm(forms.ModelForm):
     class Meta:
-        model = appointmentSatisModel
+        model = randevuSatisModel
         fields=("description",)
         widgets = {           
             "description" : Textarea(attrs={"class":"form-control","name":"description","required":"required"}),    

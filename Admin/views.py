@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import permission_required
 from Admin.forms import CommentModelForm, CourseModelForm, PageModelForm, adminSettingsProfileModelForm, appointmentAdminModelForm, appointmentCategoryModelForm, appointmentSatisModelForm, aydinlatmaMetniModelForm, blogCategoryModelForm, blogModelForm, categoryModelForm, courseSessionModelForm, courseSessionVideoModelForm, gizlilikMetniModelForm, hakkimizdaModelForm, kvkkMetniModelForm, logoModelForm, mesafeliSatisModelForm, socialModelForm, whatWillYouLearnModelForm
 from psikolog.forms import mediaGalleryImageModelForm, mediaGalleryVideoModelForm, sliderModelForm
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, hasWatchedModel, mediaGalleryImageModel, mediaGalleryVideoModel, orderModel, sliderModel
-from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, appointmentSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
+from .models import CategoryModel, CourseModel, IletisimModel, LogoModel, PageModel, appointmentAdminModel, appointmentCategoryModel, appointmentModel, randevuSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, bottomMenuModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, socialModel, topMenuModel, whatWillYouLearnModel
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
@@ -1186,7 +1186,7 @@ def mesafeliSatisAdmin(request):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def appointmentSatisAdmin(request):
-    metinler=appointmentSatisModel.objects.all()
+    metinler=randevuSatisModel.objects.all()
     if request.method == 'POST':
         if metinler:
             form=appointmentSatisModelForm(request.POST or None,request.FILES or None,instance=metinler.first())

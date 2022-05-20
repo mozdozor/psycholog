@@ -6,7 +6,7 @@ from unicodedata import category
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from Admin.forms import CommentModelForm, IletisimModelForm, appointmentAdminModelForm, appointmentModelForm, footerMailModelForm
-from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, appointmentSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
+from Admin.models import CategoryModel, CourseModel, appointmentAdminModel, appointmentModel, randevuSatisModel, aydinlatmaMetniModel, blogCategoryModel, blogModel, courseSessionModel, courseSessionVideoModel, footerMailModel, gizlilikMetniModel, hakkimizdaModel, kvkkMetniModel, mesafeliSatisModel, notificationModel, topMenuModel, whatWillYouLearnModel
 from django.contrib.auth import logout
 from Admin.templatetags.coutOfNoneWatched import getCountOfNoneWatchedVideo
 from psikolog.forms import CommentModelStarsForm, registerUserForm, userSettingsProfileModelForm
@@ -496,7 +496,7 @@ def aydinlatmaMetni(request):
 
 
 def randevuSatisMetni(request):
-    metinler=appointmentSatisModel.objects.all()
+    metinler=randevuSatisModel.objects.all()
     metin=""
     if metinler:
         metin=metinler.first()

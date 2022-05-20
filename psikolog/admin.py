@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Admin.models import appointmentSatisModel
+from Admin.models import randevuSatisModel
 
 from psikolog.models import CommentModel, CustomUserModel, billingCourseModel, favouriteCourseModel, orderModel, sliderModel
 from django.contrib.auth.admin import UserAdmin
@@ -15,7 +15,7 @@ admin.site.register(sliderModel)
 
 admin.site.register(orderModel)
 
-admin.site.register(appointmentSatisModel)
+admin.site.register(randevuSatisModel)
 
 
 @admin.register(CustomUserModel)
