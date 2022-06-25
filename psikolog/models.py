@@ -199,6 +199,7 @@ class orderModel(models.Model):
 class hasWatchedModel(models.Model):
     video=models.ForeignKey("Admin.courseSessionVideoModel",on_delete=models.CASCADE)
     user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="watchedVideos")
+    deneme_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_date=models.DateTimeField(auto_now=True,blank=True,null=True)
 
