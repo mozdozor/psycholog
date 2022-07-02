@@ -73,14 +73,10 @@ def indexAdmin(request):
 def loginAdmin(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)		
-        print("validin üstünde")
-        print(request.POST)
         if form.is_valid():
-            print("valid kısmında")
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
-            print(user.is_staff)
             if user is not None and user.is_staff:
                 login(request, user)
                 return redirect("indexAdmin")
@@ -1002,7 +998,7 @@ def gizlilikMetniAdmin(request):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def blogListAdmin(request):
-    blogs=blogModel.objects.filter(author=request.user).order_by("created_date")
+    blogs=blogModel.objects.filter().order_by("created_date")
     context={
         "blogs":blogs,
     }
@@ -1292,11 +1288,9 @@ def pastAppointmentsAdmin(request):
             if i.finishing_time>datetime.datetime.now().time():
                 pass
             else:
-                if i.top.whois==request.user:
-                    appointments.append(i)
-        else:
-            if i.top.whois==request.user:
                 appointments.append(i)
+        else:
+            appointments.append(i)
    
     context={
         "appointments":appointments,
@@ -1321,11 +1315,9 @@ def nextAppointmentsAdmin(request):
             if i.finishing_time<datetime.datetime.now().time():
                 pass
             else:
-                if i.top.whois==request.user:
-                    appointments.append(i)
+                appointments.append(i)
         else:
-            if i.top.whois==request.user:
-                    appointments.append(i)
+            appointments.append(i)
    
     context={
         "appointments":appointments,
@@ -1340,11 +1332,7 @@ def nextAppointmentsAdmin(request):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def listAppointmentsAdmin(request):
-    appointments1=appointmentModel.objects.filter(status="pending").order_by("-date")
-    appointments=list()
-    for i in appointments1:
-        if i.top.whois==request.user:
-            appointments.append(i)
+    appointments=appointmentModel.objects.filter(status="pending").order_by("-date")
     context={
         "appointments":appointments,
         "type":"requests",
@@ -1451,13 +1439,13 @@ def showVideoStatusDetail(request,slug):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def appointmentsAdmin(request):
-    appointments=appointmentAdminModel.objects.filter(whois=request.user).order_by("date")
+    appointments=appointmentAdminModel.objects.all().order_by("date")
     for i in appointments:
         if i.date<datetime.datetime.today().date():
             for j in i.bottomsAppo.all():
                 if j.status=="no":
                     j.delete()
-    appointments=appointmentAdminModel.objects.filter(whois=request.user).order_by("date")
+    appointments=appointmentAdminModel.objects.all().order_by("date")
     context={
         "appointments":appointments,
     }
@@ -1474,7 +1462,6 @@ def addAppointmentsAdmin(request):
         form = appointmentAdminModelForm(request.POST, request.FILES or None)		
         if form.is_valid(): 
             data=form.save(commit=False)   
-            data.whois=request.user      
             finish=form.cleaned_data.get('finishing_time')
             start=form.cleaned_data.get('starting_time')
             date=form.cleaned_data.get('date')
@@ -1490,7 +1477,7 @@ def addAppointmentsAdmin(request):
             difference=datetime.datetime.combine(date.today(), finish.time()) - datetime.datetime.combine(date.today(), start.time())
             dd=str(difference).split(":")
             x=0
-            oldAppointments=appointmentAdminModel.objects.filter(date=date,whois=request.user)
+            oldAppointments=appointmentAdminModel.objects.filter(date=date)
             oldAppointmentListTimes=list()
             if oldAppointments:
                 oldAppoinment=oldAppointments.first()
@@ -1528,11 +1515,8 @@ def addAppointmentsAdmin(request):
 @permission_required('is_staff',login_url="loginAdmin")
 def deleteAppointmentOfAdmin(request,pk):
     obj=get_object_or_404(appointmentAdminModel,pk=pk)
-    if obj.whois==request.user:
-        obj.delete()
-        messages.success(request,"Randevu tarihi ve o tarihli randevular başarıyla silindi")
-    else:
-        messages.error(request,"Randevu size ait değildir.Silme yetkiniz bulunmamaktadır.")
+    obj.delete()
+    messages.success(request,"Randevu tarihi ve o tarihli randevular başarıyla silindi")
     return redirect(request.META['HTTP_REFERER']) 
 
 
@@ -1602,7 +1586,7 @@ def editAppointmentsScheduleAdmin(request,pk):
             if date<datetime.datetime.today().date():
                 messages.error(request,"Girmiş olduğunuz tarih bugünden önce olamaz")
                 return redirect("showAppointmentsScheduleAdmin",apt.top.pk)
-            appointmentAdminModel.objects.create(whois=request.user,date=date,starting_time=t.time(),finishing_time=(t+datetime.timedelta(hours=1)).time())
+            appointmentAdminModel.objects.create(date=date,starting_time=t.time(),finishing_time=(t+datetime.timedelta(hours=1)).time())
         if isSame=="false":
             apt.starting_time=t.time()
             apt.finishing_time=(t+datetime.timedelta(hours=1)).time()
@@ -1639,7 +1623,7 @@ def showDetailOrderAdmin(request,pk):
 
 @permission_required('is_staff',login_url="loginAdmin")
 def appointmentCategoryListAdmin(request):
-    categories=appointmentCategoryModel.objects.filter(whois=request.user).order_by("created_date")
+    categories=appointmentCategoryModel.objects.all().order_by("created_date")
     context={
         "categories":categories,
     }
@@ -1661,9 +1645,7 @@ def addAppointmentCategoryAdmin(request):
         else:
             form = appointmentCategoryModelForm(request.POST, request.FILES or None)	
         if form.is_valid(): 
-            dd=form.save(commit=False)      
-            dd.whois=request.user
-            dd.save()      
+            form.save()      
             messages.success(request,"Randevu kategorisi başarıyla kaydedildi.")
             return redirect("appointmentCategoryListAdmin")
         else:

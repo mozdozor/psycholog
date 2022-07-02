@@ -496,16 +496,9 @@ def aydinlatmaMetni(request):
 
 
 def randevuSatisMetni(request):
-    metinler=randevuSatisModel.objects.all()
-    metin=""
-    if metinler:
-        metin=metinler.first()
     context={
-        "metin":metin,
-        "metinType":"appointmentSatis",
-        "printMetin":"Randevu Satış Sözleşmesi",
     }
-    return render(request,"metinler.html",context)
+    return render(request,"randevuSatisSozlesmesi.html",context)
 
 
 
@@ -681,7 +674,7 @@ def paymentPage(request,slug):
     user_ip = get_client_ip(request)  #canlıda test yap
     timeout_limit = '30'
     debug_on = '0'   #canlıda 0 yap
-    test_mode = '1' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
+    test_mode = '0' # Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
     no_installment = '0' # Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
     max_installment = '0'
     currency = 'TL'
@@ -1005,27 +998,21 @@ def deleteOldAppointments():
 
 
 
-def times(request,pk):
-    staffUser=get_object_or_404(CustomUserModel,pk=pk)
+def times(request):
     deleteOldAppointments()
     page=topMenuModel.objects.filter(url="/uygun-zamanlar").all()
-    todaySchedules1=appointmentModel.objects.filter(date=datetime.datetime.today().date())
-    todaySchedules=list()
-    for i in todaySchedules1:
-        if i.top.whois==staffUser:
-            todaySchedules.append(i)
+    todaySchedules=appointmentModel.objects.filter(date=datetime.datetime.today().date())
     form = appointmentModelForm()
-    form.fields["category"].queryset=appointmentCategoryModel.objects.filter(whois=staffUser)
     engdays=get_days_from_today()
     days=[]
     for i in engdays:
         days.append(getDayTurkish(i))
-    schedules1=appointmentModel.objects.filter(date=find_date(days[0]),top__whois=staffUser)
-    schedules2=appointmentModel.objects.filter(date=find_date(days[1]),top__whois=staffUser)
-    schedules3=appointmentModel.objects.filter(date=find_date(days[2]),top__whois=staffUser)
-    schedules4=appointmentModel.objects.filter(date=find_date(days[3]),top__whois=staffUser)
-    schedules5=appointmentModel.objects.filter(date=find_date(days[4]),top__whois=staffUser)
-    schedules6=appointmentModel.objects.filter(date=find_date(days[5]),top__whois=staffUser)
+    schedules1=appointmentModel.objects.filter(date=find_date(days[0]))
+    schedules2=appointmentModel.objects.filter(date=find_date(days[1]))
+    schedules3=appointmentModel.objects.filter(date=find_date(days[2]))
+    schedules4=appointmentModel.objects.filter(date=find_date(days[3]))
+    schedules5=appointmentModel.objects.filter(date=find_date(days[4]))
+    schedules6=appointmentModel.objects.filter(date=find_date(days[5]))
     # schedules7=appointmentModel.objects.filter(date=find_date(days[6]))
     for dd, item in enumerate(days):
         if days[dd]=="Pazartesi":
@@ -1048,7 +1035,6 @@ def times(request,pk):
         "form":form,
         "todaySchedules":todaySchedules,
         "page":page.first(),
-        "staffUser":staffUser.pk
         # "schedules7":schedules7,
     }
     return render(request,"times.html",context)
@@ -1072,7 +1058,7 @@ def appointment(request,randevuId):
         if form.is_valid(): 
             data=form.save(commit=False)
             if schedule.status!="no":
-                return redirect("times",schedule.top.whois.pk)
+                return redirect("times")
             schedule.status="pending"
             schedule.phone_number=form.cleaned_data["phone_number"]
             schedule.email=form.cleaned_data["email"]
@@ -1151,11 +1137,10 @@ def addWatchedList(request):
 @csrf_exempt
 def getAppointments(request):
     if is_ajax(request=request):
-            staffUser=request.POST["staffUser"]
             dateLong=request.POST["date"]
             date=dateLong.split("T")[0]
             date=datetime.datetime.strptime(date, "%Y-%m-%d").date()
-            schedules1=appointmentModel.objects.filter(date=date,top__whois__pk=staffUser).order_by("starting_time").values()
+            schedules1=appointmentModel.objects.filter(date=date).order_by("starting_time").values()
             schedules=list()
             if date>datetime.datetime.today().date():
                 schedules=schedules1
@@ -1243,7 +1228,7 @@ def mediaGallery(request):
 def paymentPageOfAppointment(request,pk):
     schedule=get_object_or_404(appointmentModel,pk=pk)
     if schedule.status!="no":
-        return redirect("times",schedule.top.whois.pk)
+        return redirect("times")
     merchant_oid = "RND"+secrets.token_hex(10)
     schedule.merchant_oid=merchant_oid
     schedule.save()
@@ -1258,7 +1243,7 @@ def paymentPageOfAppointment(request,pk):
     user_address = schedule.address
     if user_address == None or user_address=="":
         messages.error(request,"Ödeme sayfasına girmek için lütfen önce adres bilginizi güncelleyiniz.",extra_tags="appointmentMessages")
-        return redirect("times",schedule.top.whois.pk)
+        return redirect("times")
     user_phone = schedule.phone_number
     merchant_ok_url = 'http://'+request.META['HTTP_HOST']+'/basarili-randevu-satin-alimi/'+str(schedule.pk)
     merchant_fail_url = 'http://'+request.META['HTTP_HOST']+'/hatali-randevu-satin-alimi/'+str(schedule.pk)
@@ -1342,7 +1327,7 @@ def successPaymentOfAppointment(request,pk):
             schedule.fullname,
             "turkazepsikolog.com sitesinden "+ "yeni bir mailiniz var.\n\n"+message+"\n\n\n Gönderen kişi= "+schedule.email+"\n Telefon = "+schedule.phone_number+"\n Mesaj = "+schedule.message,
             schedule.phone_number,
-            [schedule.top.whois.email,],
+            ["turkazepsikolog@gmail.com",],
         )
         context["success"]="success"
         #  messages.success(request,"Mesajınız başarıyla tarafımıza iletildi.En kısa sürede sizinle iletişime geçilecektir.Teşekkür ederiz.",extra_tags="appointmentMessages")
@@ -1366,12 +1351,3 @@ def failPaymentOfAppointment(request,pk):
     return render(request,"appointmentPaymentResult.html",context)
 
 
-
-
-
-def selectAdminForAppointment(request):
-    staffUsers=CustomUserModel.objects.filter(is_staff=True).all()
-    context={
-        "staffUsers":staffUsers,
-    }
-    return render(request,"selectAdminForAppointment.html",context)
