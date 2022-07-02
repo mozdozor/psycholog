@@ -1005,8 +1005,6 @@ def deleteOldAppointments():
 
 
 
-
-
 def times(request,pk):
     staffUser=get_object_or_404(CustomUserModel,pk=pk)
     deleteOldAppointments()
