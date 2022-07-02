@@ -100,3 +100,8 @@ Randrvu sayfsında üst kısımda şunu yazalım                                
  user image admin
 
  footer da hangi ssoyal  adresler girildiyse göster girilmediyse hiç gösterme 
+
+
+ hakkımızda sayfasında randevu al dediğimizde doğru psikologa gidiyormu kontrol et
+ en son adminden gelen bildirimleri kontrol et
+ ödeme yap

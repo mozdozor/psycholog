@@ -52,7 +52,7 @@
 					<div class="profile">
 						<figure><img width="99%" src="{{metin.image.url}}" alt="Teacher" class="rounded-circle"></figure>
 						<center>
-							<a href="{% url 'times' %}" target="_blank" style="background-color: turquoise;" type="button" class="btn btn-light">Randevu Al</a>
+							<a href="{% url 'times' staffUsers.first.pk %}" target="_blank" style="background-color: turquoise;" type="button" class="btn btn-light">Randevu Al</a>
 						</center>
 						<br>
 						<ul class="social_teacher">
@@ -62,7 +62,7 @@
 							<li><a href="mailto:{{sm.email}}"><i class="icon-email"></i></a></li>
 						</ul>
 						<ul>
-							<li>İsim <span class="float-right">{{user.get_full_name}}</span> </li>
+							<li>İsim <span class="float-right">{{staffUsers.first.get_full_name}}</span> </li>
 							<li>Kurs Sayısı <span class="float-right">{{courseCount}}</span></li>
 						</ul>
 					</div>
@@ -262,7 +262,7 @@
 					<div class="profile">
 						<figure><img width="99%"  src="https://psychologs3.s3.amazonaws.com/static/assets/img/kumru_muradova3.jpg" alt="Teacher" class="rounded-circle"></figure>
 						<center>
-							<a href="" target="_blank" style="background-color: red;" type="button" class="btn btn-light">Randevu Al</a>
+							<a href="{% url 'times' staffUsers.last.pk %}" target="_blank" style="background-color: red;" type="button" class="btn btn-light">Randevu Al</a>
 						</center>
 						<br>
 						<ul class="social_teacher">

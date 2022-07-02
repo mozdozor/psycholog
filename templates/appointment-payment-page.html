@@ -114,7 +114,7 @@
 								Fiyat <span class="float-right">{{schedule.category.price}} ₺</span>
 							</div>
 							<div class="add_bottom_30"><strong>{{schedule.category.name}}</strong> kategorisine {{schedule.date}} tarihinde {{schedule.starting_time.hour}}-{{schedule.finishing_time.hour}} saatleri arasındaki randevuyu satın almak üzeresiniz.</div>
-							<a href="{% url 'times' %}" class="btn_1 full-width outline"><i class="icon-right"></i>Randevu seçimine Geri Dön</a>
+							<a href="{% url 'times' schedule.top.whois.pk %}" class="btn_1 full-width outline"><i class="icon-right"></i>Randevu seçimine Geri Dön</a>
 							<div id="list_feat">
 								<h3 style="color: red;">Dikkat Edilmesi Gerekenler</h3>
 								<ul>

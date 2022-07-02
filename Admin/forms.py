@@ -446,7 +446,7 @@ class appointmentAdminModelForm(forms.ModelForm):
     finishing_time=forms.ChoiceField(widget=forms.Select(attrs={"class":"form-control select","name":"finishing_time","required":"required"}), choices=CHOICES,label="Bitiş Saati")
     class Meta:
         model = appointmentAdminModel
-        exclude=("created_date",)
+        exclude=("created_date","whois")
         widgets = {
             "date" : DateInput(attrs={"class":"form-control","name":"date","type":"date","required":"required"}),
             

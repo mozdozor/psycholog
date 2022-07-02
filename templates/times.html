@@ -422,6 +422,9 @@ td.fc-day.fc-past {
 
 <script>
 
+var staffUser="{{staffUser}}";
+
+
 function spinner() {
     document.getElementsByClassName("loader")[0].style.display = "block";
 }
@@ -451,13 +454,13 @@ window.onload = callAjax(today);
 	},
 
 });
-function callAjax(date){
+function callAjax(date,staffUserPk){
 	$.ajax({
 		type: "POST",
 		url: "/randevulari-cek",
 		data: {
 			'date': date,
-			
+			"staffUser":staffUser
 		},
 		success: function (data) {
 			ourDiv=document.getElementById("external-events");

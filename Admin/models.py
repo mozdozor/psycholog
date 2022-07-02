@@ -637,6 +637,7 @@ class hakkimizdaModel(models.Model):
 
 
 class appointmentAdminModel(models.Model):
+    whois=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="relatedAppointmentAdminModels",blank=True,null=True)  
     date=models.DateField(max_length=250,blank=True,null=True)
     starting_time=models.TimeField(max_length=250,blank=True,null=True)
     finishing_time=models.TimeField(max_length=250,blank=True,null=True)
@@ -656,6 +657,7 @@ class appointmentAdminModel(models.Model):
 
 
 class appointmentCategoryModel(models.Model):
+    whois=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,related_name="relatedAppointmentCategoryModels",blank=True,null=True)  
     name=models.CharField(max_length=500,blank=True,null=True) 
     price=models.SmallIntegerField(default=0,blank=True,null=True)
     created_date=models.DateTimeField(auto_now_add=True,blank=True,null=True)

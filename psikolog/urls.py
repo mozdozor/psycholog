@@ -8,7 +8,7 @@ from .views import (
     AddFavouritesCoursesGridList,courseDetail,learningContentList,aboutUs,contact,aydinlatmaMetni,gizlilikPolitikası,
     kvkkMetni,blogDetail,allBlogs,paymentPage,successPayment,failPayment,callback,mesafeliSatis,footerMailSave,
     appointment,addWatchedList,times,activate,getAppointments,submitAppointmentForm,mediaGallery,paymentPageOfAppointment,
-    successPaymentOfAppointment,failPaymentOfAppointment,randevuSatisMetni
+    successPaymentOfAppointment,failPaymentOfAppointment,randevuSatisMetni,selectAdminForAppointment
 
    
 )
@@ -64,7 +64,7 @@ urlpatterns = [
     path('footer-mail-kaydet',footerMailSave,name="footerMailSave"),
     path('randevu-talebi/<int:randevuId>',appointment,name="appointment"),
     path('izlenenlere-ekle',addWatchedList,name="addWatchedList"),
-    path('uygun-zamanlar',times,name="times"),
+    path('uygun-zamanlar/<int:pk>',times,name="times"),
     path('activate/<uidb64>/<token>/',activate, name='activate'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap'),
@@ -74,6 +74,7 @@ urlpatterns = [
     path('randevu-satin-alimi/<int:pk>',paymentPageOfAppointment,name="paymentPageOfAppointment"),
     path('basarili-randevu-satin-alimi/<int:pk>',successPaymentOfAppointment,name="successPaymentOfAppointment"),
     path('hatali-randevu-satin-alimi/<int:pk>',failPaymentOfAppointment,name="failPaymentOfAppointment"),
+    path('psikolog-sec',selectAdminForAppointment,name="selectAdminForAppointment"),
 
 ]   
 
