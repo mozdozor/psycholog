@@ -1028,7 +1028,10 @@ def createBlogModelAdmin(request):
 
         if form.is_valid(): 
             data=form.save(commit=False)            
-            data.author=request.user
+            if blogId:
+                pass
+            else:
+                data.author=request.user
             data.save()
             form.save_m2m()   
             messages.success(request,"Blog başarıyla kaydedildi.")
