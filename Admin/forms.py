@@ -43,7 +43,7 @@ class CourseModelForm(forms.ModelForm):
             "price" : forms.NumberInput(attrs={"class":"form-control","name":"price","required":"required"}),
             "meta_title" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_title","maxlength":"65"}),
             "meta_description" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_description","maxlength":"170"}),
-            "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords","data-max-words":"5"}),
+            "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords","data-max-words":"10"}),
         }
         labels = {      
             'image':"Kurs Fotoğrafı (800x533)",
@@ -246,7 +246,7 @@ class blogModelForm(forms.ModelForm):
             "categories" : SelectMultiple(attrs={"class":"form-control"}), 
             "meta_title" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_title","maxlength":"65"}), 
             "meta_description" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_description","maxlength":"170"}), 
-            "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords","data-max-words":"5"}), 
+            "meta_keywords" : TextInput(attrs={"class":"form-control","type":"text","name":"meta_keywords","data-max-words":"10"}), 
         }
         labels = {      
             'title': "Başlık",
