@@ -9,7 +9,7 @@
     </div>
     <ul id="top_menu">
         <!-- <li><a href="login.html" class="login">Login</a></li> -->
-        <li><a href="#0" class="search-overlay-menu-btn">Kurs Ara</a></li>
+        <!-- <li><a href="#0" class="search-overlay-menu-btn">Kurs Ara</a></li> -->
 
         
         {% if request.user.is_authenticated %}
@@ -53,9 +53,9 @@
     <!-- Search Menu -->
     <div class="search-overlay-menu">
         <span class="search-overlay-close"><span class="closebt"><i class="ti-close"></i></span></span>
-        <form action="{% url 'coursesGridList' %}" role="search" id="searchform" method="post">
+        <form action="/" role="search" id="searchform" method="post">
             {% csrf_token %}
-            <input name="q" type="search" placeholder="Kurs Ara..." />
+            <input name="q" type="search" placeholder="..." />
             <button type="submit"><i class="icon_search"></i>
             </button>
         </form>
